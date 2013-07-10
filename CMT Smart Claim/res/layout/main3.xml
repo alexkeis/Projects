@@ -1,0 +1,228 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity" 
+    android:background="@drawable/background_new">
+    <LinearLayout
+
+        android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"   >
+
+             <RelativeLayout
+                 
+                 android:layout_gravity="top"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content" >
+
+        <ImageView
+            android:background="#fa2255"
+            android:id="@+id/imageView_header"
+              android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+          android:scaleType="centerCrop"
+            android:src="@drawable/header_new" />       
+            
+        !!!!!!!!!!!!!!!!!!!!!!!!!!! 
+        
+    </RelativeLayout> 
+                
+    
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+    
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+			android:layout_weight="1"
+            android:gravity="top" >
+
+<RelativeLayout 
+                android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+
+            >
+
+<!--      <ImageView
+        android:id="@+id/imageView_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circle" />  -->
+
+             <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true"
+        xmlns:toucharea="http://schemas.android.com/apk/res/spire.example.cmt"
+        
+       
+      >
+
+        <ImageView
+        
+            android:id="@+id/imageView1111"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/circle"
+        	
+            
+             />
+
+                <spire.example.cmt.RoundButton
+                    
+                    android:layout_centerHorizontal="true"
+            android:id="@+id/button_top"
+     
+            toucharea:toucharea="@array/touch_area_btntop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_alignTop="@+id/imageView1111"
+            android:background="@drawable/btn_top" />
+
+             <spire.example.cmt.RoundButton
+            android:id="@+id/button_center"
+            toucharea:toucharea="@array/touch_area_btncenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_center" /> 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+           android:layout_alignBottom="@+id/imageView1111"
+            android:layout_centerHorizontal="true" >
+
+            <spire.example.cmt.RoundButton
+            android:id="@+id/button_left"
+            toucharea:toucharea="@array/touch_area_btnleft"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_left"
+                />
+
+		 <spire.example.cmt.RoundButton2
+            android:id="@+id/button_right"
+            toucharea:toucharea="@array/touch_area_btnright"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_right" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+  </RelativeLayout>
+  
+            <RelativeLayout 
+                android:id="@+id/trtrtrt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/relativ_anim"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+					android:visibility="gone"
+                    android:background="#505050"
+                    
+                    >
+
+
+
+                            <LinearLayout
+                                android:id="@+id/linear"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content" 
+                                android:orientation="vertical">
+
+                                 <ImageView
+                                    android:id="@+id/imageView_lodge_claim"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/claimonpanel"
+                                    android:scaleType="centerCrop" />
+
+                                 <ImageView
+                                     android:id="@+id/imageView1"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:src="@drawable/claim_insurance" />
+
+                                 <ImageView
+                                     android:id="@+id/bmw"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:scaleType="centerCrop"
+                                     android:src="@drawable/bmw" />
+
+                                 <ImageView
+                                     android:id="@+id/mersedes"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:src="@drawable/mersedes"
+                                     android:scaleType="centerCrop"
+                                      />
+                                    
+                            </LinearLayout>
+
+                </RelativeLayout>
+
+                   <ImageView
+                    android:id="@+id/imageView_more_services2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/moreservices" /> 
+                </LinearLayout>
+
+</RelativeLayout>
+ 
+    </RelativeLayout>
+
+         <RelativeLayout
+             android:id="@+id/a3333333"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+                        
+            
+             >
+
+
+
+            <ImageView
+                android:id="@+id/imageView_banner"
+             	android:layout_centerHorizontal="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner2x" />
+        
+    </RelativeLayout> 
+    
+    
+    
+    
+ 
+        
+        
+        
+    </LinearLayout>
+
+    
+</RelativeLayout>

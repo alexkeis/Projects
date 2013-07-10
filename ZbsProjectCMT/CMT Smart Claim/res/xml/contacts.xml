@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='Utf-8' standalone='yes' ?>
+<Home>
+ <Child sex="male" age="5" name="Vasya"></Child>
+ <pets>
+  <Dog age="3" name="Druzshok"></Dog>
+ </pets>
+</Home>

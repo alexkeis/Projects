@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="spire.example.cmt"
+    android:versionCode="3"
+    android:versionName="2.0" >
+<!--android:windowSoftInputMode="stateAlwaysVisible"  -->
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:maxSdkVersion="17"
+        android:targetSdkVersion="16" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.INTERNET" />
+ 		   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+ 		   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+ 		   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="CMT"
+         android:theme="@style/AppTheme"
+         
+        >
+        <activity
+            android:name="spire.example.cmt.MainActivity"
+            android:label="CMT" 
+                        android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+<!--             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+                <activity
+            android:name="spire.example.cmt.Pin"
+
+            android:label="CMT" 
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+                <activity
+            android:name="spire.example.cmt.Call_me_back"
+            android:screenOrientation="portrait"/>
+                                <activity
+            android:name="spire.example.cmt.call"
+            android:screenOrientation="portrait"/>
+                                <activity
+            android:name="spire.example.cmt.CreateXML"
+            android:screenOrientation="portrait"/>
+                                                                <activity
+            android:name="spire.example.cmt.Lodge_claim"
+            android:screenOrientation="portrait"/>
+                                                                <activity
+            android:name="spire.example.cmt.date_time"
+            android:screenOrientation="portrait"/>
+                                                                <activity
+            android:name="spire.example.cmt.Dialog_date"
+            android:screenOrientation="portrait"/>
+                                                                <uses-library android:name="com.google.android.maps"/>
+                                                               <!--  android:theme="@android:style/Theme.NoTitleBar"  -->
+                                                                <activity 
+                                                                    
+            android:name="spire.example.cmt.GoogleMapsActivity" android:screenOrientation="portrait"
+            
+            />
+                                                                <activity 
+                                                                    
+            android:name="spire.example.cmt.Other_drivers_vechickes"
+            android:screenOrientation="portrait"
+            />
+       <activity 
+                                                                    
+            android:name="spire.example.cmt.Other_drivers"
+            android:screenOrientation="portrait"
+            />
+             <activity 
+                                                                    
+            android:name="spire.example.cmt.Dialog_drivers"
+            />
+                        <activity 
+                                                                    
+            android:name="spire.example.cmt.Dialog_vehicle"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustPan"
+            />
+                          <activity  android:screenOrientation="portrait"        
+            android:name="spire.example.cmt.Other_drivers_insurance"
+            />
+                              <activity  android:screenOrientation="portrait"        
+            android:name="spire.example.cmt.My_profile"
+            />
+                              <activity  android:screenOrientation="portrait"        
+            android:name="spire.example.cmt.Your_details"
+            
+            />
+                              <activity  android:screenOrientation="portrait"        
+            android:name="spire.example.cmt.Your_vehicle"
+            
+            />
+                               <activity  android:screenOrientation="portrait"        
+            android:name="Lodge_claim_your_details"
+            />
+                               <activity  android:screenOrientation="portrait"        
+            android:name="Lodge_claim_your_vehicle"
+            />
+                               <activity  android:screenOrientation="portrait"        
+            android:name="Lodge_claim_your_insurer"
+            />
+                               <activity  android:screenOrientation="portrait"        
+            android:name="Lodge_claim_smash_repair"
+            />
+                               <activity  android:screenOrientation="portrait"        
+            android:name="Accident_description"
+            android:windowSoftInputMode="stateAlwaysVisible"
+            />
+               <activity  android:screenOrientation="portrait"        
+            android:name="MultipleItemsList"
+            />   
+             <activity  android:screenOrientation="portrait"        
+            android:name="View_modify"
+            />   
+            <activity  android:screenOrientation="portrait"        
+            android:name="Term"
+            />   
+                        <activity  android:screenOrientation="portrait"        
+            android:name="Image"
+            />   
+            <activity       android:screenOrientation="portrait"
+            android:name="Web"
+            />     
+                        <activity       
+                            android:label="Pin"
+                            android:screenOrientation="portrait"
+            android:name="New_pin"
+            />               
+            <activity       android:screenOrientation="portrait"
+            android:name="Del_pin"
+            />            
+                           <activity android:screenOrientation="portrait"
+            android:name="Photo"
+            />   
+     <activity       android:screenOrientation="portrait"
+            android:name="Photo_new"
+            />   
+
+                               
+                               
+    </application>
+    
+
+</manifest>

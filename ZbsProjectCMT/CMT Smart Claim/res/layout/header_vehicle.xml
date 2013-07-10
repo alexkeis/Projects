@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+<!--     <Button
+        android:id="@+id/button_use_my_proile_vehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Use My Profile"
+       /> -->
+    <Button        
+        android:onClick="button_use_my_proile_vehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:src="@drawable/use_my_profile" 
+        android:text="Use My Profile"
+         />
+
+    
+</LinearLayout>
