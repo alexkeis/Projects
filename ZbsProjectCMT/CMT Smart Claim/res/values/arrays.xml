@@ -31,6 +31,12 @@
         <item>164 169 15 29</item>
         <item>127 224 19 22</item>
    </array>  
+   
+      <array name="touch_area_btnright_470_new">
+        <item>49 81 129 263</item>
+
+   </array> 
+   
       <array name="touch_area_btncenter_470">
         <item>23 25 120 117</item>
 		<item>50 8 68 16</item>

@@ -14,18 +14,19 @@ public final class R {
         public static final int stop_anim=0x7f040002;
     }
     public static final class array {
-        public static final int touch_area_btncenter=0x7f06000b;
-        public static final int touch_area_btncenter_470=0x7f060003;
-        public static final int touch_area_btncenter_710=0x7f060007;
-        public static final int touch_area_btnleft=0x7f060009;
+        public static final int touch_area_btncenter=0x7f06000c;
+        public static final int touch_area_btncenter_470=0x7f060004;
+        public static final int touch_area_btncenter_710=0x7f060008;
+        public static final int touch_area_btnleft=0x7f06000a;
         public static final int touch_area_btnleft_470=0x7f060001;
-        public static final int touch_area_btnleft_710=0x7f060005;
-        public static final int touch_area_btnright=0x7f06000a;
+        public static final int touch_area_btnleft_710=0x7f060006;
+        public static final int touch_area_btnright=0x7f06000b;
         public static final int touch_area_btnright_470=0x7f060002;
-        public static final int touch_area_btnright_710=0x7f060006;
-        public static final int touch_area_btntop=0x7f060008;
+        public static final int touch_area_btnright_470_new=0x7f060003;
+        public static final int touch_area_btnright_710=0x7f060007;
+        public static final int touch_area_btntop=0x7f060009;
         public static final int touch_area_btntop_470=0x7f060000;
-        public static final int touch_area_btntop_710=0x7f060004;
+        public static final int touch_area_btntop_710=0x7f060005;
     }
     public static final class attr {
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
