@@ -459,7 +459,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 		}
 	}
 
-	// //////////////
+	// //////////////ed
 	public class MyTask extends AsyncTask<Void, Void, Integer> {
 
 		@Override

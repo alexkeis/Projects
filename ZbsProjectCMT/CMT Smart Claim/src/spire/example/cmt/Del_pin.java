@@ -25,14 +25,10 @@ public class Del_pin extends Activity {
     protected Dialog onCreateDialog(int id) {
         if (id == 1) {
           AlertDialog.Builder adb = new AlertDialog.Builder(this);
-          // заголовок
           adb.setTitle("PIN Removed");
-          // сообщение
           adb.setMessage("There will be no PIN entry screen when Application starts up.");
-          // иконка
           adb.setIcon(android.R.drawable.ic_dialog_info);
           adb.setNeutralButton("Ok", myClickListener);
-          // создаем диалог
           return adb.create();
         }
         return super.onCreateDialog(id);
