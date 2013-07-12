@@ -503,7 +503,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 					obj.put("PersonalDataId", new Integer(0));
 
 					Map in_obj = new LinkedHashMap();
-					in_obj.put("Id", new Integer(1));
+					in_obj.put("Id", new Integer(0));
 					in_obj.put("Title", null);
 					in_obj.put("FirstName", details[0]);
 					in_obj.put("Surname", details[1]);

@@ -20,11 +20,15 @@ import org.json.JSONArray;
 import org.json.simple.JSONValue;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,8 +77,9 @@ public class My_profile extends Activity {
 		if (yr.names_info[0].equals("") || yr.names_info[1].equals("")
 				|| yr.names_info[5].equals("")
 				|| your_vehicle.names_info[2].equals("")) {
-			Toast.makeText(getApplicationContext(), "Please fill all required fields in your profile", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplicationContext(),
+					"Please fill all required fields in your profile",
+					Toast.LENGTH_LONG).show();
 		} else {
 			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -104,6 +109,40 @@ public class My_profile extends Activity {
 	// ///////////////////////
 	Your_vehicle info_vechicle = new Your_vehicle();
 	Your_details details = new Your_details();
+
+	// //////////////////
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch (id) {
+
+		case 0:
+
+		{
+			builder.setTitle("Registration Succeeded");
+			builder.setMessage("Your ClientID is " + id_client);
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+			builder.setNeutralButton("Cancel", null);
+
+			builder.setCancelable(false);
+			return builder.create();
+		}
+		case 1:
+
+		{
+
+			builder.setTitle("Registration Failed");
+			builder.setMessage("Please try again later");
+			builder.setIcon(android.R.drawable.ic_dialog_info);
+			builder.setNeutralButton("Cancel", null);
+			builder.setCancelable(false);
+			return builder.create();
+		}
+		default:
+			return null;
+		}
+	}
 
 	// //////////////////////
 	public class MyTask_show extends AsyncTask<Void, Void, Integer> {
@@ -142,6 +181,7 @@ public class My_profile extends Activity {
 					obj.put("Notes", null);
 					String s = "/Date(" + System.currentTimeMillis() / 1000
 							+ ")/";
+//					 String s = "/Date(";
 
 					obj.put("CreatedDate", s);
 
@@ -149,7 +189,7 @@ public class My_profile extends Activity {
 					obj.put("PersonalDataId", new Integer(0));
 
 					Map in_obj = new LinkedHashMap();
-					in_obj.put("Id", new Integer(1));
+					in_obj.put("Id", new Integer(0));
 					in_obj.put("Title", null);
 					in_obj.put("FirstName", details.names_info[0]);
 					in_obj.put("Surname", details.names_info[1]);
@@ -167,7 +207,7 @@ public class My_profile extends Activity {
 					in_obj.put("Postcode", details.names_info[9]);// details[9]
 
 					obj.put("PersonalData", in_obj);
-//
+					//
 					StringWriter out2 = new StringWriter();
 					JSONValue.writeJSONString(obj, out2);
 					String jsonText = out2.toString();
@@ -191,15 +231,25 @@ public class My_profile extends Activity {
 					}
 
 					result = sb.toString();
-//
+					//
 				} catch (Exception e) {
 					e.printStackTrace();
 					res = new Integer(1);
 				}
 
 			} finally {
-
 				result = result.substring(0, result.length() - 1);
+				try {
+
+					Integer.parseInt(result);
+					Log.d("Log", "Norm");
+					res = new Integer(0);
+				} catch (Exception e) {
+					Log.d("Log", "Fail");
+					res = new Integer(1);
+					// TODO: handle exce;ption
+				}
+
 				Log.d("DLINNA", String.valueOf(result.length()) + "/" + result
 						+ "/");
 				id_client = result;
@@ -214,17 +264,22 @@ public class My_profile extends Activity {
 			Log.d("Log", "End");
 
 			if (result.intValue() == 1)
-				
-				Toast.makeText(
-						getApplicationContext(),
-						"Registration Failed. Please try again later.",
-						Toast.LENGTH_SHORT).show();
+
+				// Toast.makeText(
+				// getApplicationContext(),
+				// "Registration Failed. Please try again later.",
+				// Toast.LENGTH_SHORT).show();
+				showDialog(1);
 
 			else {
 				Log.d("Log", "VSE OKEY");
-				Toast.makeText(getApplicationContext(),
-						"Registration Succeeded. Your ClientID is " + id_client, Toast.LENGTH_SHORT)
-						.show();
+				showDialog(0);
+
+				// Toast.makeText(getApplicationContext(),
+				// "Registration Succeeded. Your ClientID is " + id_client,
+				// Toast.LENGTH_SHORT)
+				// .show();
+
 				SavePreferences2("ID", id_client);
 				sendDetails.setVisibility(View.GONE);
 			}
