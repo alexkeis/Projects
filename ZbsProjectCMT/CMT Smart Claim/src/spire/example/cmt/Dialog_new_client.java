@@ -50,6 +50,12 @@ public class Dialog_new_client extends DialogFragment implements OnClickListener
     {
     	edit_driver.setInputType(InputType.TYPE_CLASS_PHONE);
     }
+    else if(yd.pos + i == 0){
+    	edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+    }
+    else if(yd.pos + i == 1 || yd.pos + i == 2){
+    	edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+    }
     else
     edit_driver.setInputType(InputType.TYPE_CLASS_TEXT);
     ds = new Dialog_new_client();

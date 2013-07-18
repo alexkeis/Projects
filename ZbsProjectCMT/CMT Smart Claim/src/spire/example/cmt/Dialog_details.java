@@ -1,8 +1,6 @@
 package spire.example.cmt;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 public class Dialog_details extends DialogFragment implements OnClickListener {
 
@@ -49,7 +46,12 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 		}
 		edit_driver = (EditText) v.findViewById(R.id.editText_drivers);
 		edit_driver.setText(yd.names_info[yd.pos + i]);
-		if (yd.pos + i == 5 || yd.pos + i == 9) {
+		if (yd.pos + i == 0 || yd.pos + i == 1) {
+			edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+		} else if (yd.pos + i == 6) {
+			edit_driver
+					.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+		} else if (yd.pos + i == 5 || yd.pos + i == 9) {
 			edit_driver.setInputType(InputType.TYPE_CLASS_PHONE);
 		} else
 			edit_driver.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -109,9 +111,8 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 		dismiss();
 	}
 
-
-
 	public void onDismiss(DialogInterface dialog) {
+
 		if (click == 0) {
 			Intent intent1 = new Intent();
 			intent1.setClass(getActivity(), Your_details.class);
@@ -123,12 +124,20 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 			Log.d(LOG_TAG, "positionpositionpositionposition = " + re);
 			if (yd.pos + i == 3) {
 				Dialog_date_details ddd = new Dialog_date_details();
-				ddd.i = yd.pos - 4;
+				yd.pos = yd.pos + i - 1;
+				// ddd.i =(-1)+(i*(-1));// yd.pos - 4;
+				// Toast.makeText(getActivity(), String.valueOf(ddd.i),
+				// Toast.LENGTH_SHORT).show();
 				dialog_date.show(getFragmentManager(), "");
 				i = 0;
 				click = 0;
 			} else if (yd.pos + i == 5) {
+				Dialog_date_details ddd = new Dialog_date_details();
+				yd.pos = yd.pos + i - 1;
+				// ddd.i= (-1)+(i*(-1));
 				dialog_date.show(getFragmentManager(), "");
+				// Toast.makeText(getActivity(), String.valueOf(ddd.i),
+				// Toast.LENGTH_SHORT).show();
 				i = 0;
 				click = 0;
 			} else {
@@ -138,14 +147,25 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 		}
 		if (click == 2) {
 			if (yd.pos + i == 1) {
+				Log.d("Logg", "Pos: " + yd.pos);
 				Dialog_date_details ddd = new Dialog_date_details();
-				ddd.i = yd.pos + i + i;
+				 ddd.i = yd.pos + i + i;
+//				yd.pos = yd.pos + i - 1;
+				// Toast.makeText(getActivity(), String.valueOf(ddd.i),
+				// Toast.LENGTH_SHORT).show();
+				Log.d("Logg", "Pos: " + (yd.pos) + i + i);
 				dialog_date.show(getFragmentManager(), "");
+
 				i = 0;
 				click = 0;
 			} else if (yd.pos + i == 3) {
+				Log.d("Logg", "Pos: " + yd.pos);
 				Dialog_date_details ddd = new Dialog_date_details();
-				ddd.i = yd.pos - 2;
+				 ddd.i = yd.pos - 2;
+//				yd.pos = yd.pos + i - 1;
+				// Toast.makeText(getActivity(), String.valueOf(ddd.i),
+				// Toast.LENGTH_SHORT).show();
+				Log.d("Logg", "Pos: " + (yd.pos - 2));
 				dialog_date.show(getFragmentManager(), "");
 				i = 0;
 				click = 0;

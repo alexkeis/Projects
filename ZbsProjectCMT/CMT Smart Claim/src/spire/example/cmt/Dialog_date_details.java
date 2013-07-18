@@ -50,6 +50,7 @@ public class Dialog_date_details extends DialogFragment implements OnClickListen
       Bundle savedInstanceState) {
 	  dialog_n = new Dialog_details();
 	  pol=ood.names[ood.pos+i];
+//	  Toast.makeText(getActivity(), String.valueOf(ood.pos+i), Toast.LENGTH_SHORT).show();
     getDialog().setTitle(pol);
     View v = inflater.inflate(R.layout.dialog_date_drivers, null);
     v.findViewById(R.id.btnYes_date).setOnClickListener(this);

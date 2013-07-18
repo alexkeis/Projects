@@ -72,19 +72,19 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		 long currentTs = System.currentTimeMillis() / 1000;
 		
-		 if (strdata.equals("")) {
-		
-		 SavePreferences("data", String.valueOf(currentTs));
-		 //p();
-		
-		 } else {
-		 long savedTs = Long.parseLong(strdata);
-		
-		 if( ((currentTs - savedTs) >= 60 * 60 * 24 * 5) ){
-		 finish();
-		 }
-		
-		 }
+//		 if (strdata.equals("")) {
+//		
+//		 SavePreferences("data", String.valueOf(currentTs));
+//		 //p();
+//		
+//		 } else {
+//		 long savedTs = Long.parseLong(strdata);
+//		
+//		 if( ((currentTs - savedTs) >= 60 * 60 * 24 * 5) ){
+//		// finish();
+//		 }
+//		
+//		 }
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Log.d("Resolution", "resolution: " + display.getWidth() + " x "

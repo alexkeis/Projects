@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -46,7 +47,8 @@ public class Dialog_vehicle extends DialogFragment implements OnClickListener {
 	  }
     edit_driver=(EditText)v.findViewById(R.id.editText_drivers2);
     edit_driver.setText(your_v.names_info[your_v.pos2+i]);
-    
+    if(your_v.pos2 + i == 2)
+    	edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
     ds = new Dialog_vehicle();
     return v;
   }

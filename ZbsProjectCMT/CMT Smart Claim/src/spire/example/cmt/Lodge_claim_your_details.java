@@ -35,14 +35,14 @@ public class Lodge_claim_your_details extends Activity {
 	public static boolean click_state_lodge_claim = false;
 	public static boolean update;
 	public static String[] names = { "*First Name: ", "*Last Name: ",
-			"Date of Birth: ", "Driver's License: ", "Expire Date: ", "Phone: ",
+			"Date of Birth: ", "Driver's License: ", "Expiry Date: ", "Phone: ",
 			"Email: ", "Street Adress: ", "Suburb: ", "Postcode: ", "State: " };
 	public static String[] names_info = { "", "", "", "", "", "", "", "", "",
 			"", "" };
 	public static String[] names_title = { "*First Name: " + names_info[0],
 			"*Last Name: " + names_info[1], "Date of Birth: " + names_info[2],
 			"Driver's License: " + names_info[3],
-			"Expire Date: " + names_info[4], "Phone: " + names_info[5],
+			"Expiry Date: " + names_info[4], "Phone: " + names_info[5],
 			"Email: " + names_info[6], "Street Adress: " + names_info[7],
 			"Suburb: " + names_info[8], "Postcode: " + names_info[9],
 			"State: " + names_info[10] };
@@ -82,10 +82,10 @@ public class Lodge_claim_your_details extends Activity {
 
 				pp = position - 1;
 				tit = names_title[position - 1];
-				if (position == 2 ) {
+				if (position == 3 ) {
 					dialog_date();
 				} 
-				else if(position == 4){
+				else if(position == 5){
 					dialog_date();
 				}
 				else if(position == 11){

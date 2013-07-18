@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,8 @@ public class Dialog_vehicle_lodge_claim extends DialogFragment implements OnClic
 	  }
     edit_driver=(EditText)v.findViewById(R.id.editText_drivers);
     edit_driver.setText(yd.names_info[yd.pos2+i]);
+    if(yd.pos2 + i == 2)
+    	edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
     ds = new Dialog_vehicle_lodge_claim();   
     return v;
   }

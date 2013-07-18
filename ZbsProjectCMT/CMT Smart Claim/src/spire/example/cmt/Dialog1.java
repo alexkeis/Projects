@@ -97,6 +97,7 @@ public class Dialog1 extends DialogFragment implements OnClickListener {
   public void onDismiss(DialogInterface dialog) {
     super.onDismiss(dialog);
 	Intent intent1 = new Intent();
+//	intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     intent1.setClass(getActivity(), Lodge_claim.class);
     startActivity(intent1);
     Lodge_claim lg = new Lodge_claim();

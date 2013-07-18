@@ -44,7 +44,7 @@ public class Other_drivers extends Activity {
 	public static boolean rez = false;
 	public static String[] mas_name_file = new String[25];
 	public static String[] names_k = { "*First Name: ", "*Last Name: ",
-			"Date of Birth: ", "Driver's License: ", "Expire Date: ", "Phone: ",
+			"Date of Birth: ", "Driver's License: ", "Expiry Date: ", "Phone: ",
 			"Email: ", "Street Adress: ", "Suburb: ", "Postcode: ", "State: ",
 			"Make: ", "Model: ", "*Rego: " };
 	public static boolean click_state_dialog = false;
@@ -55,7 +55,7 @@ public class Other_drivers extends Activity {
 	public static String[] n = new String[12];
 	public static String[] names = { "*First Name: " + names_n[0],
 			"*Last Name: " + names_n[1], "Date of Birth: " + names_n[2],
-			"Driver's License: " + names_n[3], "Expire Date: " + names_n[4],
+			"Driver's License: " + names_n[3], "Expiry Date: " + names_n[4],
 			"Phone: " + names_n[5], "Email: " + names_n[6],
 			"Street Adress: " + names_n[7], "Suburb: " + names_n[8],
 			"Postcode: " + names_n[9], "State: " + names_n[10],
@@ -305,7 +305,7 @@ public class Other_drivers extends Activity {
 			}
 			bw.close();
 			Log.d(LOG_TAG,
-					"Р¤Р°Р№Р» Р·Р°РїРёСЃР°РЅ РЅР° SD: "
+					"Р В¤Р В°Р в„–Р В» Р В·Р В°Р С—Р С‘РЎРѓР В°Р Р… Р Р…Р В° SD: "
 							+ sdFile.getAbsolutePath());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -352,9 +352,9 @@ public class Other_drivers extends Activity {
 		try {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
 					openFileOutput(FILENAME, MODE_PRIVATE)));
-			bw.write("РЎРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°");
+			bw.write("Р РЋР С•Р Т‘Р ВµРЎР‚Р В¶Р С‘Р С�Р С•Р Вµ РЎвЂћР В°Р в„–Р В»Р В°");
 			bw.close();
-			Log.d(LOG_TAG, "Р¤Р°Р№Р» Р·Р°РїРёСЃР°РЅ");
+			Log.d(LOG_TAG, "Р В¤Р В°Р в„–Р В» Р В·Р В°Р С—Р С‘РЎРѓР В°Р Р…");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

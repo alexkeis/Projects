@@ -42,15 +42,23 @@ public class Dialog_drivers extends DialogFragment implements OnClickListener {
 		v.findViewById(R.id.btnYes_d).setOnClickListener(this);
 		v.findViewById(R.id.btnYes_ok).setOnClickListener(this);
 		v.findViewById(R.id.btnNo_d).setOnClickListener(this);
-		if (ood.pos + i == 0) {
-			v.findViewById(R.id.btnYes_d).setEnabled(false);
-
-		}
 		edit_driver = (EditText) v.findViewById(R.id.editText_drivers);
 		edit_driver.setText(ood.names_n[ood.pos + i]);
-		if (ood.pos + i == 5 || ood.pos + i == 9) {
+		if (ood.pos + i == 0) {
+			v.findViewById(R.id.btnYes_d).setEnabled(false);
+			edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
+		} else if (ood.pos + i == 1) {
+			edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+		} else if (ood.pos + i == 6) {
+			edit_driver
+					.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+		} else if (ood.pos + i == 5 || ood.pos + i == 9) {
 			edit_driver.setInputType(InputType.TYPE_CLASS_PHONE);
-		} else
+		}
+		else if (ood.pos + i == 13) {
+			edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+		}else
 			edit_driver.setInputType(InputType.TYPE_CLASS_TEXT);
 
 		ds = new Dialog_drivers();
@@ -82,9 +90,8 @@ public class Dialog_drivers extends DialogFragment implements OnClickListener {
 			Other_drivers.click_state_dialog = true;
 			click = 0;
 			onDismiss(getDialog());
-		}
-		else
-		ds.show(getFragmentManager(), "sad");
+		} else
+			ds.show(getFragmentManager(), "sad");
 
 	}
 
@@ -131,12 +138,14 @@ public class Dialog_drivers extends DialogFragment implements OnClickListener {
 			Log.d(LOG_TAG, "positionpositionpositionposition = " + re);
 			if (ood.pos + i == 3) {
 				Dialog_date_details2 ddd = new Dialog_date_details2();
-				ddd.i = ood.pos - 4;
+				ood.pos = ood.pos + i - 1;
+				// ddd.i = ood.pos - 4;
 				dialog_date.show(getFragmentManager(), "");
 				i = 0;
 				click = 0;
 			} else if (ood.pos + i == 5) {
 				Dialog_date_details2 ddd = new Dialog_date_details2();
+				ood.pos = ood.pos + i - 1;
 				dialog_date.show(getFragmentManager(), "");
 				i = 0;
 				click = 0;

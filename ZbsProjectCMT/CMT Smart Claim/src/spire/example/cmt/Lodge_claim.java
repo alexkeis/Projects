@@ -110,7 +110,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 	public static String[] details_insurer = { "", "", "" };
 	public static String[] details_vehicle = { "", "", "" };
 	MyTask_send_image myTask_send_image;
-
+	ListView lv;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -182,7 +182,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 
 		dlg2 = new Dialog2();
 		dlg1 = new Dialog1();
-		ListView lv = (ListView) findViewById(R.id.listView_lodge_claim);
+		 lv = (ListView) findViewById(R.id.listView_lodge_claim);
 		ListView lv2 = (ListView) findViewById(R.id.listView_lodge_claim2);
 		ListView lv3 = (ListView) findViewById(R.id.listView_lodge_claim3);
 		String[] names_title = new String[] {
@@ -1526,6 +1526,8 @@ public class Lodge_claim extends Activity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		
+		lv.requestLayout();
 		if (rez_time == true) {
 			rez_time = false;
 			finish();

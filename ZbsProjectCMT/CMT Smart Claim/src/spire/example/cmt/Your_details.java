@@ -33,7 +33,7 @@ public static String title = "Title";
 	String[] state = new String[] { "ACT", "NSW", "NT", "QLD", "SA", "TAC",
 			"VIC", "WA" };
 	public static String[] names = { "*First Name: ", "*Last Name: ",
-			"Date of Birth: ", "Driver's License: ", "Expire Date: ",
+			"Date of Birth: ", "Driver's License: ", "Expiry Date: ",
 			"*Phone: ", "Email: ", "Street Adress: ", "Suburb: ", "Postcode: ",
 			"State: " };
 	public static String[] names_info = { "", "", "", "", "", "", "", "", "",
@@ -41,7 +41,7 @@ public static String title = "Title";
 	public static String[] names_title = { "*First Name: " + names_info[0],
 			"*Last Name: " + names_info[1], "Date of Birth: " + names_info[2],
 			"Driver's License: " + names_info[3],
-			"Expire Date: " + names_info[4], "*Phone: " + names_info[5],
+			"Expiry Date: " + names_info[4], "*Phone: " + names_info[5],
 			"Email: " + names_info[6], "Street Adress: " + names_info[7],
 			"Suburb: " + names_info[8], "Postcode: " + names_info[9],
 			"State: " + names_info[10] };

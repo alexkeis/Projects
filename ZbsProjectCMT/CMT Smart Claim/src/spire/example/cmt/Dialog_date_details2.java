@@ -47,7 +47,7 @@ public class Dialog_date_details2 extends DialogFragment implements OnClickListe
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
 	  dialog_n = new Dialog_drivers();
-	  pol=ood.names[ood.pos+i];
+	  pol=ood.names_k[ood.pos+i];
     getDialog().setTitle(pol);
     View v = inflater.inflate(R.layout.dialog_date_drivers, null);
     v.findViewById(R.id.btnYes_date).setOnClickListener(this);
