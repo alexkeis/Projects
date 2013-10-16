@@ -68,25 +68,25 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// captcha
-		SharedPreferences sharedData = getSharedPreferences("MY_DATA",
-				MODE_PRIVATE);
-		String strdata = sharedData.getString("data", "");
-
-		long currentTs = System.currentTimeMillis() / 1000;
-
-		if (strdata.equals("")) {
-
-			SavePreferences("data", String.valueOf(currentTs));
-			// p();
-
-		} else {
-			long savedTs = Long.parseLong(strdata);
-
-			if (((currentTs - savedTs) >= 60 * 60 * 24 * 5)) {
-				finish();
-			}
-
-		}
+//		SharedPreferences sharedData = getSharedPreferences("MY_DATA",
+//				MODE_PRIVATE);
+//		String strdata = sharedData.getString("data", "");
+//
+//		long currentTs = System.currentTimeMillis() / 1000;
+//
+//		if (strdata.equals("")) {
+//
+//			SavePreferences("data", String.valueOf(currentTs));
+//			// p();
+//
+//		} else {
+//			long savedTs = Long.parseLong(strdata);
+//
+//			if (((currentTs - savedTs) >= 60 * 60 * 24 * 5)) {
+//				finish();
+//			}
+//
+//		}
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Log.d("Resolution", "resolution: " + display.getWidth() + " x "
