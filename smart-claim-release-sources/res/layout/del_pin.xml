@@ -1,0 +1,56 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" 
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="No-one will be reqbired to enter a PIN to use this Application; your data will be available to anybody that can access the handset."
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <!-- <ImageButton
+            android:id="@+id/del_image_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="0dp"
+            android:onClick="del_pincod"
+            android:src="@drawable/remove" 
+         /> -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="75px"
+                android:layout_marginTop="10dp"
+				android:visibility="invisible"
+				android:layout_weight="0.3"
+         />
+
+            <Button
+                android:id="@+id/del_image_pin"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:layout_marginTop="10dp"
+                android:onClick="del_pincod"
+                android:text="Remove" 
+                android:layout_weight="0.3"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="75px"
+                android:layout_marginTop="10dp"
+				android:visibility="invisible"
+				android:layout_weight="0.3"
+         />
+        </LinearLayout>
+
+    </LinearLayout>

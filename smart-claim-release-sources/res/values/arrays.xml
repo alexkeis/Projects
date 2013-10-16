@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <array name="touch_area_btntop_470">
+        <item>103 66 255 71</item>
+		<item>153 39 168 22</item>
+		<item>185 29 95 10</item>
+		<item>72 97 32 38</item>
+		<item>112 137 66 18</item>
+		<item>359 89 25 51</item>
+		<item>288 139 66 16</item>
+   </array>  
+   <array name="touch_area_btnleft_470">
+        <item>31 46 93 98</item>
+		<item>40 20 29 35</item>
+        <item>39 144 108 39</item>
+        <item>57 185 129 30</item>
+        <item>172 197 56 104</item>
+        <item>100 215 70 48</item>
+        <item>85 216 13 29</item>
+        <item>122 264 48 15</item>       
+   </array>  
+   <array name="touch_area_btnright_470">
+        <item>92 52 72 172</item>
+		<item>129 31 65 137</item>
+        <item>3 200 124 64</item>
+        <item>3 265 97 15</item>
+        <item>5 283 43 18</item>
+        <item>156 14 32 15</item>
+        <item>41 186 50 13</item>
+        <item>72 160 19 26</item>
+        <item>164 169 15 29</item>
+        <item>127 224 19 22</item>
+   </array>  
+   
+      <array name="touch_area_btnright_470_new">
+        <item>49 81 129 263</item>
+
+   </array> 
+   
+      <array name="touch_area_btncenter_470">
+        <item>23 25 120 117</item>
+		<item>50 8 68 16</item>
+        <item>41 142 83 13</item>
+        <item>6 51 16 63</item>
+        <item>142 58 17 57</item>
+   </array>  
+         <array name="touch_area_btntop_710">
+        <item>103*1.51064 66*1.51064 255*1.51064 71*1.51064</item>
+		<item>153*1.51064 39*1.51064 168*1.51064 22*1.51064</item>
+		<item>18*1.510645 29*1.51064 95*1.51064 10*1.51064</item>
+		<item>72*1.51064 97*1.51064 32*1.51064 38*1.51064</item>
+		<item>112*1.51064 137*1.51064 66*1.51064 18*1.51064</item>
+		<item>359*1.51064 89*1.51064 25*1.51064 51*1.51064</item>
+		<item>288*1.51064 139*1.51064 66*1.51064 16*1.51064</item>
+   </array>  
+   <array name="touch_area_btnleft_710">
+        <item>31*1.51064 46*1.51064 93*1.51064 98*1.51064</item>
+		<item>40*1.51064 20*1.51064 29*1.51064 35*1.51064</item>
+        <item>39*1.51064 144*1.51064 108*1.51064 39*1.51064</item>
+        <item>57*1.51064 185*1.51064 129*1.51064 30*1.51064</item>
+        <item>172*1.51064 197*1.51064 56*1.51064 104*1.51064</item>
+        <item>100*1.51064 215*1.51064 70*1.51064 48*1.51064</item>
+        <item>85*1.51064 216*1.51064 13*1.51064 29*1.51064</item>
+        <item>122*1.51064 264*1.51064 48*1.51064 15*1.51064</item>       
+   </array>  
+   <array name="touch_area_btnright_710">
+        <item>31 46 93 98</item>
+		<item>40 20 29 35</item>
+        <item>39 144 108 39</item>
+        <item>57 185 129 30</item>
+         <item>172 197 56 104</item>
+        <item>100 215 70 48</item> -
+        <item>85 216 13 29</item>
+        <item>122 264 48 15</item>     
+   </array>  
+      <array name="touch_area_btncenter_710">
+        <item>35 37 178 176</item>
+		<item>78 8 93 28</item>
+        <item>7 82 27 88</item>
+        <item>215 76 26 100</item>
+        <item>78 215 98 26</item>
+   </array> 
+    
+    
+    
+  <array name="touch_area_btntop">
+        <item>50 27 133 55</item>
+        <item>80 15 75 11</item>
+        <item>25 44 66 41</item>
+        <item>183 55 31 24</item> 
+   </array>  
+   <array name="touch_area_btnleft">
+        <item>14 31 65 70</item>
+        <item>66 100 29 71</item>
+        <item>34 106 22 33</item>
+        <item>97 126 41 59</item>
+   </array>  
+   <array name="touch_area_btnright">
+        <item>62 33 63 68</item>
+        <item>4 127 28 63</item>
+        <item>44 104 73 13</item>
+        <item>62 118 32 34</item>
+   </array>  
+      <array name="touch_area_btncenter">
+        <item>19 16 88 90</item>
+        <item>4 35 12 38</item>
+        <item>88 34 12 40</item>  
+   </array>  
+</resources>
