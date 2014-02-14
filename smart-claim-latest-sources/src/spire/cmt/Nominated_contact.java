@@ -54,9 +54,9 @@ public class Nominated_contact extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.your_details);
-		//dialog = new Dialog_details();
-		//dialog_date = new Dialog_date_details();
+		setContentView(R.layout.nominated_contact);
+		dialog = new Dialog_details();
+		dialog_date = new Dialog_date_details();
 		list();
 	}
 
@@ -80,6 +80,9 @@ public class Nominated_contact extends Activity {
 					int position, long id) {
 				pp = position;
 				tit = names_title[position];
+				
+				
+				dialog();
 //				if (position == 2) {
 //					dialog_date();
 //				} else if (position == 4) {
@@ -115,7 +118,7 @@ public class Nominated_contact extends Activity {
 	}
 
 	void writeFileSD() {
-		File path = new File(getFilesDir(), "/Nominated_contact");
+		File path = new File(getFilesDir(), "/Your_details");
 		path.mkdirs();
 		File sdFile = new File(path, "Nominated_contacts.txt");
 		try {
@@ -164,7 +167,7 @@ public class Nominated_contact extends Activity {
 				try {
 					names_info[10] = state[lv.getCheckedItemPosition()];
 					names_title[10] = names[10] + names_info[10];
-					ListView lv2 = (ListView) findViewById(R.id.listView_your_details);
+					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
 					ArrayAdapter<String> adapt = new ArrayAdapter<String>(
 							getApplicationContext(), R.layout.list_item,
 							names_title);
@@ -172,7 +175,7 @@ public class Nominated_contact extends Activity {
 				} catch (Exception e) {
 					names_info[10] = "";
 					names_title[10] = names[10] + names_info[10];
-					ListView lv2 = (ListView) findViewById(R.id.listView_your_details);
+					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
 					ArrayAdapter<String> adapt = new ArrayAdapter<String>(
 							getApplicationContext(), R.layout.list_item,
 							names_title);
@@ -189,7 +192,7 @@ public class Nominated_contact extends Activity {
 					title = names_title[pos];
 					names_info[10] = state[lv.getCheckedItemPosition()];
 					names_title[10] = names[10] + names_info[10];
-					ListView lv2 = (ListView) findViewById(R.id.listView_your_details);
+					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
 					ArrayAdapter<String> adapt = new ArrayAdapter<String>(
 							getApplicationContext(), R.layout.list_item,
 							names_title);
@@ -199,7 +202,7 @@ public class Nominated_contact extends Activity {
 				} catch (Exception e) {
 					names_info[10] = "";
 					names_title[10] = names[10] + names_info[10];
-					ListView lv2 = (ListView) findViewById(R.id.listView_your_details);
+					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
 					ArrayAdapter<String> adapt = new ArrayAdapter<String>(
 							getApplicationContext(), R.layout.list_item,
 							names_title);
