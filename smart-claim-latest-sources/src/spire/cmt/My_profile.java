@@ -46,7 +46,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class My_profile extends Activity {
-	public static String[] mas_prof = { "Your Details", "Your Vehicle" };
+
+	
+	//public static String[] mas_prof = { "Your Details", "Your Vehicle" };
+	// changed by Alex Keis, to include Nominated Contact
+	
+	public static String[] mas_prof = { "Your Details", "Your Vehicle",  "Nominated Conntact"};
 	Button im_del, sendDetails;
 	SharedPreferences sPref;
 	final String SAVED_TEXT = "pin";
