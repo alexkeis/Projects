@@ -45,6 +45,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * @author alex
+ *
+ */
 public class My_profile extends Activity {
 
 	
@@ -126,9 +130,14 @@ public class My_profile extends Activity {
 	}
 
 	// ///////////////////////
+	
 	Your_vehicle info_vechicle = new Your_vehicle();
 	Your_details details = new Your_details();
-
+    /**
+     * alexkeis, 14.02.14
+     */
+    Nominated_contact contact = new Nominated_contact(); 
+	
 	// //////////////////
 
 	@Override
@@ -357,6 +366,7 @@ public class My_profile extends Activity {
 		lv.setDividerHeight(0);
 		lv.setAdapter(adapt);
 		lv.setOnItemClickListener(new OnItemClickListener() {
+
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				if (position == 0) {
@@ -371,6 +381,18 @@ public class My_profile extends Activity {
 							Your_vehicle.class);
 					startActivity(intent1);
 				}
+				/* (non-Javadoc)
+				 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
+				 * alexkeis, 14/02/2014
+				 */
+				if (position == 2) {
+					Intent intent1 = new Intent();
+					intent1.setClass(getApplicationContext(),
+									 Nominated_contact.class);
+					startActivity(intent1);
+				}
+				
+				
 			}
 		});
 	}

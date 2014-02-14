@@ -95,6 +95,9 @@
             android:name="spire.cmt.Your_vehicle"
             android:screenOrientation="portrait" />
         <activity
+            android:name="spire.cmt.Nominated_contact"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="Lodge_claim_your_details"
             android:screenOrientation="portrait" />
         <activity
