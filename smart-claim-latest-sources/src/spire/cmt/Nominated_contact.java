@@ -32,36 +32,45 @@ public class Nominated_contact extends Activity {
 	public static boolean click_state = false;
 	int radio_pos = -1;
 
+	
+    //alexkeis
+	String[] country = new String[] {"Australia"};
 	String[] state = new String[] { "ACT", "NSW", "NT", "QLD", "SA", "TAC",
 			"VIC", "WA" };
-	public static String[] names = { "*First Name: ", "*Last Name: ",
-			"Date of Birth: ", "Driver's License: ", "Expiry Date: ",
-			"*Phone: ", "Email: ", "Street Adress: ", "Suburb: ", "Postcode: ",
-			"State: " };
-	public static String[] names_info = { "", "", "", "", "", "", "", "", "",
-			"", "" };
-	public static String[] names_title = { "*First Name: " + names_info[0],
-			"*Last Name: " + names_info[1], "Date of Birth: " + names_info[2],
-			"Driver's License: " + names_info[3],
-			"Expiry Date: " + names_info[4], "*Phone: " + names_info[5],
-			"Email: " + names_info[6], "Street Adress: " + names_info[7],
-			"Suburb: " + names_info[8], "Postcode: " + names_info[9],
-			"State: " + names_info[10] };
+	
+	
+	public static String[] names = { "*Country: ", "State: ",
+			"City: ", "Contact Type: ", "Name: ",
+			"Business Name (If applicable): ", "Mobile phone number:", "Email: " };
+	
+	public static String[] names_info = { "Australia", "", "", "", "", "", "", ""};
+	
+	public static String[] names_title = { "*Country: " + names_info[0],
+			"State: " + names_info[1], "City: " + names_info[2],
+			"Contact Type: " + names_info[3],
+			"Name: " + names_info[4], "Business Name (If applicable): " + names_info[5],
+			"Mobile phone number: " + names_info[6], "Email: " + names_info[7]};
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.your_details);
-		dialog = new Dialog_details();
-		dialog_date = new Dialog_date_details();
+		//dialog = new Dialog_details();
+		//dialog_date = new Dialog_date_details();
 		list();
 	}
 
+	
+	
+	
+	
+	
+	
 	public void list() {
-		ListView lv = (ListView) findViewById(R.id.listView_your_details);
+		ListView lv = (ListView) findViewById(R.id.listView_nominated_contact);
 		ArrayAdapter<String> adapt = new ArrayAdapter<String>(this,
 				R.layout.list_item, names_title);
-		View footer = getLayoutInflater().inflate(R.layout.footer_your_details,
+		View footer = getLayoutInflater().inflate(R.layout.footer_nominated_contact,
 				null);
 		lv.addFooterView(footer);
 		lv.setDividerHeight(0);
@@ -71,25 +80,25 @@ public class Nominated_contact extends Activity {
 					int position, long id) {
 				pp = position;
 				tit = names_title[position];
-				if (position == 2) {
-					dialog_date();
-				} else if (position == 4) {
-					dialog_date();
-				} else if (position == 10) {
-					for (int i = 0; i < state.length - 1; i++) {
-						if (state[i].equals(names_info[10])) {
-							radio_pos = i;
-						}
-					}
-					showDialog(1);
-				} else {
-					dialog();
-				}
+//				if (position == 2) {
+//					dialog_date();
+//				} else if (position == 4) {
+//					dialog_date();
+//				} else if (position == 10) {
+//					for (int i = 0; i < state.length - 1; i++) {
+//						if (state[i].equals(names_info[10])) {
+//							radio_pos = i;
+//						}
+//					}
+//					showDialog(1);
+//				} else {
+//					dialog();
+//				}
 			}
 		});
 	}
 
-	public void ok_footer_your_details(View view) {
+	public void ok_footer_nominated_contact(View view) {
 		chek();
 	}
 
@@ -99,25 +108,16 @@ public class Nominated_contact extends Activity {
 					"Please enter a valid *First name:", Toast.LENGTH_SHORT);
 			toast.show();
 		}
-		if (names_info[1].length() < 1) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Please enter a valid *Last name:", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-		if (names_info[5].length() < 2) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Please enter a valid *Phone:", Toast.LENGTH_SHORT);
-			toast.show();
-		} else {
+		{
 			writeFileSD();
 			finish();
 		}
 	}
 
 	void writeFileSD() {
-		File path = new File(getFilesDir(), "/Your_details");
+		File path = new File(getFilesDir(), "/Nominated_contact");
 		path.mkdirs();
-		File sdFile = new File(path, "My_profile_details.txt");
+		File sdFile = new File(path, "Nominated_contacts.txt");
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
 			int i = 0;
