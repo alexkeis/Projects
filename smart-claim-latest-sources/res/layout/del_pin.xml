@@ -9,7 +9,7 @@
             android:id="@+id/textView1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="No-one will be reqbired to enter a PIN to use this Application; your data will be available to anybody that can access the handset."
+            android:text="No-one will be required to enter a PIN to use this Application; your data will be available to anybody that can access the handset."
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <!-- <ImageButton

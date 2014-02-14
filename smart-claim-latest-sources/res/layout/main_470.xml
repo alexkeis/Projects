@@ -24,7 +24,8 @@
                 android:layout_centerHorizontal="true"
                 android:background="#fa2255"
                 android:scaleType="fitXY"
-                android:src="@drawable/header_600x153" />
+				                android:src="@drawable/header_600x153" />                             
+
         !!!!!!!!!!!!!!!!!!!!!!!!!!! 
         </RelativeLayout>
 

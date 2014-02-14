@@ -121,6 +121,15 @@ public class Call_me_back extends Activity implements OnClickListener {
 		View footer2 = getLayoutInflater().inflate(
 				R.layout.footer_existing_client, null);
 		lv2.addFooterView(footer2);
+		
+//		New code added 2/13/2014 by alexkeis  -----------------------------------
+		
+		View footer3 = getLayoutInflater().inflate(
+				R.layout.gap, null);
+		lv2.addFooterView(footer3);
+//	-----------------------------------------------------------------------------	
+		
+		
 		lv2.setAdapter(adapt2);
 
 		dialog = new Dialog_new_client();
@@ -195,7 +204,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 	}
 
-	public void forgout_id(View view) {
+	public void forgot_id(View view) {
 
 		id = 0;
 		tabs.setCurrentTab(id);
