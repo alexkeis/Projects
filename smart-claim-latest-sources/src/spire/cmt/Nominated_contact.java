@@ -22,13 +22,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class Nominated_contact extends Activity {
-	DialogFragment dialog;
+	DialogFragment dialog_nc;
 	DialogFragment dialog_date;
-	String tit;
+	String tit_nc;
 
-	public static int pos;
-	int pp;
-	public static String title = "Title";
+	public static int pos_nc;
+	int pp_nc;
+	public static String title_nc = "Title";
 	public static boolean click_state = false;
 	int radio_pos = -1;
 
@@ -55,7 +55,7 @@ public class Nominated_contact extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.nominated_contact);
-		dialog = new Dialog_details();
+		dialog_nc = new Dialog_nc();
 		dialog_date = new Dialog_date_details();
 		list();
 	}
@@ -78,8 +78,8 @@ public class Nominated_contact extends Activity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				pp = position;
-				tit = names_title[position];
+				pp_nc = position;
+				tit_nc = names_title[position];
 				
 				
 				dialog();
@@ -188,8 +188,8 @@ public class Nominated_contact extends Activity {
 			else if (which == Dialog.BUTTON_NEGATIVE) {
 				try {
 
-					pp = 9;
-					title = names_title[pos];
+					pp_nc = 9;
+					title_nc = names_title[pos_nc];
 					names_info[10] = state[lv.getCheckedItemPosition()];
 					names_title[10] = names[10] + names_info[10];
 					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
@@ -214,14 +214,14 @@ public class Nominated_contact extends Activity {
 	};
 
 	public void dialog() {
-		pos = pp;
-		title = tit;
-		dialog.show(getFragmentManager(), "");
+		pos_nc = pp_nc;
+		title_nc = tit_nc;
+		dialog_nc.show(getFragmentManager(), "");
 	}
 
 	public void dialog_date() {
-		pos = pp;
-		title = tit;
+		pos_nc = pp_nc;
+		title_nc = tit_nc;
 		dialog_date.show(getFragmentManager(), "");
 	}
 
