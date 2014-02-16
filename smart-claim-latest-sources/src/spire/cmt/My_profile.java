@@ -55,7 +55,9 @@ public class My_profile extends Activity {
 	//public static String[] mas_prof = { "Your Details", "Your Vehicle" };
 	// changed by Alex Keis, to include Nominated Contact
 	
-	public static String[] mas_prof = { "Your Details", "Your Vehicle",  "Nominated Conntact"};
+	public static String[] mas_prof = { "Your Details", "Your Vehicle",  "Nominated Contact"};
+	//public static String[] mas_prof = { "Nominated Conntact"};
+	
 	Button im_del, sendDetails;
 	SharedPreferences sPref;
 	final String SAVED_TEXT = "pin";
@@ -92,6 +94,7 @@ public class My_profile extends Activity {
 		list();
 		readFile_info();
 		readFile_info2();
+		readFile_info3();
 	}
 
 	public void showDetails(View view) {
@@ -436,6 +439,31 @@ public class My_profile extends Activity {
 			{
 				yv.names_info[qw] = str;
 				yv.names_title[qw] = yv.names[qw] + yv.names_info[qw];
+				qw++;
+
+			}
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	void readFile_info3() {
+		String str = "";
+		File path = new File(getFilesDir(), "/Your_details");
+		File sdFile = new File(path, "Nominated_contact.txt");
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(sdFile));
+			int qw = 0;
+			Nominated_contact contact = new Nominated_contact();
+			while ((str = br.readLine()) != null)
+
+			{
+				contact.names_info[qw] = str;
+				contact.names_title[qw] = contact.names[qw] + contact.names_info[qw];
 				qw++;
 
 			}
