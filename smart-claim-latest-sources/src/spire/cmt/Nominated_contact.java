@@ -177,8 +177,8 @@ public class Nominated_contact extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Contact type:");
 			builder.setSingleChoiceItems(contact_type, radio_pos, myClickListener);
-			builder.setPositiveButton("Next", myClickListener);
-			builder.setNegativeButton("Prev", myClickListener);
+			//builder.setPositiveButton("Next", myClickListener);
+			//builder.setNegativeButton("Prev", myClickListener);
 			builder.setNeutralButton("Done", myClickListener);
 			// builder.setCancelable(false);
 			return builder.create();
@@ -268,7 +268,7 @@ public class Nominated_contact extends Activity {
 		// TODO Auto-generated method stub
 
 		if (click_contact_type == true) {
-			for (int i = 0; i < state.length - 1; i++) {
+			for (int i = 0; i < contact_type.length - 1; i++) {
 				if (contact_type[i].equals(names_info[3])) {
 					radio_pos = i;
 				}

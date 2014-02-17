@@ -35,15 +35,15 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 			Bundle savedInstanceState) {
 
 		getDialog().setTitle(your_nc.names[your_nc.pos_nc + i]);
-		View v = inflater.inflate(R.layout.dialog_vehicle, null);
-		yyy = (Button) v.findViewById(R.id.btnYes_d2);
-		v.findViewById(R.id.btnYes_d2).setOnClickListener(this);
-		v.findViewById(R.id.btnNo_d2).setOnClickListener(this);
+		View v = inflater.inflate(R.layout.dialog_nc, null);
+//		yyy = (Button) v.findViewById(R.id.btnYes_d2);
+//		v.findViewById(R.id.btnYes_d2).setOnClickListener(this);
+//		v.findViewById(R.id.btnNo_d2).setOnClickListener(this);
 		v.findViewById(R.id.buttonYes_d2).setOnClickListener(this);
-		if (your_nc.pos_nc + i == 0) {
-			v.findViewById(R.id.btnYes_d2).setEnabled(false);
-
-		}
+//		if (your_nc.pos_nc + i == 0) {
+//			v.findViewById(R.id.btnYes_d2).setEnabled(false);
+//
+//		}
 		edit_driver = (EditText) v.findViewById(R.id.editText_drivers2);
 		edit_driver.setText(your_nc.names_info[your_nc.pos_nc + i]);
 		if (your_nc.pos_nc + i == 5 || your_nc.pos_nc + i == 4) {
@@ -77,8 +77,14 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 	public void prev() {
 
 		i--;
-
-		ds.show(getFragmentManager(), "sad");
+		//click = 1;
+		
+		if (your_nc.pos_nc == 4) {
+			click = 0;
+			Nominated_contact.click_contact_type = true;
+			onDismiss(getDialog());
+		} else
+			ds.show(getFragmentManager(), "sad");;
 	}
 
 	public void add_list() {

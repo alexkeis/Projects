@@ -47,7 +47,7 @@ public class Requests {
 	private Handler handler;
 
 	private Requests() {
-
+ 
 	}
 
 	public static Requests getInstance() {
