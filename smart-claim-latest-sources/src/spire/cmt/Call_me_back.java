@@ -298,14 +298,19 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 	void send_email(){
 		
-		String email = ""; // = my_files.get_email_from_nc();
+		String email = "alex.v.keis@gmail.com"; // = my_files.get_email_from_nc();
 		Intent i = new Intent(Intent.ACTION_SEND);
 		
 		
 		i.setType("message/rfc822");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
-		i.putExtra(Intent.EXTRA_SUBJECT, "X has been in a car accident");
-		i.putExtra(Intent.EXTRA_TEXT   , "Testing");
+		i.putExtra(Intent.EXTRA_SUBJECT, "X has been in a car accident\n");
+		i.putExtra(Intent.EXTRA_TEXT   , "Name has been in a car accident. You’ve been chosen as their nominated contact in the event of a car crash. \n" +
+ 
+"Their current location is _________, and they can be contacted on Phone Number. \n\n\n"+
+ 
+"If you have any questions, please contact CMT on 1300 887 712. ");
+		
 		try {
 		    startActivity(Intent.createChooser(i, "Send mail..."));
 		} catch (android.content.ActivityNotFoundException ex) {
