@@ -43,8 +43,8 @@ public class Nominated_contact extends Activity {
 	
 	
 	public static String[] names = { "*Country: ", "State: ",
-			"City: ", "Contact Type: ", "Name: ",
-			"Business Name\n (If applicable): ", "Mobile phone number:", "Email: " };
+			"City: ", "Contact Type: ", "*Name: ",
+			"Business Name\n (If applicable): ", "*Mobile phone number:", "Email: " };
 	
 	public static String[] names_info = { "", "", "", "", "", "", "", ""};
 	
@@ -146,11 +146,17 @@ public class Nominated_contact extends Activity {
 	}
 
 	public void chek() {
-		// if (names_info[0].length() < 1) {
-		//	Toast toast = Toast.makeText(getApplicationContext(),
-		//			"Please enter a valid *First name:", Toast.LENGTH_SHORT);
-		//	toast.show();
-		//}
+		if (names_info[3].length() < 1) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Please enter a valid contact *name:", Toast.LENGTH_SHORT);
+			toast.show();
+		}
+		if (names_info[5].length() < 1) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Please enter a valid contact *mobile phone name:", Toast.LENGTH_SHORT);
+			toast.show();
+		}
+		else
 		{
 			writeFileSD();
 			finish();

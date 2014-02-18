@@ -13,7 +13,8 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:onClick="ok_gap" >
 
             <spire.cmt.RoundButton
                 android:id="@+id/button_center"
@@ -22,7 +23,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:background="@drawable/gapglobe_d"
-                toucharea:toucharea="@array/touch_area_btncenter_470" />
+                toucharea:toucharea="@array/touch_area_btncenter_470"
+                android:onClick="ok_gap"
+                 />
         </RelativeLayout>
 
         <RelativeLayout

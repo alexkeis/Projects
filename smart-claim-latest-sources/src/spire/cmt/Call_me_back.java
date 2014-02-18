@@ -26,12 +26,11 @@ import org.json.JSONStringer;
 import org.json.simple.JSONValue;
 
 import spire.cmt.R;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -49,6 +48,14 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+/**
+ * @author alex
+ *
+ */
+/**
+ * @author alex
+ *
+ */
 public class Call_me_back extends Activity implements OnClickListener {
 	public static int id = 0;
 	int id_req;
@@ -86,6 +93,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 	public static String[] details = { "", "", "", "", "", "", "", "", "", "",
 			"", "" };
 	private ProgressDialog progressDialog;
+	private Application_files_explorer my_files = new Application_files_explorer();
 	
 	
 	@Override
@@ -242,7 +250,76 @@ public class Call_me_back extends Activity implements OnClickListener {
 		}
 
 	}
+	
+	public void ok_gap(View view) {
+		
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    builder.setTitle("");
+	    builder.setMessage("We’ve detected that you’ve been in a car accident. Would you like a notification sent to your nominated contact?");
 
+	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+	        public void onClick(DialogInterface dialog, int which) {
+	        	                Toast.makeText(getApplicationContext(), "Email Send.", Toast.LENGTH_SHORT).show();
+	        		        	dialog.dismiss();
+	        		        	send_email();
+	        }
+
+	    });
+
+	    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	            // Do nothing
+	            dialog.dismiss();
+	            Toast.makeText(getApplicationContext(), "Email Canceled.", Toast.LENGTH_SHORT).show();
+	        }
+	    });
+	    
+	    AlertDialog alert = builder.create();
+	    alert.show();
+
+		
+		if (names_info2[0].equals("")) {
+			Toast.makeText(
+					getApplicationContext(),
+					"ClientId is required field. Please use \"New Client\" if you do not know your ClientId",
+					Toast.LENGTH_LONG).show();
+			id = 0;
+			tabs.setCurrentTab(id);
+		} else {
+
+		}
+
+	}
+	
+
+	void send_email(){
+		
+		String email = ""; // = my_files.get_email_from_nc();
+		Intent i = new Intent(Intent.ACTION_SEND);
+		
+		
+		i.setType("message/rfc822");
+		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
+		i.putExtra(Intent.EXTRA_SUBJECT, "X has been in a car accident");
+		i.putExtra(Intent.EXTRA_TEXT   , "Testing");
+		try {
+		    startActivity(Intent.createChooser(i, "Send mail..."));
+		} catch (android.content.ActivityNotFoundException ex) {
+		    Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	void readFile_info2() {
 		String str = "";
 		File path = new File(getFilesDir(), "/Your_details");
@@ -449,6 +526,11 @@ public class Call_me_back extends Activity implements OnClickListener {
 		}
 
 	}
+	
+	//alexkeis read the nominated contact stuff
+	void readFile_info3() {
+
+	}
 
 	class MyTask2 extends AsyncTask<Void, Void, Integer> {
 
@@ -557,5 +639,9 @@ public class Call_me_back extends Activity implements OnClickListener {
 		SavePreferences("ID", names_info2[0]);
 		super.onPause();
 	}
+	
+	
 
 }
+
+

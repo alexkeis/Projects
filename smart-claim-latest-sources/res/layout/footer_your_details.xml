@@ -3,34 +3,37 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-<!--     <Button
+    <!--
+         <Button
         
         android:onClick="ok_footer_your_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Ok"
-         /> -->
-                         <Button        
-    android:layout_weight="1"
+         />
+    -->
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_gravity="center_horizontal"
-        android:visibility="invisible"
-       />
-         
-                <Button        
-                    android:layout_weight="1"
-        android:onClick="ok_footer_your_details"
+        android:layout_weight="1"
+        android:visibility="invisible" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_gravity="center_horizontal"
-        android:text="Done"/>
-                                <Button        
-android:layout_weight="1"
+        android:layout_weight="1"
+        android:onClick="ok_footer_your_details"
+        android:text="Done" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_gravity="center_horizontal"
-        android:visibility="invisible"
-/>
+        android:layout_weight="1"
+        android:visibility="invisible" />
+
 </LinearLayout>

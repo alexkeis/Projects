@@ -247,8 +247,9 @@ public class My_profile extends Activity {
 					//StringWriter out2 = new StringWriter();					
 					// JSONValue.writeJSONString(obj, out2);
 					
+				    JSONObject json1 =  new JSONObject(obj);
 					JSONObject json =  new JSONObject(in_obj);
-					JSONObject json1 =  new JSONObject(obj);
+					
 					//String jsonText = out2.toString();
 					String jsonText = json.toString(); 
 					String jsonText1 = json1.toString();

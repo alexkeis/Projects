@@ -5,4 +5,5 @@
      <item android:state_focused="true"
            android:drawable="@drawable/gapglobe_down" /> <!-- focused -->
      <item android:drawable="@drawable/gapglobe_up" /> <!-- default -->
+        
  </selector>

@@ -3,7 +3,6 @@ package spire.cmt;
 import java.io.File;
 
 import spire.cmt.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -106,6 +105,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		Log.d("Proverka", "kto perviyyyyyyyyyyyyyy: ");
 		imageView_header1 = (ImageView) findViewById(R.id.imageView_header1);
+		
+		
+		//alexkeis, ask whether a user wants to nominated a contact
+		check_nominated_contact();
+		
+		
 		btn_center = (Button) findViewById(R.id.button_center);
 		btn_center.setOnClickListener(this);
 		btn_right = (Button) findViewById(R.id.button_right);
@@ -142,6 +147,40 @@ public class MainActivity extends Activity implements OnClickListener {
 		path.mkdirs();
 
 	}
+	
+	public void check_nominated_contact(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+	    builder.setTitle("Nominate accident contact");
+	    builder.setMessage("Would you like someone to contact you if you have an accident?");
+
+	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+	        public void onClick(DialogInterface dialog, int which) {
+	        	Nominated_contact contact = new Nominated_contact(); 
+	        	
+	        	dialog.dismiss();
+				Intent intent1 = new Intent();
+				intent1.setClass(getApplicationContext(),
+								 Nominated_contact.class);
+				startActivity(intent1);
+	        }
+
+	    });
+
+	    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	            // Do nothing
+	            dialog.dismiss();
+	        }
+	    });
+
+	    AlertDialog alert = builder.create();
+	    alert.show();
+	}
+	
 
 	public void cmt_insurance(View view) {
 		Web web = new Web();
