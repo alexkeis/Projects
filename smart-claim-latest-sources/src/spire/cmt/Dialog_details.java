@@ -36,15 +36,20 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 			Bundle savedInstanceState) {
 
 		getDialog().setTitle(yd.names[yd.pos + i]);
-		View v = inflater.inflate(R.layout.dialog_driver, null);
-		yyy = (Button) v.findViewById(R.id.btnYes_d);
-		v.findViewById(R.id.btnYes_d).setOnClickListener(this);
-		v.findViewById(R.id.btnNo_d).setOnClickListener(this);
-		v.findViewById(R.id.btnYes_ok).setOnClickListener(this);
-		if (yd.pos + i == 0) {
-			v.findViewById(R.id.btnYes_d).setEnabled(false);
+	
+		// alexkeis, removed the next and prior button
+//		View v = inflater.inflate(R.layout.dialog_driver, null);
+		
+		View v = inflater.inflate(R.layout.dialog_driver_simple, null);
 
-		}
+		//		yyy = (Button) v.findViewById(R.id.btnYes_d);
+		//v.findViewById(R.id.btnYes_d).setOnClickListener(this);
+		//v.findViewById(R.id.btnNo_d).setOnClickListener(this);
+		v.findViewById(R.id.btnYes_ok).setOnClickListener(this);
+//		if (yd.pos + i == 0) {
+//			v.findViewById(R.id.btnYes_d).setEnabled(false);
+//
+//		}
 		edit_driver = (EditText) v.findViewById(R.id.editText_drivers);
 		edit_driver.setText(yd.names_info[yd.pos + i]);
 		if (yd.pos + i == 0 || yd.pos + i == 1) {
@@ -88,16 +93,16 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btnYes_d: {
-
-			click = 1;
-		}
-			break;
-		case R.id.btnNo_d: {
-			add_list();
-			click = 2;
-		}
-			break;
+//		case R.id.btnYes_d: {
+//
+//			click = 1;
+//		}
+//			break;
+//		case R.id.btnNo_d: {
+//			add_list();
+//			click = 2;
+//		}
+//			break;
 		case R.id.btnYes_ok: {
 			yd.names_info[yd.pos + i] = edit_driver.getText().toString();
 			yd.names_title[yd.pos + i] = yd.names[yd.pos + i]

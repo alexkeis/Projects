@@ -44,7 +44,7 @@ public class Nominated_contact extends Activity {
 	
 	public static String[] names = { "*Country: ", "State: ",
 			"City: ", "Contact Type: ", "Name: ",
-			"Business Name (If applicable): ", "Mobile phone number:", "Email: " };
+			"Business Name\n (If applicable): ", "Mobile phone number:", "Email: " };
 	
 	public static String[] names_info = { "", "", "", "", "", "", "", ""};
 	
@@ -93,7 +93,16 @@ public class Nominated_contact extends Activity {
 						toast.show();
 					
 				}
-				if(position == 3){
+				else if(position == 1){
+					for (int i = 0; i < state.length - 1; i++) {
+						if (state[i].equals(names_info[1])) {
+							radio_pos = i;
+						}
+					}
+					showDialog(2);
+				}
+
+				else if(position == 3){
 					for (int i = 0; i < contact_type.length - 1; i++) {
 						if (contact_type[i].equals(names_info[4])) {
 							radio_pos = i;
@@ -101,14 +110,14 @@ public class Nominated_contact extends Activity {
 					}
 					showDialog(1);
 				}
-				else if (position == 10) {
+//				else if (position == 10) {
 //					for (int i = 0; i < state.length - 1; i++) {
 //						if (state[i].equals(names_info[10])) {
 //							radio_pos = i;
 //						}
 //					}
 //					showDialog(1);
-				}
+//				}
 				
 				else
 				{
@@ -172,11 +181,21 @@ public class Nominated_contact extends Activity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
 		switch (id) {
 		case 1:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			
 			builder.setTitle("Contact type:");
 			builder.setSingleChoiceItems(contact_type, radio_pos, myClickListener);
+			//builder.setPositiveButton("Next", myClickListener);
+			//builder.setNegativeButton("Prev", myClickListener);
+			builder.setNeutralButton("Done", myClickListener);
+			// builder.setCancelable(false);
+			return builder.create();
+		case 2:
+			builder.setTitle("State:");
+			builder.setSingleChoiceItems(state, radio_pos, myClickListener);
 			//builder.setPositiveButton("Next", myClickListener);
 			//builder.setNegativeButton("Prev", myClickListener);
 			builder.setNeutralButton("Done", myClickListener);
@@ -196,8 +215,15 @@ public class Nominated_contact extends Activity {
 			if (which == Dialog.BUTTON_POSITIVE
 					|| which == Dialog.BUTTON_NEUTRAL) {
 				try {
-					names_info[3] = contact_type[lv.getCheckedItemPosition()];
-					names_title[3] = names[3] + names_info[3];
+					if(pp_nc == 1){
+						names_info[1] = state[lv.getCheckedItemPosition()];
+						names_title[1] = names[1] + names_info[1];
+					}
+					else 
+					{
+						names_info[3] = contact_type[lv.getCheckedItemPosition()];
+						names_title[3] = names[3] + names_info[3];
+					}
 					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
 					ArrayAdapter<String> adapt = new ArrayAdapter<String>(
 							getApplicationContext(), R.layout.list_item,
@@ -255,6 +281,12 @@ public class Nominated_contact extends Activity {
 		title_nc = tit_nc;
 		dialog_date.show(getFragmentManager(), "");
 	}
+	
+	public void dialog_dropdown(){
+		pos_nc = pp_nc;
+		title_nc = tit_nc;
+		dialog_dropdown.show(getFragmentManager(), "");
+	}
 
 	@Override
 	protected void onStop() {
@@ -275,6 +307,16 @@ public class Nominated_contact extends Activity {
 			}
 			showDialog(1);
 			click_contact_type = false;
+		}
+		
+		if (click_state == true) {
+			for (int i = 0; i < state.length - 1; i++) {
+				if (state[i].equals(names_info[1])) {
+					radio_pos = i;
+				}
+			}
+			showDialog(2);
+			click_state = false;
 		}
 		super.onResume();
 

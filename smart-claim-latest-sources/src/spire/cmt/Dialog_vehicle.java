@@ -37,15 +37,15 @@ public class Dialog_vehicle extends DialogFragment implements OnClickListener {
 
 	  getDialog().setTitle(your_v.names[your_v.pos2+i]);
 	 View v = inflater.inflate(R.layout.dialog_vehicle, null);
-	 yyy=(Button)v.findViewById(R.id.btnYes_d2);
-    v.findViewById(R.id.btnYes_d2).setOnClickListener(this);
-    v.findViewById(R.id.btnNo_d2).setOnClickListener(this);
+	 //yyy=(Button)v.findViewById(R.id.btnYes_d2);
+    //v.findViewById(R.id.btnYes_d2).setOnClickListener(this);
+    //v.findViewById(R.id.btnNo_d2).setOnClickListener(this);
     v.findViewById(R.id.buttonYes_d2).setOnClickListener(this);
-	  if(your_v.pos2 + i == 0)
-	  {
-		 v.findViewById(R.id.btnYes_d2).setEnabled(false);
+	 // if(your_v.pos2 + i == 0)
+	  //{
+		// v.findViewById(R.id.btnYes_d2).setEnabled(false);
 		  
-	  }
+	  //}
     edit_driver=(EditText)v.findViewById(R.id.editText_drivers2);
     edit_driver.setText(your_v.names_info[your_v.pos2+i]);
     if(your_v.pos2 + i == 2)
@@ -79,17 +79,17 @@ public void add_list()
   public void onClick(View v) {
     
 	  switch (v.getId()) {
-	case R.id.btnYes_d2:
-	{
-			click=1;			
-	}
-		break;
-	case R.id.btnNo_d2:
-	{	
-		add_list();
-		click=2;
-	}
-		break;
+//	case R.id.btnYes_d2:
+//	{
+//			click=1;			
+//	}
+//		break;
+//	case R.id.btnNo_d2:
+//	{	
+//		add_list();
+//		click=2;
+//	}
+//		break;
 	case R.id.buttonYes_d2:
 	{		
 		your_v.names_info[your_v.pos2 + i]=edit_driver.getText().toString();

@@ -55,16 +55,16 @@ public class Dialog_date_details extends DialogFragment implements
 		// Toast.makeText(getActivity(), String.valueOf(ood.pos+i),
 		// Toast.LENGTH_SHORT).show();
 		getDialog().setTitle(pol);
-		View v = inflater.inflate(R.layout.dialog_date_drivers, null);
-		v.findViewById(R.id.btnYes_date).setOnClickListener(this);
-		v.findViewById(R.id.btnNo_date).setOnClickListener(this);
+		View v = inflater.inflate(R.layout.dialog_date_drivers_simple, null);
+		//v.findViewById(R.id.btnYes_date).setOnClickListener(this);
+		//v.findViewById(R.id.btnNo_date).setOnClickListener(this);
 		v.findViewById(R.id.btnOk_date).setOnClickListener(this);
 		v.findViewById(R.id.btnClear_date).setOnClickListener(this);
 		dpResult = (DatePicker) v.findViewById(R.id.datePicker_date);
-		btn_dialog_yes = (Button) v.findViewById(R.id.btnYes_date);
-		btn_dialog_yes.setOnClickListener(this);
-		btn_dialog_no = (Button) v.findViewById(R.id.btnNo_date);
-		btn_dialog_no.setOnClickListener(this);
+		//btn_dialog_yes = (Button) v.findViewById(R.id.btnYes_date);
+		//btn_dialog_yes.setOnClickListener(this);
+		//btn_dialog_no = (Button) v.findViewById(R.id.btnNo_date);
+		//btn_dialog_no.setOnClickListener(this);
 		btn_dialog_ok = (Button) v.findViewById(R.id.btnOk_date);
 		btn_dialog_ok.setOnClickListener(this);
 		txt = (TextView) v.findViewById(R.id.proba123);
@@ -89,18 +89,18 @@ public class Dialog_date_details extends DialogFragment implements
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btnYes_date:
-			rez = 1;
-			add_list();
-			dismiss();
-			break;
-		case R.id.btnNo_date: {
-			add_list();
-			rez = 2;
-			dismiss();
-
-		}
-			break;
+//		case R.id.btnYes_date:
+//			rez = 1;
+//			add_list();
+//			dismiss();
+//			break;
+//		case R.id.btnNo_date: {
+//			add_list();
+//			rez = 2;
+//			dismiss();
+//
+//		}
+//			break;
 		case R.id.btnClear_date: {
 
 			ood.names_info[ood.pos + i] =" ";

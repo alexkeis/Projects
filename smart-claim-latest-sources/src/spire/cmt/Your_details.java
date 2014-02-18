@@ -143,8 +143,8 @@ public class Your_details extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Select state:");
 			builder.setSingleChoiceItems(state, radio_pos, myClickListener);
-			builder.setPositiveButton("Next", myClickListener);
-			builder.setNegativeButton("Prev", myClickListener);
+			//builder.setPositiveButton("Next", myClickListener);
+			//builder.setNegativeButton("Prev", myClickListener);
 			builder.setNeutralButton("Done", myClickListener);
 			// builder.setCancelable(false);
 			return builder.create();

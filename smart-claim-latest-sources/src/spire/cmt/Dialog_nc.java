@@ -100,15 +100,15 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btnYes_d2: {
-			click = 1;
-		}
-			break;
-		case R.id.btnNo_d2: {
-			add_list();
-			click = 2;
-		}
-			break;
+//		case R.id.btnYes_d2: {
+//			click = 1;
+//		}
+//			break;
+//		case R.id.btnNo_d2: {
+//			add_list();
+//			click = 2;
+//		}
+	//		break;
 		case R.id.buttonYes_d2: {
 			your_nc.names_info[your_nc.pos_nc + i] = edit_driver.getText()
 					.toString();
