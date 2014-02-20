@@ -306,7 +306,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
-		i.putExtra(Intent.EXTRA_SUBJECT, "X has been in a car accident\n");
+		i.putExtra(Intent.EXTRA_SUBJECT, profile_name+" has been in a car accident\n");
 		i.putExtra(Intent.EXTRA_TEXT   , profile_name+" has been in a car accident. You’ve been chosen as their nominated contact in the event of a car crash. \n" +
  
 "Their current location is _________, and they can be contacted on "+profile_phone+ "\n\n\n"+
@@ -319,11 +319,6 @@ public class Call_me_back extends Activity implements OnClickListener {
 		    Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
-	
-	
-	
-	
 	
 	
 	

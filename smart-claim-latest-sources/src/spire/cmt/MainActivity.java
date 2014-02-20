@@ -1,6 +1,10 @@
 package spire.cmt;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import spire.cmt.R;
 import android.app.Activity;
@@ -53,6 +57,32 @@ public class MainActivity extends Activity implements OnClickListener {
 	DisplayMetrics metricsB = new DisplayMetrics();
 	Context context;
 
+	void readFile_info3() {
+		String str = "";
+		File path = new File(getFilesDir(), "/Your_details");
+		File sdFile = new File(path, "Nominated_contact.txt");
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(sdFile));
+			int qw = 0;
+			Nominated_contact contact = new Nominated_contact();
+			while ((str = br.readLine()) != null)
+
+			{
+				contact.names_info[qw] = str;
+				contact.names_title[qw] = contact.names[qw] + contact.names_info[qw];
+				qw++;
+
+			}
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 	private void SavePreferences(String key, String value) {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_DATA",
@@ -107,8 +137,27 @@ public class MainActivity extends Activity implements OnClickListener {
 		imageView_header1 = (ImageView) findViewById(R.id.imageView_header1);
 		
 		
-		//alexkeis, ask whether a user wants to nominated a contact
-		check_nominated_contact();
+		
+		
+		Application_files_explorer app_files = new Application_files_explorer();
+		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
+		String nc_email_string = app_files.get_nc_email();
+		
+		if(nc_email_string != null && !(app_files.get_nc_email().equals(""))){
+			SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
+					MODE_PRIVATE);
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putString("NC_EMAIL", "yes");
+			editor.commit();
+		}
+		
+		//alexkeis, only prompt for nominated contact if contact email is not set
+		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT", MODE_PRIVATE);
+		String strSavedMem1 = sharedPreferences.getString("NC_EMAIL", "");
+		if (strSavedMem1 == null || strSavedMem1.equals("")) { 
+			//alexkeis, ask whether a user wants to nominated a contact
+			check_nominated_contact();
+		}
 		
 		
 		btn_center = (Button) findViewById(R.id.button_center);
@@ -162,7 +211,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
 	        public void onClick(DialogInterface dialog, int which) {
-	        	Nominated_contact contact = new Nominated_contact(); 
+	        	readFile_info3();
 	        	
 	        	dialog.dismiss();
 				Intent intent1 = new Intent();
