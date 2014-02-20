@@ -93,7 +93,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 	public static String[] details = { "", "", "", "", "", "", "", "", "", "",
 			"", "" };
 	private ProgressDialog progressDialog;
-	private Application_files_explorer my_files = new Application_files_explorer();
+	private Application_files_explorer app_files = new Application_files_explorer();
 	
 	
 	@Override
@@ -256,14 +256,14 @@ public class Call_me_back extends Activity implements OnClickListener {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	    builder.setTitle("");
-	    builder.setMessage("We’ve detected that you’ve been in a car accident. Would you like a notification sent to your nominated contact?");
+	    builder.setMessage("We’ve detected that you’ve been in a car accident. Would you like a notification sent to your Nominated Contact?");
 
 	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
 	        public void onClick(DialogInterface dialog, int which) {
-	        	                Toast.makeText(getApplicationContext(), "Email Send.", Toast.LENGTH_SHORT).show();
-	        		        	dialog.dismiss();
-	        		        	send_email();
+	        	                send_email();
+	        					Toast.makeText(getApplicationContext(), "Email Send.", Toast.LENGTH_SHORT).show();
+	        		        	dialog.dismiss();  		        	
 	        }
 
 	    });
@@ -298,16 +298,18 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 	void send_email(){
 		
-		String email = "alex.v.keis@gmail.com"; // = my_files.get_email_from_nc();
+		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
+		String email = app_files.get_nc_email(); 
+		String profile_name = app_files.get_profile_name();
+		String profile_phone = app_files.get_profile_phone();
+		
 		Intent i = new Intent(Intent.ACTION_SEND);
-		
-		
 		i.setType("message/rfc822");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
 		i.putExtra(Intent.EXTRA_SUBJECT, "X has been in a car accident\n");
-		i.putExtra(Intent.EXTRA_TEXT   , "Name has been in a car accident. You’ve been chosen as their nominated contact in the event of a car crash. \n" +
+		i.putExtra(Intent.EXTRA_TEXT   , profile_name+" has been in a car accident. You’ve been chosen as their nominated contact in the event of a car crash. \n" +
  
-"Their current location is _________, and they can be contacted on Phone Number. \n\n\n"+
+"Their current location is _________, and they can be contacted on "+profile_phone+ "\n\n\n"+
  
 "If you have any questions, please contact CMT on 1300 887 712. ");
 		

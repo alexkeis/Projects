@@ -149,6 +149,11 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 	
 	public void check_nominated_contact(){
+		
+//		Application_files_explorer app_files = new Application_files_explorer();
+//		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
+	
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 	    builder.setTitle("Nominate accident contact");

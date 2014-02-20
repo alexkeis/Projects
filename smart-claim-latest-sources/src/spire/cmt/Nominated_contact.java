@@ -51,8 +51,8 @@ public class Nominated_contact extends Activity {
 	public static String[] names_title = { "*Country: " + names_info[0],
 			"State: " + names_info[1], "City: " + names_info[2],
 			"Contact Type: " + names_info[3],
-			"Name: " + names_info[4], "Business Name (If applicable): " + names_info[5],
-			"Mobile phone number: " + names_info[6], "Email: " + names_info[7]};
+			"*Name: " + names_info[4], "Business Name (If applicable): " + names_info[5],
+			"*Mobile phone number: " + names_info[6], "Email: " + names_info[7]};
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,6 +73,7 @@ public class Nominated_contact extends Activity {
 		ListView lv = (ListView) findViewById(R.id.listView_nominated_contact);
 		
 		names_title[0] = "Country: Australia";
+		names_info[0] = "Australia";
 		
 		ArrayAdapter<String> adapt = new ArrayAdapter<String>(this,
 				R.layout.list_item, names_title);
@@ -146,14 +147,14 @@ public class Nominated_contact extends Activity {
 	}
 
 	public void chek() {
-		if (names_info[3].length() < 1) {
+		if (names_info[4].length() < 1) {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Please enter a valid contact *name:", Toast.LENGTH_SHORT);
 			toast.show();
 		}
-		if (names_info[5].length() < 1) {
+		if (names_info[6].length() < 1) {
 			Toast toast = Toast.makeText(getApplicationContext(),
-					"Please enter a valid contact *mobile phone name:", Toast.LENGTH_SHORT);
+					"Please enter a valid contact *mobile phone number:", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 		else
