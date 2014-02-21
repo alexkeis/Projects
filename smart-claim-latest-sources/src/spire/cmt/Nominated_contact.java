@@ -33,10 +33,11 @@ public class Nominated_contact extends Activity {
 	public static boolean click_state = false;
 	public static boolean click_contact_type = false;
 	int radio_pos = -1;
+	private Email_processor ep = new Email_processor();
 
 	
     //alexkeis
-	String[] country = new String[] {"Australia"};
+	String[]   country = new String[] {"Australia"};
 	String[] state = new String[] { "ACT", "NSW", "NT", "QLD", "SA", "TAC",
 			"VIC", "WA" };
 	String[] contact_type = {"Smash Repair Center", "Personal Contact (e.g family)", "Other Contact"};
@@ -64,8 +65,7 @@ public class Nominated_contact extends Activity {
 	}
 
 	
-	
-	
+
 	
 	
 	
@@ -147,17 +147,22 @@ public class Nominated_contact extends Activity {
 	}
 
 	public void chek() {
+		boolean mistakes = false;
+		
 		if (names_info[4].length() < 1) {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Please enter a valid contact *name:", Toast.LENGTH_SHORT);
 			toast.show();
+			mistakes = true;
 		}
 		if (names_info[6].length() < 1) {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Please enter a valid contact *mobile phone number:", Toast.LENGTH_SHORT);
 			toast.show();
+			mistakes = true;
 		}
-		else
+		
+		if(!mistakes)
 		{
 			writeFileSD();
 			finish();

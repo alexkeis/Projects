@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Dialog_details extends DialogFragment implements OnClickListener {
 
@@ -105,6 +106,20 @@ public class Dialog_details extends DialogFragment implements OnClickListener {
 //			break;
 		case R.id.btnYes_ok: {
 			yd.names_info[yd.pos + i] = edit_driver.getText().toString();
+			
+			if (yd.pos + i == 6) {
+				Email_processor ep = new Email_processor();
+				String email = yd.names_info[yd.pos + i];
+				
+				if(!email.equals("") && email != null  && !ep.isValidEmailAddress(email)){
+					Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+							"Please enter a valid email", Toast.LENGTH_SHORT);
+					toast.show();
+					return;
+					
+				}
+			}
+			
 			yd.names_title[yd.pos + i] = yd.names[yd.pos + i]
 					+ yd.names_info[yd.pos + i];
 			click = 0;

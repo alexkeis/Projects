@@ -142,19 +142,23 @@ public class MainActivity extends Activity implements OnClickListener {
 		Application_files_explorer app_files = new Application_files_explorer();
 		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
 		String nc_email_string = app_files.get_nc_email();
+		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
 		
 		if(nc_email_string != null && !(app_files.get_nc_email().equals(""))){
-			SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
-					MODE_PRIVATE);
-			SharedPreferences.Editor editor = sharedPreferences.edit();
 			editor.putString("NC_EMAIL", "yes");
+			editor.commit();
+		}
+		else
+		{
+			editor.putString("NC_EMAIL", "no");
 			editor.commit();
 		}
 		
 		//alexkeis, only prompt for nominated contact if contact email is not set
-		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT", MODE_PRIVATE);
 		String strSavedMem1 = sharedPreferences.getString("NC_EMAIL", "");
-		if (strSavedMem1 == null || strSavedMem1.equals("")) { 
+		if (strSavedMem1.equals("no")) { 
 			//alexkeis, ask whether a user wants to nominated a contact
 			check_nominated_contact();
 		}

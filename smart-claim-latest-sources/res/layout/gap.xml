@@ -18,9 +18,9 @@
 
             <spire.cmt.RoundButton
                 android:id="@+id/button_center"
-                android:layout_width="167px"
+				android:layout_width="167px"
                 android:layout_height="167px"
-                android:layout_centerHorizontal="true"
+                android:layout_centerHorizontal="true"                
                 android:layout_centerInParent="true"
                 android:background="@drawable/gapglobe_d"
                 toucharea:toucharea="@array/touch_area_btncenter_470"
@@ -36,8 +36,10 @@
 
             <ImageView
                 android:id="@+id/imageView_banner"
+
                 android:layout_width="fill_parent"
                 android:layout_height="100px"
+                
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:baselineAlignBottom="true"
@@ -48,3 +50,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+

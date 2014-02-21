@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Context;
 
 public class Dialog_nc extends DialogFragment implements OnClickListener {
 
@@ -25,12 +26,18 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 	Nominated_contact your_nc = new Nominated_contact();
 	DialogFragment ds;
 	static int click = 0;
-
+	
+	
 	final String LOG_TAG = "myLogs";
 	public static int rezzz = 0;
 	public static String title_n = "";
 	static int i = 0;
+	
 
+
+	
+
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -110,8 +117,25 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 //		}
 	//		break;
 		case R.id.buttonYes_d2: {
+			
+			
 			your_nc.names_info[your_nc.pos_nc + i] = edit_driver.getText()
 					.toString();
+			
+			if (your_nc.pos_nc + i == 7) {
+				Email_processor ep = new Email_processor();
+				String email = your_nc.names_info[your_nc.pos_nc + i];
+				
+				if(!email.equals("") && email != null  && !ep.isValidEmailAddress(email)){
+					Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+							"Please enter a valid email", Toast.LENGTH_SHORT);
+					toast.show();
+					return;
+					
+				}
+			}
+			//else
+			
 			your_nc.names_title[your_nc.pos_nc + i] = your_nc.names[your_nc.pos_nc
 					+ i]
 					+ your_nc.names_info[your_nc.pos_nc + i];
