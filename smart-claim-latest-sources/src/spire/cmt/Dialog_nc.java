@@ -32,7 +32,7 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 	public static int rezzz = 0;
 	public static String title_n = "";
 	static int i = 0;
-	
+	private Context thiscontext;
 
 
 	
@@ -41,6 +41,7 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		thiscontext = getActivity().getApplicationContext();
 		getDialog().setTitle(your_nc.names[your_nc.pos_nc + i]);
 		View v = inflater.inflate(R.layout.dialog_nc, null);
 //		yyy = (Button) v.findViewById(R.id.btnYes_d2);
@@ -127,7 +128,8 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 				String email = your_nc.names_info[your_nc.pos_nc + i];
 				
 				if(!email.equals("") && email != null  && !ep.isValidEmailAddress(email)){
-					Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+					Toast toast = Toast.makeText(thiscontext,
+					//Toast toast = Toast.makeText(getActivity().getApplicationContext(),
 							"Please enter a valid email", Toast.LENGTH_SHORT);
 					toast.show();
 					return;

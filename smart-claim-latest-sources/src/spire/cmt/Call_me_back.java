@@ -47,6 +47,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 /**
  * @author alex
@@ -255,9 +256,11 @@ public class Call_me_back extends Activity implements OnClickListener {
 		
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("");
+	    builder.setTitle("Accident");
 	    builder.setMessage("We’ve detected that you’ve been in a car accident. Would you like a notification sent to your Nominated Contact?");
-
+	    builder.setIcon(android.R.drawable.ic_dialog_info);
+	    
+	    
 	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
 	        public void onClick(DialogInterface dialog, int which) {
@@ -278,7 +281,11 @@ public class Call_me_back extends Activity implements OnClickListener {
 	        }
 	    });
 	    
+	    builder.setInverseBackgroundForced(true);
 	    AlertDialog alert = builder.create();
+	    Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+	    // Vibrate for 500 milliseconds
+	    v.vibrate(2500);
 	    alert.show();
 
 		
