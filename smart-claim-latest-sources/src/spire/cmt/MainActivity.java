@@ -13,6 +13,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.app.PendingIntent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.app.Notification;
+import android.app.Service;
 
 public class MainActivity extends Activity implements OnClickListener {
 	RelativeLayout.LayoutParams lParams1;
@@ -57,6 +60,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	DisplayMetrics metricsB = new DisplayMetrics();
 	Context context;
 
+
 	void readFile_info3() {
 		String str = "";
 		File path = new File(getFilesDir(), "/Your_details");
@@ -79,7 +83,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	
@@ -92,9 +95,33 @@ public class MainActivity extends Activity implements OnClickListener {
 		editor.commit();
 	}
 
+	
+	private void begin_service(){
+		//alexkeis, app as service stuff
+		//Intent main_intent = new Intent(this, CMTIntentService.class);
+		//startService(main_intent);		
+		
+		Thread t = new Thread(){
+			public void run(){
+			 Intent i = new Intent();
+		       i.setClassName( "spire.cmt",
+		        //"spire.cmt.CMTIntentService" );
+		        "spire.cmt.CMT_service" );
+		       //bindService( i, null, Context.BIND_AUTO_CREATE);
+		       startService(i);   
+			}
+		};
+		t.start();
+		
+	}
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		begin_service();
+		
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// captcha
 		SharedPreferences sharedData = getSharedPreferences("MY_DATA",
@@ -176,8 +203,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		relat_anim.setOnClickListener(this);
 		relat_vis = (RelativeLayout) findViewById(R.id.relativ_anim);
 
-		imageView_lodge_claim = (ImageView) findViewById(R.id.imageView_lodge_claim);
-		imageView_lodge_claim.setOnClickListener(this);
+		//imageView_lodge_claim = (ImageView) findViewById(R.id.imageView_lodge_claim);
+		//imageView_lodge_claim.setOnClickListener(this);
+		
 		imageView_banner = (ImageView) findViewById(R.id.imageView_banner);
 		imageView_banner.setOnClickListener(this);
 		imageView_terms = (ImageView) findViewById(R.id.imageView_claim_terms);

@@ -15,21 +15,39 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="CMT"
         android:theme="@style/AppTheme" >
+        <service android:name=".CMT_service" />
+        <service
+            android:name=".CMT_service"
+            class=".CMT_service" >
+            <intent-filter>
+                <action
+                    android:name=".CMT_service"
+                    android:value="spire.cmt.CMT_SERVICE" />
+            </intent-filter>
+        </service>
+         <service
+            android:name=".CMTIntentService"
+            class=".CMTIntentService" >
+            <intent-filter>
+                <action
+                    android:name=".CMTIntentService"
+                    android:value="spire.cmt.CMTIntentService" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name="spire.cmt.MainActivity"
             android:label="CMT"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" 
-            
-     >
+            android:theme="@android:style/Theme.NoTitleBar" >
 
             <!--
                  <intent-filter>
@@ -136,8 +154,7 @@
         <activity
             android:name="Del_pin"
             android:screenOrientation="portrait" />
-
-          <activity
+        <activity
             android:name="Attach_image"
             android:screenOrientation="portrait" />
         <activity

@@ -265,7 +265,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 	        public void onClick(DialogInterface dialog, int which) {
 	        	                send_email();
-	        					Toast.makeText(getApplicationContext(), "Email Send.", Toast.LENGTH_SHORT).show();
+	        					Toast.makeText(getApplicationContext(), "Sending Email", Toast.LENGTH_SHORT).show();
 	        		        	dialog.dismiss();  		        	
 	        }
 
@@ -373,7 +373,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost(
-						"http://service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
 				httppost.setHeader("Content-Type", "application/json");
 				httppost.setHeader("Accept", "application/json");
 				try {
@@ -559,7 +559,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 			try {
 				String currentTimeStamp = "/Date(" + System.currentTimeMillis() / 1000 + ")/";
 				
-				HttpPost request = new HttpPost("http://service.cmt.net.au/ClaimsDataService.svc/InsertEnquiryEntry");
+				HttpPost request = new HttpPost("http://test.service.cmt.net.au/ClaimsDataService.svc/InsertEnquiryEntry");
 				request.setHeader("Content-Type", "application/json");
 				request.setHeader("Accept", "application/json");
 				

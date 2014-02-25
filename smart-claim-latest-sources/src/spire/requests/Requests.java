@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 
 public class Requests {
-	public static final String URL_MY_PROFILE = "http://service.cmt.net.au/ClaimsDataService.svc/SaveClientObject";
+	public static final String URL_MY_PROFILE = "http://test.service.cmt.net.au/ClaimsDataService.svc/SaveClientObject";
 	// public static final String URL_TEST =
 	// "http://192.168.1.64/test_web/index.php";
 	public static final String LANGUAGES = "languages";

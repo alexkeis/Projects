@@ -198,8 +198,7 @@ public class My_profile extends Activity {
 				int timeoutSocket = 5000;
 				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 				DefaultHttpClient httpclient = new DefaultHttpClient(httpParameters);
-				HttpPost httppost = new HttpPost(
-						"http://service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
+				HttpPost httppost = new HttpPost("http://test.service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
 				httppost.setHeader("Content-Type", "application/json");
 				httppost.setHeader("Accept", "application/json");
 				try {
@@ -223,7 +222,9 @@ public class My_profile extends Activity {
 
 					obj.put("IsBusiness", false);
 					obj.put("PersonalDataId", new Integer(0));
-
+					obj.put("PersonalData", "--");
+					obj.put("GapContact", "--2");
+					
 					Map in_obj = new LinkedHashMap();
 					in_obj.put("Id", new Integer(0));
 					in_obj.put("Title", null);
@@ -242,18 +243,69 @@ public class My_profile extends Activity {
 																	// details[10]
 					in_obj.put("Postcode", details.names_info[9]);// details[9]
 
-					obj.put("PersonalData", "--");
+					
+					
+					///////////////////////////////////////////////////////////////////////////////////
+					Map nom_obj = new LinkedHashMap();
+					Map nom_obj_personal = new LinkedHashMap();
+					
+					
+					
+					nom_obj.put("Id", new Integer(0));
+					nom_obj.put("ClientId", new Integer(0));
+					nom_obj.put("AssignedDate", contact.getDate());
+					nom_obj.put("Date", s);
+					nom_obj.put("ContactType", contact.getType());
+					nom_obj.put("NotifyVia", contact.getContactVia());
+					nom_obj.put("PersonalDataId", new Integer(0));
+					nom_obj.put("PersonalData", "--");
+					
+					
+					nom_obj_personal.put("Id", new Integer(0));
+					nom_obj_personal.put("Title", null);
+					nom_obj_personal.put("FirstName", contact.getName());
+					nom_obj_personal.put("Surname", contact.getSurname());
+					nom_obj_personal.put("Email",  contact.getEmail());
+					nom_obj_personal.put("Phone", contact.getPhone());
+					nom_obj_personal.put("Phone2", null);
+					nom_obj_personal.put("Company", contact.getCompany());
+					nom_obj_personal.put("AbnNumber", null);
+					nom_obj_personal.put("Country", contact.getCountry());
+					nom_obj_personal.put("Address1", contact.getAddress());
+					nom_obj_personal.put("Address2", null);
+					nom_obj_personal.put("City", contact.getCity());
+					nom_obj_personal.put("StateCode", contact.getState());																// details[10]
+					nom_obj_personal.put("Postcode", null);
+					
+		
+					///////////////////////////////////////////////////////////////////////////////////
+					
+					
+					
 					//
 					//StringWriter out2 = new StringWriter();					
 					// JSONValue.writeJSONString(obj, out2);
 					
 				    JSONObject json1 =  new JSONObject(obj);
 					JSONObject json =  new JSONObject(in_obj);
+					JSONObject json2 =  new JSONObject(nom_obj);
+					JSONObject json3 =  new JSONObject(nom_obj_personal);
+					
 					
 					//String jsonText = out2.toString();
 					String jsonText = json.toString(); 
 					String jsonText1 = json1.toString();
+					String jsonText2 = json2.toString();
+					String jsonText3 = json3.toString();
+					
+					
 					jsonText1 = jsonText1.replace("\"--\"", jsonText);
+					jsonText2 = jsonText2.replace("\"--\"", jsonText3);
+					jsonText1 = jsonText1.replace("\"--2\"", jsonText2);
+			
+
+				
+					
 					httppost.setEntity(new StringEntity(jsonText1, "UTF-8"));
 
 					HttpResponse response = httpclient.execute(httppost);

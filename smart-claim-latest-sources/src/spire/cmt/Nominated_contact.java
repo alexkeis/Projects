@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import spire.cmt.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -34,6 +33,7 @@ public class Nominated_contact extends Activity {
 	public static boolean click_contact_type = false;
 	int radio_pos = -1;
 	private Email_processor ep = new Email_processor();
+	Long date = System.currentTimeMillis()/1000;
 
 	
     //alexkeis
@@ -146,6 +146,75 @@ public class Nominated_contact extends Activity {
 		chek();
 	}
 
+	public String getDate(){
+		String s = "/Date(" + this.date
+				+ ")/";
+		return s;
+	}
+	
+	
+	public String getType(){
+		if(names_info[3].equals("Personal Contact (e.g family)")){
+			return "1";
+		}
+		else if(names_info[3].equals("Smash Repair Center")){
+			return "2";
+		} 
+		else{
+			return "3";
+		} 
+	}
+	
+	public String getContactVia(){
+		
+		// decide what to return based on which values are available
+		return "1";
+		
+	}
+	
+	public String getName(){
+		return names_info[4];
+		
+	}
+	
+	public String getSurname(){
+		return null;
+		
+	}
+	
+	public String getEmail(){
+		return names_info[7];
+		
+	}
+	
+	public String getPhone(){
+		return names_info[6];
+		
+	}
+	
+	public String getCountry(){
+		return names_info[0];
+		
+	}
+	
+	public String getAddress(){
+		return null;
+		
+	}
+	public String getCity(){
+		return names_info[2];
+		
+	}
+	public String getState(){
+		return names_info[1];
+	}
+	
+	public String getCompany(){
+		return names_info[5];
+		
+	}
+	
+	
 	public void chek() {
 		boolean mistakes = false;
 		

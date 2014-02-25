@@ -495,7 +495,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost(
-						"http://service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
 				httppost.setHeader("Content-Type", "application/json");
 				httppost.setHeader("Accept", "application/json");
 				try {
@@ -1095,7 +1095,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 				// 2 request
 
 				HttpPost request = new HttpPost(
-						"http://service.cmt.net.au/ClaimsDataService.svc/InsertAccidentClaim");
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/InsertAccidentClaim");
 				request.setHeader("Content-Type", "application/json");
 				request.setHeader("Accept", "application/json");
 
@@ -1291,7 +1291,7 @@ public class Lodge_claim extends Activity implements OnClickListener {
 				HttpClient httpclient = new DefaultHttpClient();
 				// 4 request
 				HttpPost httppost = new HttpPost(
-						"http://service.cmt.net.au/ClaimsDataService.svc/UploadAccidentClaimImage");
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/UploadAccidentClaimImage");
 				httppost.setHeader("Content-Type", "application/json");
 				httppost.setHeader("Accept", "application/json");
 				try {
