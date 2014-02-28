@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.ArrayList;
 
 public class Nominated_contact extends Activity {
 	DialogFragment dialog_nc;
@@ -31,6 +32,8 @@ public class Nominated_contact extends Activity {
 	public static String title_nc = "Title";
 	public static boolean click_state = false;
 	public static boolean click_contact_type = false;
+	public static boolean click_contact_mode = false;
+	
 	int radio_pos = -1;
 	private Email_processor ep = new Email_processor();
 	Long date = System.currentTimeMillis()/1000;
@@ -41,19 +44,21 @@ public class Nominated_contact extends Activity {
 	String[] state = new String[] { "ACT", "NSW", "NT", "QLD", "SA", "TAC",
 			"VIC", "WA" };
 	String[] contact_type = {"Smash Repair Center", "Personal Contact (e.g family)", "Other Contact"};
+	String[] contact_via = {"Email", "Mobile phone"};
 	
 	
 	public static String[] names = { "*Country: ", "State: ",
 			"City: ", "Contact Type: ", "*Name: ",
-			"Business Name\n (If applicable): ", "*Mobile phone number:", "Email: " };
+			"Business Name\n (If applicable): ", "Contact Mode: ", "*Mobile phone number:", "Email: " };
 	
-	public static String[] names_info = { "", "", "", "", "", "", "", ""};
+	public static String[] names_info = { "", "", "", "", "", "", "", "", ""};
 	
 	public static String[] names_title = { "*Country: " + names_info[0],
 			"State: " + names_info[1], "City: " + names_info[2],
 			"Contact Type: " + names_info[3],
 			"*Name: " + names_info[4], "Business Name (If applicable): " + names_info[5],
-			"*Mobile phone number: " + names_info[6], "Email: " + names_info[7]};
+			"Contact mode: " + names_info[6],
+			"*Mobile phone number: " + names_info[7], "Email: " + names_info[8]};
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,6 +115,14 @@ public class Nominated_contact extends Activity {
 						}
 					}
 					showDialog(1);
+				}
+				else if(position == 6){
+					for (int i = 0; i < contact_via.length - 1; i++) {
+						if (contact_via[i].equals(names_info[6])) {
+							radio_pos = i;
+						}
+					}
+					showDialog(3);
 				}
 //				else if (position == 10) {
 //					for (int i = 0; i < state.length - 1; i++) {
@@ -168,8 +181,13 @@ public class Nominated_contact extends Activity {
 	public String getContactVia(){
 		
 		// decide what to return based on which values are available
-		return "1";
-		
+		if(names_info[6].equals("Email")){
+			return "2";
+		}
+		else{
+			return "1";
+		}
+			
 	}
 	
 	public String getName(){
@@ -215,21 +233,52 @@ public class Nominated_contact extends Activity {
 	}
 	
 	
+	public ArrayList getCompolsoryFields(){
+		//int cf[] = new int[50];
+		ArrayList cf = new ArrayList();
+		
+		//private List<Integer> x = new ArrayList<Integer>();
+		int i;
+				
+		for(i=0; i<names_title.length; i++){
+			
+			if(names_title[i].startsWith("*")){
+				cf.add(i);
+			}
+		
+		}
+		return cf;
+	}
+	
 	public void chek() {
 		boolean mistakes = false;
+		ArrayList compulsory_fields = getCompolsoryFields();
+		int i;
+		int j;
 		
-		if (names_info[4].length() < 1) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Please enter a valid contact *name:", Toast.LENGTH_SHORT);
-			toast.show();
-			mistakes = true;
+		for(i=0; i<compulsory_fields.size(); i++){
+			j = (Integer) compulsory_fields.get(i);
+			
+			if (names_info[j].length() < 1) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Please enter a valid "+names[j],  Toast.LENGTH_SHORT);
+				toast.show();
+				mistakes = true;
+			}
 		}
-		if (names_info[6].length() < 1) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Please enter a valid contact *mobile phone number:", Toast.LENGTH_SHORT);
-			toast.show();
-			mistakes = true;
-		}
+		
+//		if (names_info[4].length() < 1) {
+//			Toast toast = Toast.makeText(getApplicationContext(),
+//					"Please enter a valid contact *name:", Toast.LENGTH_SHORT);
+//			toast.show();
+//			mistakes = true;
+//		}
+//		if (names_info[6].length() < 1) {
+//			Toast toast = Toast.makeText(getApplicationContext(),
+//					"Please enter a valid contact *mobile phone number:", Toast.LENGTH_SHORT);
+//			toast.show();
+//			mistakes = true;
+//		}
 		
 		if(!mistakes)
 		{
@@ -282,6 +331,15 @@ public class Nominated_contact extends Activity {
 			builder.setNeutralButton("Done", myClickListener);
 			// builder.setCancelable(false);
 			return builder.create();
+		case 3:
+			builder.setTitle("Contact Mode:");
+			builder.setSingleChoiceItems(contact_via, radio_pos, myClickListener);
+			//builder.setPositiveButton("Next", myClickListener);
+			//builder.setNegativeButton("Prev", myClickListener);
+			builder.setNeutralButton("Done", myClickListener);
+			// builder.setCancelable(false);
+			return builder.create();
+			
 		default:
 			return null;
 		}
@@ -299,6 +357,22 @@ public class Nominated_contact extends Activity {
 					if(pp_nc == 1){
 						names_info[1] = state[lv.getCheckedItemPosition()];
 						names_title[1] = names[1] + names_info[1];
+					}
+					else if(pp_nc == 6){
+						int temppos = lv.getCheckedItemPosition();
+						names_info[6] = contact_via[temppos];
+						
+						if(names_info[6].equals("Email")){
+							 make_compulsory(8);
+							 make_uncompolsory(7);
+						}
+						else if (names_info[6].equals("Mobile phone")){
+							make_compulsory(7);
+							make_uncompolsory(8);
+							
+						}
+
+						names_title[6] = names[6] + names_info[6];
 					}
 					else 
 					{
@@ -351,6 +425,24 @@ public class Nominated_contact extends Activity {
 		}
 	};
 
+	public void make_compulsory(int index){
+		if(this.names[index].startsWith("*")){	
+		}
+		else
+			this.names[index] = "*"+this.names[index];
+		
+		this.names_title[index] =  this.names[index] + this.names_info[index];
+	}
+	
+	public void make_uncompolsory(int index){
+		if(this.names[index].startsWith("*"))
+		{
+			this.names[index] = this.names[index].substring(1); 
+		}
+		this.names_title[index] =  this.names[index] + this.names_info[index];
+	}
+	
+	
 	public void dialog() {
 		pos_nc = pp_nc;
 		title_nc = tit_nc;
@@ -388,6 +480,16 @@ public class Nominated_contact extends Activity {
 			}
 			showDialog(1);
 			click_contact_type = false;
+		}
+		
+		if (click_contact_mode == true) {
+			for (int i = 0; i < contact_via.length - 1; i++) {
+				if (contact_via[i].equals(names_info[6])) {
+					radio_pos = i;
+				}
+			}
+			showDialog(3);
+			click_contact_mode = false;
 		}
 		
 		if (click_state == true) {

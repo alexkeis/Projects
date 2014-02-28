@@ -8,7 +8,7 @@ import android.content.Context;
 public class Application_files_explorer extends Activity {
 
 	public String str = "";
-	public static String[] nc_details= {"","","","","","","",""};
+	public static String[] nc_details= {"","","","","","","","",""};
 	public static String[] vehicle_details = {"","",""};
 	public static String[] profile_details = {"", "", "", "", "", "", "", "", "", ""}; 
 			
@@ -75,7 +75,7 @@ public class Application_files_explorer extends Activity {
 	
 	public String get_nc_email(){
 		getNcValuesfromFile();
-		return nc_details[7];
+		return nc_details[8];
 	}
 	
 	public String get_profile_name(){
