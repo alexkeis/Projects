@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.content.Intent;
 //import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -156,7 +157,19 @@ public class Nominated_contact extends Activity {
 	}
 
 	public void ok_footer_nominated_contact(View view) {
-		chek();
+
+		boolean mistakes = chek();
+
+		if (!mistakes) {
+
+			String PUBLIC_STATIC_STRING_IDENTIFIER = "done";
+			Intent resultIntent = new Intent();
+			resultIntent.putExtra(PUBLIC_STATIC_STRING_IDENTIFIER,
+					this.getName());
+			setResult(Activity.RESULT_OK, resultIntent);
+			finish();
+		}
+
 	}
 
 	public String getDate(){
@@ -250,7 +263,7 @@ public class Nominated_contact extends Activity {
 		return cf;
 	}
 	
-	public void chek() {
+	public boolean chek() {
 		boolean mistakes = false;
 		ArrayList compulsory_fields = getCompolsoryFields();
 		int i;
@@ -283,8 +296,9 @@ public class Nominated_contact extends Activity {
 		if(!mistakes)
 		{
 			writeFileSD();
-			finish();
 		}
+		
+		return mistakes;
 	}
 
 	void writeFileSD() {

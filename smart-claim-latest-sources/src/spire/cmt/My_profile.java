@@ -444,7 +444,10 @@ public class My_profile extends Activity {
 				if (position == 2) {
 					Intent intent1 = new Intent();
 					intent1.setClass(getApplicationContext(),
-									 Nominated_contact.class);
+									 
+									//Nominated_contact.class);
+									Nominated_contacts.class);
+						
 					startActivity(intent1);
 				}
 				

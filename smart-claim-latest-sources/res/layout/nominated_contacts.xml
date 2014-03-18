@@ -1,12 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp" >
+    
+            <Button
+                android:id="@+id/del_pin"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:onClick="addContactClicked"
+                android:text="Add Nominated Contact" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+           </LinearLayout>
+            
+    
+    
 
-	<ListView
-		android:id="@+id/chainListView"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" >
-	</ListView>
+        <ListView
+            android:id="@+id/chainListView"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content" >
+        </ListView>
+ 
 
-    </RelativeLayout>
+</LinearLayout>

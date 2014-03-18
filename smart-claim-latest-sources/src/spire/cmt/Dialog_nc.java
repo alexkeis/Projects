@@ -123,7 +123,7 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 			your_nc.names_info[your_nc.pos_nc + i] = edit_driver.getText()
 					.toString();
 			
-			if (your_nc.pos_nc + i == 7) {
+			if (your_nc.pos_nc + i == 8) {
 				Email_processor ep = new Email_processor();
 				String email = your_nc.names_info[your_nc.pos_nc + i];
 				
