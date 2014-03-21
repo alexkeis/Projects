@@ -1,7 +1,6 @@
 package spire.cmt;
 
 import java.io.BufferedWriter;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +13,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 //import android.util.Log;
 import android.view.View;
@@ -47,6 +47,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class Nominated_contacts extends Activity {
 
@@ -76,10 +77,31 @@ public class Nominated_contacts extends Activity {
 	public void addCell(String s){
 		MyCell cell = new MyCell();
 		cell.name = s;
-		mAnimList.add(cell);
-		mMyAnimListAdapter.notifyDataSetChanged();
+		
+		if(!mAnimList.contains(cell) && s != null && !s.equals(""))
+		{
+			mAnimList.add(cell);
+			mMyAnimListAdapter.notifyDataSetChanged();
+		}
+		
 	}
 //	
+	
+	
+	public boolean hasBeenProcessed(){
+		
+		java.util.Iterator iterator = mAnimList.iterator();
+
+		        while (iterator.hasNext())
+		        {
+		            MyCell o = (MyCell) iterator.next();
+		            if(! mAnimList.contains(o)) return true;
+		        }
+		         return false;
+	}
+	
+	
+	
 	@Override 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
@@ -164,12 +186,25 @@ public class Nominated_contacts extends Activity {
 
 	private class MyCell {
 		public String name;
+		
+		@Override
+		public boolean equals(Object object)
+	    {
+		    boolean sameSame = false;
+
+	        if (object != null && object instanceof MyCell)
+	        {
+	            sameSame = this.name.equals(((MyCell)object).name);
+	        }
+	        return sameSame;
+	    }
 	}
 
 	private class ViewHolder {
 		public boolean needInflate;
 		public TextView text;
-		ImageButton imageButton;
+		public ImageButton imageButton;
+		public Button keyButton;
 	}
 
 	public class MyAnimListAdapter extends ArrayAdapter<MyCell> {
@@ -187,7 +222,8 @@ public class Nominated_contacts extends Activity {
 			final View view ;
 			ViewHolder vh;
 			MyCell cell = (MyCell)getItem(position);
-
+			final String cellname = cell.name;
+			
 			if (convertView==null) {
 				view = mInflater.inflate(R.layout.chain_cell, parent, false);
 			    setViewHolder(view);
@@ -201,7 +237,17 @@ public class Nominated_contacts extends Activity {
 			}
 
 			vh = (ViewHolder)view.getTag();
-			vh.text.setText(cell.name);
+			//vh.text.setText(cell.name);
+			vh.keyButton.setText(cell.name);
+			
+			vh.keyButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v){
+					editContactClicked(v, cellname);
+				}
+			});
+			
+			
 			vh.imageButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -214,11 +260,23 @@ public class Nominated_contacts extends Activity {
 
 		private void setViewHolder(View view) {
 			ViewHolder vh = new ViewHolder();
-			vh.text = (TextView)view.findViewById(R.id.cell_name_textview);
+			//vh.text = (TextView)view.findViewById(R.id.cell_name_textview);
 			vh.imageButton = (ImageButton) view.findViewById(R.id.cell_trash_button);
+			vh.keyButton = (Button)  view.findViewById(R.id.cell_key_button);
 			vh.needInflate = false;
 			view.setTag(vh);
 		}
+	}
+	
+	public void editContactClicked(View view, String key){
+		clickedNominatedContactKeySet(key);
+		Intent intent1 = new Intent();
+		intent1.setClass(getApplicationContext(),
+						 
+						//Nominated_contact.class);
+						Nominated_contact.class);			
+		//startActivity(intent1);
+		startActivityForResult(intent1, STATIC_INTEGER_VALUE);
 	}
 	
 	public void addContactClicked(View view){
@@ -230,4 +288,13 @@ public class Nominated_contacts extends Activity {
 		//startActivity(intent1);
 		startActivityForResult(intent1, STATIC_INTEGER_VALUE);
 	}
+	
+	private void clickedNominatedContactKeySet(String key){
+		  SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+	      SharedPreferences.Editor editor = settings.edit();
+	      editor.putString("key", key);
+	      // Commit the edits!
+	      editor.commit();
+	}
+	
 }

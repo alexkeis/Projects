@@ -57,10 +57,9 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 		edit_driver.setText(your_nc.names_info[your_nc.pos_nc + i]);
 		if (your_nc.pos_nc + i == 5 || your_nc.pos_nc + i == 4) {
 			edit_driver.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-		} else if (your_nc.pos_nc + i == 7) {
-			edit_driver
-					.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
-		} else if (your_nc.pos_nc + i == 6 ) {
+		} else if (your_nc.pos_nc + i == 8) {
+			edit_driver.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+		} else if (your_nc.pos_nc + i == 7 ) {
 			edit_driver.setInputType(InputType.TYPE_CLASS_PHONE);
 		} else
 			edit_driver.setInputType(InputType.TYPE_CLASS_TEXT);

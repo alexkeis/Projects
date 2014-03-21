@@ -1,7 +1,6 @@
 package spire.cmt;
 
 import java.io.BufferedReader;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,6 +17,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.content.Intent;
+import android.content.SharedPreferences;
 //import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,35 +75,52 @@ public class Nominated_contact extends Activity {
 		dialog_date = new Dialog_date_details();
 		
 		
-		//readFileInfo();
+		//this.readFileInfo();
 		
 		list();
 	}
-
 	
 	void readFileInfo() {
-		String str = "";
-		File path = new File(getFilesDir(), "/Your_details");
-		File sdFile = new File(path, "Nominated_contact.txt");
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(sdFile));
-			int qw = 0;
+		String key =  getStoredNominatedContactKey();
+		Application_files_explorer ap = new Application_files_explorer(key);
+		names_info = ap.getNamesInfoNc();
 		
-			while ((str = br.readLine()) != null)
-			{
-				names_info[qw] = str;
-				names_title[qw] = names[qw] + names_info[qw];
-				qw++;
-
-			}
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		for(int i=0; i<= names_info.length; i++){
+			names_title[i] = names[i] + names_info[i];
 		}
+		
+		
+//		String keytext = "";
+//		if (!key.equals(null)) {
+//			keytext = "_"+key;
+//		}
+		
+//		String str = "";
+//		File path = new File(getFilesDir(), "/Your_details");
+//		File sdFile = new File(path, "Nominated_contact"+keytext+".txt");
+//		try {
+//			BufferedReader br = new BufferedReader(new FileReader(sdFile));
+//			int qw = 0;
+//		
+//			while ((str = br.readLine()) != null)
+//			{
+//				names_info[qw] = str;
+//				names_title[qw] = names[qw] + names_info[qw];
+//				qw++;
+//
+//			}
+//		} catch (FileNotFoundException e) {
+//
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
+	private String getStoredNominatedContactKey(){
+		SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+		return settings.getString("key", null);
+	}
 	
 	public void list() {
 		ListView lv = (ListView) findViewById(R.id.listView_nominated_contact);
@@ -372,7 +389,9 @@ public class Nominated_contact extends Activity {
 	void writeFileSD() {
 		File path = new File(getFilesDir(), "/Your_details");
 		path.mkdirs();
-		File sdFile = new File(path, "Nominated_contact.txt");
+		String key = getKey();
+		
+		File sdFile = new File(path, "Nominated_contact_"+key+".txt");
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
 			int i = 0;

@@ -4,6 +4,7 @@ import java.io.*;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 
 public class Application_files_explorer extends Activity {
 
@@ -14,11 +15,42 @@ public class Application_files_explorer extends Activity {
 			
 			
 	Context context;
-	File path;
+	File path;// = new File(getFilesDir(), "/Your_details");
 	File path_string;
 	File ncFile;
 	File vehicleFile;
 	File detailsFile;
+	
+	public Application_files_explorer(String nckey){
+		if (!TextUtils.isEmpty(nckey)) {
+			this.ncFile = new File(new File(getFilesDir(), "/Your_details"), "/Nominated_contact_"+nckey+".txt");
+		} 
+	}
+	
+	public Application_files_explorer(){	
+	}
+	
+	public String[] getNamesInfoNc(){
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(ncFile));
+			int qw = 0;
+		
+			while ((str = br.readLine()) != null)
+			{
+				nc_details[qw] = str;
+				qw++;
+
+			}
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return nc_details;
+	}
+	
 	
 	public String get_path_string(){
 		return path_string.toString();
