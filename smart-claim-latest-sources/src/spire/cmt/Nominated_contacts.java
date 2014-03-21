@@ -1,6 +1,7 @@
 package spire.cmt;
 
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import spire.cmt.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.*;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -80,18 +82,28 @@ public class Nominated_contacts extends Activity {
 //	
 	@Override 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		//if (data !=null){
+		Intent testintent = data;
+		String PREFS_NAME = null;
+		
 		super.onActivityResult(requestCode, resultCode, data);
+		SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_SCREEN_VALUES", MODE_PRIVATE);
+		String keystring  = settings.getString("done", null);
+		addCell(keystring);
+				
 //
 //		//switch (requestCode) {
 //		//case (0): {
 //			//if (resultCode == Activity.RESULT_OK) {
 //			//	String newText = data
 //				//		.getStringExtra(PUBLIC_STATIC_STRING_IDENTIFIER);
-				addCell("TEST");
+			//	addCell(data.getStringExtra("done"));
 //			//}
 //			//break;
 //		//}
 //		//}
+		//}
 	}
 	
 	

@@ -1,6 +1,7 @@
 package spire.cmt;
 
 import spire.cmt.R;
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -143,6 +144,14 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 					+ your_nc.names_info[your_nc.pos_nc + i];
 
 			click = 0;
+			
+//			
+//			String y = "done";
+//			Intent resultIntent = new Intent();
+//			resultIntent.putExtra(y, "Clicked Screen 3...");
+//			 //finish();
+//			//getActivity().moveTaskToBack(false);
+//			getActivity().setResult(Activity.RESULT_OK, resultIntent);
 		}
 			break;
 		default:
@@ -153,6 +162,7 @@ public class Dialog_nc extends DialogFragment implements OnClickListener {
 
 	public void onDismiss(DialogInterface dialog) {
 		if (click == 0) {
+						
 			Intent intent1 = new Intent();
 			intent1.setClass(getActivity(), Nominated_contact.class);
 			startActivity(intent1);

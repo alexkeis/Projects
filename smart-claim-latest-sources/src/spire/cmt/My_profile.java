@@ -55,7 +55,7 @@ public class My_profile extends Activity {
 	//public static String[] mas_prof = { "Your Details", "Your Vehicle" };
 	// changed by Alex Keis, to include Nominated Contact
 	
-	public static String[] mas_prof = { "Your Details", "Your Vehicle",  "Nominated Contact"};
+	public static String[] mas_prof = { "Your Details", "Your Vehicle",  "Nominated Contacts"};
 	//public static String[] mas_prof = { "Nominated Conntact"};
 	
 	Button im_del, sendDetails;
@@ -516,7 +516,6 @@ public class My_profile extends Activity {
 			int qw = 0;
 			Nominated_contact contact = new Nominated_contact();
 			while ((str = br.readLine()) != null)
-
 			{
 				contact.names_info[qw] = str;
 				contact.names_title[qw] = contact.names[qw] + contact.names_info[qw];
@@ -529,7 +528,6 @@ public class My_profile extends Activity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override

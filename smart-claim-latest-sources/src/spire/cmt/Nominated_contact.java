@@ -1,10 +1,15 @@
 package spire.cmt;
 
+import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import android.content.*;
 import spire.cmt.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class Nominated_contact extends Activity {
@@ -67,12 +73,36 @@ public class Nominated_contact extends Activity {
 		setContentView(R.layout.nominated_contact);
 		dialog_nc = new Dialog_nc();
 		dialog_date = new Dialog_date_details();
+		
+		
+		//readFileInfo();
+		
 		list();
 	}
 
 	
+	void readFileInfo() {
+		String str = "";
+		File path = new File(getFilesDir(), "/Your_details");
+		File sdFile = new File(path, "Nominated_contact.txt");
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(sdFile));
+			int qw = 0;
+		
+			while ((str = br.readLine()) != null)
+			{
+				names_info[qw] = str;
+				names_title[qw] = names[qw] + names_info[qw];
+				qw++;
 
-	
+			}
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	public void list() {
@@ -159,19 +189,58 @@ public class Nominated_contact extends Activity {
 	public void ok_footer_nominated_contact(View view) {
 
 		boolean mistakes = chek();
-
+		
+		
 		if (!mistakes) {
 
-			String PUBLIC_STATIC_STRING_IDENTIFIER = "done";
-			Intent resultIntent = new Intent();
-			resultIntent.putExtra(PUBLIC_STATIC_STRING_IDENTIFIER,
-					this.getName());
-			setResult(Activity.RESULT_OK, resultIntent);
+			String x = "done";
+			
+			
+			Intent resultIntent = new Intent(getApplicationContext(), Nominated_contact.class);
+			resultIntent.putExtra(x,
+					"Clicked Screen 2");
+					//this.getKey());
+			resultIntent.addFlags(resultIntent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+			this.setResult(Activity.RESULT_OK, resultIntent);
+			//this.onResume();
+			
+		      SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_SCREEN_VALUES", MODE_PRIVATE);
+		      SharedPreferences.Editor editor = settings.edit();
+		      editor.putString("done", getKey());
+
+		      // Commit the edits!
+		      editor.commit();
+			
+			
+			
 			finish();
 		}
 
 	}
 
+	
+
+	
+	
+	public String getKey(){
+		String key = "";
+		
+		if (!this.getName().equals("") && !this.getName().equals(null)){
+			key += this.getName();
+		}
+		
+		if (!this.getPhone().equals("") && !this.getPhone().equals(null)){
+			key += "  |  "+ this.getPhone();
+		}
+		
+		if (!this.getEmail().equals("") && !this.getEmail().equals(null)){
+			key += "  |  "+ this.getEmail();
+		}
+	
+		return key;
+	}
+	
+	
 	public String getDate(){
 		String s = "/Date(" + this.date
 				+ ")/";
@@ -214,13 +283,12 @@ public class Nominated_contact extends Activity {
 	}
 	
 	public String getEmail(){
-		return names_info[7];
+		return names_info[8];
 		
 	}
 	
 	public String getPhone(){
-		return names_info[6];
-		
+		return names_info[7];	
 	}
 	
 	public String getCountry(){
