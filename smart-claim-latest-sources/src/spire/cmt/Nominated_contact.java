@@ -25,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,9 @@ public class Nominated_contact extends Activity {
 	public static boolean click_state = false;
 	public static boolean click_contact_type = false;
 	public static boolean click_contact_mode = false;
+	private String initial_key = null; 
+	private Activity initial_activity;
+	
 	
 	int radio_pos = -1;
 	private Email_processor ep = new Email_processor();
@@ -75,19 +79,47 @@ public class Nominated_contact extends Activity {
 		dialog_date = new Dialog_date_details();
 		
 		
-		//this.readFileInfo();
+		this.readFileInfo();
 		
 		list();
 	}
 	
 	void readFileInfo() {
 		String key =  getStoredNominatedContactKey();
-		Application_files_explorer ap = new Application_files_explorer(key);
-		names_info = ap.getNamesInfoNc();
+		//String mode =  getStoredNominatedContactMode();
 		
-		for(int i=0; i<= names_info.length; i++){
-			names_title[i] = names[i] + names_info[i];
+		if(key.equals("editing")){
+		//if(mode.equals("editing")){
+		      return;
 		}
+		else if (key.equals("firsttime")){		
+			for(int i=0; i<names_info.length; i++){
+				names_info[i] = "";
+			}
+			
+			for(int i=0; i<names_info.length; i++){
+				names_title[i] = names[i] + names_info[i];
+			}
+		}
+		else if (!TextUtils.isEmpty(key)) {
+			this.initial_key = key;
+			//this.initial_activity = (Activity)this.getCallingActivity();
+			
+			Application_files_explorer ap = new Application_files_explorer(getFilesDir(), key);
+			names_info = ap.getNamesInfoNc();
+		
+			for(int i=0; i<names_info.length; i++){
+				names_title[i] = names[i] + names_info[i];
+			}
+		}
+		
+		  SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+	      SharedPreferences.Editor editor = settings.edit();
+	      editor.putString("key", "editing");
+	      editor.putString("originalkey", key);
+	      // Commit the edits!
+	      editor.commit();
+			
 		
 		
 //		String keytext = "";
@@ -116,6 +148,12 @@ public class Nominated_contact extends Activity {
 //			e.printStackTrace();
 //		}
 	}
+	
+	private String getStoredNominatedContactOriginalKey(){
+		SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+	    return settings.getString("originalkey", null);
+	}
+	
 	
 	private String getStoredNominatedContactKey(){
 		SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
@@ -209,7 +247,7 @@ public class Nominated_contact extends Activity {
 		
 		
 		if (!mistakes) {
-
+			deleteInitialFile();
 			String x = "done";
 			
 			
@@ -237,7 +275,16 @@ public class Nominated_contact extends Activity {
 
 	
 
-	
+	public void deleteInitialFile(){
+		this.initial_key = this.getStoredNominatedContactOriginalKey();
+		this.initial_key = this.getStoredNominatedContactOriginalKey();
+		if(this.initial_key != null && !this.initial_key.equals(getKey())){
+			  SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+		      SharedPreferences.Editor editor = settings.edit();
+		      editor.putString("deletekey", initial_key);
+		      editor.commit();
+		}
+	}
 	
 	public String getKey(){
 		String key = "";

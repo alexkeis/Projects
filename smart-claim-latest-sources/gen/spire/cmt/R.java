@@ -210,7 +210,7 @@ containing a value of this type.
         public static final int button_right=0x7f090044;
         public static final int button_top=0x7f090042;
         public static final int button_top_470=0x7f09004d;
-        public static final int cell_name_textview=0x7f090007;
+        public static final int cell_key_button=0x7f090007;
         public static final int cell_trash_button=0x7f090006;
         public static final int chainListView=0x7f09005e;
         public static final int check1=0x7f090028;

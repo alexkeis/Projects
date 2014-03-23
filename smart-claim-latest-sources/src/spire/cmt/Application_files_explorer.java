@@ -11,8 +11,7 @@ public class Application_files_explorer extends Activity {
 	public String str = "";
 	public static String[] nc_details= {"","","","","","","","",""};
 	public static String[] vehicle_details = {"","",""};
-	public static String[] profile_details = {"", "", "", "", "", "", "", "", "", ""}; 
-			
+	public static String[] profile_details = {"", "", "", "", "", "", "", "", "", ""}; 		
 			
 	Context context;
 	File path;// = new File(getFilesDir(), "/Your_details");
@@ -21,13 +20,24 @@ public class Application_files_explorer extends Activity {
 	File vehicleFile;
 	File detailsFile;
 	
-	public Application_files_explorer(String nckey){
+	public Application_files_explorer(File path, String nckey){
+		this.path = path;
 		if (!TextUtils.isEmpty(nckey)) {
-			this.ncFile = new File(new File(getFilesDir(), "/Your_details"), "/Nominated_contact_"+nckey+".txt");
+			this.ncFile = new File(new File(this.path, "/Your_details"), "/Nominated_contact_"+nckey+".txt");
 		} 
 	}
 	
+	public Application_files_explorer(File path){	
+		this.path = path;
+	}	
+	
 	public Application_files_explorer(){	
+	}
+	
+	
+	public void removeNcFile(String nckey){
+		File ncFile = new File(new File(this.path, "/Your_details"), "/Nominated_contact_"+nckey+".txt");
+		ncFile.delete();
 	}
 	
 	public String[] getNamesInfoNc(){

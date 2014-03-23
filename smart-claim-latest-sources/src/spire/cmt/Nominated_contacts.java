@@ -74,6 +74,15 @@ public class Nominated_contacts extends Activity {
 	}
 	
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+		String key = settings.getString("deletekey", null);
+		this.removeNc(key);
+	}
+	
+	
 	public void addCell(String s){
 		MyCell cell = new MyCell();
 		cell.name = s;
@@ -137,7 +146,7 @@ public class Nominated_contacts extends Activity {
 		return true;
 	}
 
-	private void deleteCell(final View v, final int index) {
+	private void deleteCell(final View v, final int index, String key) {
 		AnimationListener al = new AnimationListener() {
 			@Override
 			public void onAnimationEnd(Animation arg0) {
@@ -152,9 +161,17 @@ public class Nominated_contacts extends Activity {
 			@Override public void onAnimationStart(Animation animation) {}
 		};
 
+		removeNcFile(key);
 		collapse(v, al);
 	}
 
+	
+	private void removeNcFile(String key){
+		
+		Application_files_explorer ap = new Application_files_explorer(getFilesDir());
+		ap.removeNcFile(key);
+	}
+	
 	private void collapse(final View v, AnimationListener al) {
 		final int initialHeight = v.getMeasuredHeight();
 
@@ -183,6 +200,17 @@ public class Nominated_contacts extends Activity {
 		v.startAnimation(anim);
 	}
 
+	
+	public void removeNc(String key){
+		
+		if(key != null){
+			MyCell cell = new MyCell();
+			cell.name = key;
+			
+			mAnimList.remove(cell);
+			this.removeNcFile(key);
+		}
+	}
 
 	private class MyCell {
 		public String name;
@@ -251,12 +279,13 @@ public class Nominated_contacts extends Activity {
 			vh.imageButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					deleteCell(view, position);
+					deleteCell(view, position, cellname);
 				}
 			});
 
 			return view;
 		}
+		
 
 		private void setViewHolder(View view) {
 			ViewHolder vh = new ViewHolder();
@@ -280,6 +309,7 @@ public class Nominated_contacts extends Activity {
 	}
 	
 	public void addContactClicked(View view){
+		clickedNominatedContactKeySet("firsttime");
 		Intent intent1 = new Intent();
 		intent1.setClass(getApplicationContext(),
 						 
