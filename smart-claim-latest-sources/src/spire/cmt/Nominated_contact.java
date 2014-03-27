@@ -71,6 +71,23 @@ public class Nominated_contact extends Activity {
 			"Contact mode: " + names_info[6],
 			"*Mobile phone number: " + names_info[7], "Email: " + names_info[8]};
 
+	
+	public Nominated_contact(final String info[]){
+		
+//		this.runOnUiThread(new Runnable() {
+//			   public void run() {
+//				   this.count names_info = info;
+//			  }
+//		});
+		
+		this.names_info = info;
+	}
+	
+	public Nominated_contact(){
+		
+	}
+	
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -166,6 +183,12 @@ public class Nominated_contact extends Activity {
 		names_title[0] = "Country: Australia";
 		names_info[0] = "Australia";
 		
+		// Make the mobile phone the default contact mode
+		if(TextUtils.isEmpty(names_info[6])){
+			names_info[6] = "Mobile phone";
+			names_title[6] = "Contact Mode: Mobile phone";
+		}
+		
 		ArrayAdapter<String> adapt = new ArrayAdapter<String>(this,
 				R.layout.list_item, names_title);
 		View footer = getLayoutInflater().inflate(R.layout.footer_nominated_contact,
@@ -186,7 +209,7 @@ public class Nominated_contact extends Activity {
 					
 				}
 				else if(position == 1){
-					for (int i = 0; i < state.length - 1; i++) {
+					for (int i = 0; i < state.length; i++) {
 						if (state[i].equals(names_info[1])) {
 							radio_pos = i;
 						}
@@ -195,15 +218,15 @@ public class Nominated_contact extends Activity {
 				}
 
 				else if(position == 3){
-					for (int i = 0; i < contact_type.length - 1; i++) {
-						if (contact_type[i].equals(names_info[4])) {
+					for (int i = 0; i < contact_type.length; i++) {
+						if (contact_type[i].equals(names_info[3])) {
 							radio_pos = i;
 						}
 					}
 					showDialog(1);
 				}
 				else if(position == 6){
-					for (int i = 0; i < contact_via.length - 1; i++) {
+					for (int i = 0; i < contact_via.length; i++) {
 						if (contact_via[i].equals(names_info[6])) {
 							radio_pos = i;
 						}

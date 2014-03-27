@@ -1,17 +1,19 @@
 package spire.cmt;
 
 import java.io.*;
+import java.util.*;
 
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
-public class Application_files_explorer extends Activity {
+public class Application_files_explorer  {
 
 	public String str = "";
 	public static String[] nc_details= {"","","","","","","","",""};
 	public static String[] vehicle_details = {"","",""};
 	public static String[] profile_details = {"", "", "", "", "", "", "", "", "", ""}; 		
+	public ArrayList contacts;
 			
 	Context context;
 	File path;// = new File(getFilesDir(), "/Your_details");
@@ -25,13 +27,42 @@ public class Application_files_explorer extends Activity {
 		if (!TextUtils.isEmpty(nckey)) {
 			this.ncFile = new File(new File(this.path, "/Your_details"), "/Nominated_contact_"+nckey+".txt");
 		} 
+		getNcsfromFiles();
 	}
 	
 	public Application_files_explorer(File path){	
-		this.path = path;
+		try{
+			this.path = path;
+			getNcsfromFiles();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}	
 	
 	public Application_files_explorer(){	
+	}
+	
+	
+	
+	public void getNcsfromFiles(){
+		
+		File[] files = new File(this.path.toString()).listFiles();
+				
+		for(File file : files){
+			if(file.toString().contains("Nominated_contact"))
+			{
+				this.ncFile = file;
+				this.getNcValuesfromFile();
+				
+				Nominated_contact contact = new Nominated_contact(this.nc_details);
+				this.contacts.add(contact);
+			}
+		}
+	}
+	
+	public ArrayList getNcs(){
+		return this.contacts;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package spire.cmt;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -47,17 +50,17 @@ import android.widget.Toast;
 
 /**
  * @author alex
- *
+ * 
  */
 public class My_profile extends Activity {
 
-	
-	//public static String[] mas_prof = { "Your Details", "Your Vehicle" };
+	// public static String[] mas_prof = { "Your Details", "Your Vehicle" };
 	// changed by Alex Keis, to include Nominated Contact
-	
-	public static String[] mas_prof = { "Your Details", "Your Vehicle",  "Nominated Contacts"};
-	//public static String[] mas_prof = { "Nominated Conntact"};
-	
+
+	public static String[] mas_prof = { "Your Details", "Your Vehicle",
+			"Nominated Contacts" };
+	// public static String[] mas_prof = { "Nominated Conntact"};
+
 	Button im_del, sendDetails;
 	SharedPreferences sPref;
 	final String SAVED_TEXT = "pin";
@@ -71,8 +74,8 @@ public class My_profile extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_profile);
-		 Log.d("Log", "---My_profile---");
-		
+		Log.d("Log", "---My_profile---");
+
 		array = new JSONArray();
 		sendDetails = (Button) findViewById(R.id.sendDetails);
 
@@ -83,7 +86,7 @@ public class My_profile extends Activity {
 			sendDetails.setVisibility(View.VISIBLE);
 		} else
 			sendDetails.setVisibility(View.GONE);
-		
+
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
@@ -133,14 +136,14 @@ public class My_profile extends Activity {
 	}
 
 	// ///////////////////////
-	
+
 	Your_vehicle info_vechicle = new Your_vehicle();
 	Your_details details = new Your_details();
-    /**
-     * alexkeis, 14.02.14
-     */
-    Nominated_contact contact = new Nominated_contact(); 
-	
+	/**
+	 * alexkeis, 14.02.14
+	 */
+	Nominated_contact contact = new Nominated_contact();
+
 	// //////////////////
 
 	@Override
@@ -189,16 +192,19 @@ public class My_profile extends Activity {
 		protected Integer doInBackground(Void... params) {
 
 			Integer res = new Integer(0);
-			 Log.d("Log", "doInBackground---");
+			Log.d("Log", "doInBackground---");
 			try {
 				HttpParams httpParameters = new BasicHttpParams();
 				int timeoutConnection = 5000;
 				HttpConnectionParams.setConnectionTimeout(httpParameters,
 						timeoutConnection);
 				int timeoutSocket = 5000;
-				HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-				DefaultHttpClient httpclient = new DefaultHttpClient(httpParameters);
-				HttpPost httppost = new HttpPost("http://test.service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
+				HttpConnectionParams
+						.setSoTimeout(httpParameters, timeoutSocket);
+				DefaultHttpClient httpclient = new DefaultHttpClient(
+						httpParameters);
+				HttpPost httppost = new HttpPost(
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/SaveClientObject");
 				httppost.setHeader("Content-Type", "application/json");
 				httppost.setHeader("Accept", "application/json");
 				try {
@@ -223,8 +229,8 @@ public class My_profile extends Activity {
 					obj.put("IsBusiness", false);
 					obj.put("PersonalDataId", new Integer(0));
 					obj.put("PersonalData", "--");
-					obj.put("GapContact", "--2");
-					
+					obj.put("GapContacts", "--2");
+
 					Map in_obj = new LinkedHashMap();
 					in_obj.put("Id", new Integer(0));
 					in_obj.put("Title", null);
@@ -243,79 +249,46 @@ public class My_profile extends Activity {
 																	// details[10]
 					in_obj.put("Postcode", details.names_info[9]);// details[9]
 
-					
-					
-					///////////////////////////////////////////////////////////////////////////////////
-					Map nom_obj = new LinkedHashMap();
-					Map nom_obj_personal = new LinkedHashMap();
-					
-					
-					
-					nom_obj.put("Id", new Integer(0));
-					nom_obj.put("ClientId", new Integer(0));
-					nom_obj.put("AssignedDate", contact.getDate());
-					nom_obj.put("Date", s);
-					nom_obj.put("ContactType", contact.getType());
-					nom_obj.put("NotifyVia", contact.getContactVia());
-					nom_obj.put("PersonalDataId", new Integer(0));
-					nom_obj.put("PersonalData", "--");
-					
-					
-					nom_obj_personal.put("Id", new Integer(0));
-					nom_obj_personal.put("Title", null);
-					nom_obj_personal.put("FirstName", contact.getName());
-					nom_obj_personal.put("Surname", contact.getSurname());
-					nom_obj_personal.put("Email",  contact.getEmail());
-					nom_obj_personal.put("Phone", contact.getPhone());
-					nom_obj_personal.put("Phone2", null);
-					nom_obj_personal.put("Company", contact.getCompany());
-					nom_obj_personal.put("AbnNumber", null);
-					nom_obj_personal.put("Country", contact.getCountry());
-					nom_obj_personal.put("Address1", contact.getAddress());
-					nom_obj_personal.put("Address2", null);
-					nom_obj_personal.put("City", contact.getCity());
-					nom_obj_personal.put("StateCode", contact.getState());																// details[10]
-					nom_obj_personal.put("Postcode", null);
-					
-		
-					///////////////////////////////////////////////////////////////////////////////////
-					
-					
-					
+					// /////////////////////////////////////////////////////////////////////////////////
+
+					// /////////////////////////////////////////////////////////////////////////////////
+
 					//
-					//StringWriter out2 = new StringWriter();					
+					// StringWriter out2 = new StringWriter();
 					// JSONValue.writeJSONString(obj, out2);
+
+					JSONObject json1 = new JSONObject(obj);
+					JSONObject json = new JSONObject(in_obj);
 					
-				    JSONObject json1 =  new JSONObject(obj);
-					JSONObject json =  new JSONObject(in_obj);
-					JSONObject json2 =  new JSONObject(nom_obj);
-					JSONObject json3 =  new JSONObject(nom_obj_personal);
-					
-					
-					//String jsonText = out2.toString();
-					String jsonText = json.toString(); 
+					String debug = " {\"Id\":0,\"ClientId\":0,\"AssignedDate\":\"/Date(1395745727102)/\",\"ContactType\":1,\"NotifyVia\":1,\"PersonalDataId\":0,\"PersonalData\":{\"Id\":0,\"Title\":null,\"FirstName\":\"NominateFirst\",\"Surname\":\"NominateLast\",\"Email\":\"some@email.com\",\"Phone\":\"0412234567\",\"Phone2\":null,\"Company\":null,\"AbnNumber\":null,\"Country\":null,\"Address1\":null,\"Address2\":null,\"City\":null,\"StateCode\":null,\"Postcode\":null}},{\"Id\":0,\"ClientId\":0,\"AssignedDate\":\"/Date(1395745727102)/\",\"ContactType\":2,\"NotifyVia\":2,\"PersonalDataId\":0,\"PersonalData\":{\"Id\":0,\"Title\":null,\"FirstName\":\"NominateSecond\",\"Surname\":\"LastName\",\"Email\":\"some@email.com\",\"Phone\":\"045566778899\",\"Phone2\":null,\"Company\":null,\"AbnNumber\":null,\"Country\":null,\"Address1\":null,\"Address2\":null,\"City\":null,\"StateCode\":null,\"Postcode\":null}}; ";	
+					//JSONObject json2 = new JSONObject(debug);
+					JSONObject json2 = new JSONObject(getJSONStringContacts());
+
+					// JSONObject json2 = new JSONObject(nom_obj);
+					// JSONObject json3 = new JSONObject(nom_obj_personal);
+
+					// String jsonText = out2.toString();
+					String jsonText = json.toString();
 					String jsonText1 = json1.toString();
 					String jsonText2 = json2.toString();
-					String jsonText3 = json3.toString();
-					
-					
-					jsonText1 = jsonText1.replace("\"--\"", jsonText);
-					jsonText2 = jsonText2.replace("\"--\"", jsonText3);
-					jsonText1 = jsonText1.replace("\"--2\"", jsonText2);
-			
 
-				
-					
+					// String jsonText3 = json3.toString();
+
+					jsonText1 = jsonText1.replace("\"--\"", jsonText);
+
+					// jsonText2 = jsonText2.replace("\"--\"", jsonText3);
+					jsonText1 = jsonText1.replace("\"--2\"", "["+jsonText2+"]");
+
 					httppost.setEntity(new StringEntity(jsonText1, "UTF-8"));
 
 					HttpResponse response = httpclient.execute(httppost);
-                     // if (response == null)
-					
-					  // ////////////
+					// if (response == null)
+
+					// ////////////
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(response.getEntity()
 									.getContent(), "windows-1251"));
-					
+
 					StringBuilder sb = new StringBuilder();
 					String line = null;
 
@@ -324,7 +297,7 @@ public class My_profile extends Activity {
 					}
 
 					result = sb.toString();
-					Log.d("Log", "result "+result);
+					Log.d("Log", "result " + result);
 					//
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -333,23 +306,24 @@ public class My_profile extends Activity {
 
 			} finally {
 				Log.d("Log", "finally ");
-				if (result == null){
+				if (result == null) {
 					res = new Integer(1);
-				}else{
-				  result = result.substring(0, result.length() - 1);
-				  try {
+				} else {
+					result = result.substring(0, result.length() - 1);
+					try {
 
-					Integer.parseInt(result);
-					Log.d("Log", "Norm");
-					res = new Integer(0);
-				  } catch (Exception e) {
-					Log.d("Log", "Fail");
-					res = new Integer(1);
-					// TODO: handle exce;ption
-				  }
+						Integer.parseInt(result);
+						Log.d("Log", "Norm");
+						res = new Integer(0);
+					} catch (Exception e) {
+						Log.d("Log", "Fail");
+						res = new Integer(1);
+						// TODO: handle exce;ption
+					}
 
-				 Log.d("DLINNA", String.valueOf(result.length()) + "/" + result+ "/");
-				  id_client = result;
+					Log.d("DLINNA", String.valueOf(result.length()) + "/"
+							+ result + "/");
+					id_client = result;
 				}
 
 			}
@@ -361,7 +335,7 @@ public class My_profile extends Activity {
 			super.onPostExecute(result);
 			Log.d("Log", "End");
 			progressDialog.dismiss();
-			
+
 			if (result.intValue() == 1)
 
 				// Toast.makeText(
@@ -388,6 +362,74 @@ public class My_profile extends Activity {
 
 	// /////////////////////
 	// ////////////////////
+
+	public String getJSONStringContacts() {
+		try {
+			ArrayList contacts;
+			Nominated_contact c;
+			Map nom_obj = new LinkedHashMap();
+			Map nom_obj_personal = new LinkedHashMap();
+			String result = "";
+			
+			
+				Application_files_explorer ap = new Application_files_explorer(
+						new File(getFilesDir(), "/Your_details"));
+				
+				
+		
+			
+			
+			contacts = ap.getNcs();
+			java.util.Iterator<Nominated_contact> it = contacts.iterator();
+
+			while (it.hasNext()) {
+				c = it.next();
+				String s = "/Date(" + System.currentTimeMillis() / 1000 + ")/";
+
+				nom_obj.put("Id", new Integer(0));
+				nom_obj.put("ClientId", new Integer(0));
+				nom_obj.put("AssignedDate", c.getDate());
+				nom_obj.put("Date", s);
+				nom_obj.put("ContactType", c.getType());
+				nom_obj.put("NotifyVia", c.getContactVia());
+				nom_obj.put("PersonalDataId", new Integer(0));
+				nom_obj.put("PersonalData", "--");
+
+				nom_obj_personal.put("Id", new Integer(0));
+				nom_obj_personal.put("Title", null);
+				nom_obj_personal.put("FirstName", c.getName());
+				nom_obj_personal.put("Surname", c.getSurname());
+				nom_obj_personal.put("Email", c.getEmail());
+				nom_obj_personal.put("Phone", c.getPhone());
+				nom_obj_personal.put("Phone2", null);
+				nom_obj_personal.put("Company", c.getCompany());
+				nom_obj_personal.put("AbnNumber", null);
+				nom_obj_personal.put("Country", c.getCountry());
+				nom_obj_personal.put("Address1", c.getAddress());
+				nom_obj_personal.put("Address2", null);
+				nom_obj_personal.put("City", c.getCity());
+				nom_obj_personal.put("StateCode", c.getState()); // details[10]
+				nom_obj_personal.put("Postcode", null);
+
+				JSONObject json1 = new JSONObject(nom_obj);
+				JSONObject json2 = new JSONObject(nom_obj_personal);
+
+				String jsonText1 = json1.toString();
+				String jsonText2 = json2.toString();
+
+				jsonText2 = jsonText2.replace("\"--\"", jsonText1);
+
+				result += jsonText2;
+				if (it.hasNext()) {
+					result += ",";
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	public void load() {
 		SharedPreferences sharedPreferences = getSharedPreferences(
@@ -437,21 +479,24 @@ public class My_profile extends Activity {
 							Your_vehicle.class);
 					startActivity(intent1);
 				}
-				/* (non-Javadoc)
-				 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see
+				 * android.widget.AdapterView.OnItemClickListener#onItemClick
+				 * (android.widget.AdapterView, android.view.View, int, long)
 				 * alexkeis, 14/02/2014
 				 */
 				if (position == 2) {
 					Intent intent1 = new Intent();
 					intent1.setClass(getApplicationContext(),
-									 
-									//Nominated_contact.class);
-									Nominated_contacts.class);
-						
+
+					// Nominated_contact.class);
+							Nominated_contacts.class);
+
 					startActivity(intent1);
 				}
-				
-				
+
 			}
 		});
 	}
@@ -506,7 +551,7 @@ public class My_profile extends Activity {
 		}
 
 	}
-	
+
 	void readFile_info3() {
 		String str = "";
 		File path = new File(getFilesDir(), "/Your_details");
@@ -515,10 +560,10 @@ public class My_profile extends Activity {
 			BufferedReader br = new BufferedReader(new FileReader(sdFile));
 			int qw = 0;
 			Nominated_contact contact = new Nominated_contact();
-			while ((str = br.readLine()) != null)
-			{
+			while ((str = br.readLine()) != null) {
 				contact.names_info[qw] = str;
-				contact.names_title[qw] = contact.names[qw] + contact.names_info[qw];
+				contact.names_title[qw] = contact.names[qw]
+						+ contact.names_info[qw];
 				qw++;
 
 			}
