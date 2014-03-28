@@ -262,7 +262,8 @@ public class My_profile extends Activity {
 					
 					String debug = " {\"Id\":0,\"ClientId\":0,\"AssignedDate\":\"/Date(1395745727102)/\",\"ContactType\":1,\"NotifyVia\":1,\"PersonalDataId\":0,\"PersonalData\":{\"Id\":0,\"Title\":null,\"FirstName\":\"NominateFirst\",\"Surname\":\"NominateLast\",\"Email\":\"some@email.com\",\"Phone\":\"0412234567\",\"Phone2\":null,\"Company\":null,\"AbnNumber\":null,\"Country\":null,\"Address1\":null,\"Address2\":null,\"City\":null,\"StateCode\":null,\"Postcode\":null}},{\"Id\":0,\"ClientId\":0,\"AssignedDate\":\"/Date(1395745727102)/\",\"ContactType\":2,\"NotifyVia\":2,\"PersonalDataId\":0,\"PersonalData\":{\"Id\":0,\"Title\":null,\"FirstName\":\"NominateSecond\",\"Surname\":\"LastName\",\"Email\":\"some@email.com\",\"Phone\":\"045566778899\",\"Phone2\":null,\"Company\":null,\"AbnNumber\":null,\"Country\":null,\"Address1\":null,\"Address2\":null,\"City\":null,\"StateCode\":null,\"Postcode\":null}}; ";	
 					//JSONObject json2 = new JSONObject(debug);
-					JSONObject json2 = new JSONObject(getJSONStringContacts());
+					String temps = "["+getJSONStringContacts()+"]";
+					JSONArray json2 = new JSONArray(temps);
 
 					// JSONObject json2 = new JSONObject(nom_obj);
 					// JSONObject json3 = new JSONObject(nom_obj_personal);
@@ -277,7 +278,7 @@ public class My_profile extends Activity {
 					jsonText1 = jsonText1.replace("\"--\"", jsonText);
 
 					// jsonText2 = jsonText2.replace("\"--\"", jsonText3);
-					jsonText1 = jsonText1.replace("\"--2\"", "["+jsonText2+"]");
+					jsonText1 = jsonText1.replace("\"--2\"", jsonText2);
 
 					httppost.setEntity(new StringEntity(jsonText1, "UTF-8"));
 
@@ -364,28 +365,25 @@ public class My_profile extends Activity {
 	// ////////////////////
 
 	public String getJSONStringContacts() {
-		try {
+	//	try {
 			ArrayList contacts;
-			Nominated_contact c;
+			Temp_nominated_contact c;
 			Map nom_obj = new LinkedHashMap();
 			Map nom_obj_personal = new LinkedHashMap();
-			String result = "";
-			
+			String myresult = "";
+			boolean hasnext = false;
 			
 				Application_files_explorer ap = new Application_files_explorer(
 						new File(getFilesDir(), "/Your_details"));
 				
-				
-		
-			
-			
 			contacts = ap.getNcs();
-			java.util.Iterator<Nominated_contact> it = contacts.iterator();
+			java.util.Iterator<Temp_nominated_contact> it = contacts.iterator();
 
 			while (it.hasNext()) {
 				c = it.next();
+				if(it.hasNext()){hasnext = true;}
+				
 				String s = "/Date(" + System.currentTimeMillis() / 1000 + ")/";
-
 				nom_obj.put("Id", new Integer(0));
 				nom_obj.put("ClientId", new Integer(0));
 				nom_obj.put("AssignedDate", c.getDate());
@@ -417,18 +415,19 @@ public class My_profile extends Activity {
 				String jsonText1 = json1.toString();
 				String jsonText2 = json2.toString();
 
-				jsonText2 = jsonText2.replace("\"--\"", jsonText1);
+				jsonText1 = jsonText1.replace("\"--\"", jsonText2);
 
-				result += jsonText2;
-				if (it.hasNext()) {
-					result += ",";
+				myresult += jsonText1;
+				if (hasnext) {
+					myresult += ",";
+					hasnext = false;
 				}
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+			return myresult;
+		//} catch (Exception e) {
+		//	e.printStackTrace();
+		//	return null;
+		//}
 	}
 
 	public void load() {

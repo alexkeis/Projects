@@ -72,21 +72,21 @@ public class Nominated_contact extends Activity {
 			"*Mobile phone number: " + names_info[7], "Email: " + names_info[8]};
 
 	
-	public Nominated_contact(final String info[]){
-		
-//		this.runOnUiThread(new Runnable() {
-//			   public void run() {
-//				   this.count names_info = info;
-//			  }
-//		});
-		
-		this.names_info = info;
+	public Nominated_contact(final String info[]){		
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+            	setNamesInfo(info);
+            }
+         });
 	}
 	
 	public Nominated_contact(){
 		
 	}
 	
+	public void setNamesInfo(String[] info){
+		this.names_info = info;
+	}
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -470,7 +470,8 @@ public class Nominated_contact extends Activity {
 				bw.write(names_info[i] + "\n");
 
 			}
-			bw.write(names_info[i]);
+			bw.write(names_info[i]+"\n");
+			bw.write(this.date+"\n");
 
 			bw.close();
 

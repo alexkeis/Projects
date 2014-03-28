@@ -10,10 +10,11 @@ import android.text.TextUtils;
 public class Application_files_explorer  {
 
 	public String str = "";
-	public static String[] nc_details= {"","","","","","","","",""};
-	public static String[] vehicle_details = {"","",""};
-	public static String[] profile_details = {"", "", "", "", "", "", "", "", "", ""}; 		
-	public ArrayList contacts;
+	public String[] nc_details= {"","","","","","","","",""};
+	public String nc_date = "";
+	public String[] vehicle_details = {"","",""};
+	public String[] profile_details = {"", "", "", "", "", "", "", "", "", ""}; 		
+	public ArrayList contacts = new ArrayList();
 			
 	Context context;
 	File path;// = new File(getFilesDir(), "/Your_details");
@@ -21,6 +22,7 @@ public class Application_files_explorer  {
 	File ncFile;
 	File vehicleFile;
 	File detailsFile;
+	String date;
 	
 	public Application_files_explorer(File path, String nckey){
 		this.path = path;
@@ -48,15 +50,29 @@ public class Application_files_explorer  {
 	public void getNcsfromFiles(){
 		
 		File[] files = new File(this.path.toString()).listFiles();
-				
+		int i = 0;
+		String[] nc_test;
+		String[] nc_temp;
+		String nc_date;
+		//Temp_nominated_contact contact = null;		
+		
 		for(File file : files){
 			if(file.toString().contains("Nominated_contact"))
 			{
 				this.ncFile = file;
-				this.getNcValuesfromFile();
+				nc_temp = this.getNcValuesfromFile();
+				nc_date = this.getDatefromNcFile();
 				
-				Nominated_contact contact = new Nominated_contact(this.nc_details);
-				this.contacts.add(contact);
+				try{
+					//contact = new Temp_nominated_contact(this.nc_details, this.date);
+					//nc_temp = this.nc_details;
+					this.contacts.add(new Temp_nominated_contact((nc_temp), nc_date));
+					//nc_temp = new String[](this.nc_details);				
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -70,6 +86,9 @@ public class Application_files_explorer  {
 		File ncFile = new File(new File(this.path, "/Your_details"), "/Nominated_contact_"+nckey+".txt");
 		ncFile.delete();
 	}
+	
+
+	
 	
 	public String[] getNamesInfoNc(){
 		
@@ -132,18 +151,55 @@ public class Application_files_explorer  {
 		}
 	}
 	
-	public void getNcValuesfromFile() {
+	public String getDatefromNcFile() {
+		String tmpdate = null;
+		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(ncFile));
-			for (int i = 0; i < nc_details.length; i++) {
-				nc_details[i] = br.readLine();
+			String lastline = null;
+			for (int i = 0; i <= nc_details.length; i++) {
+				String s = br.readLine();
+				if (s == null){
+					s = "";  
+				}
+				lastline = s;
 			}
+			this.date = lastline;
+			tmpdate = lastline;
+			
+		} catch (FileNotFoundException e) {
+			//e.printStackTrace();
+		} catch (IOException e) {
+			//e.printStackTrace();
+		}
+		return tmpdate;
+	}
+	
+	
+	public String[] getNcValuesfromFile() {
+		String[] tmpncvals = new String[] {"","","","","","","","",""};
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(ncFile));
+			String lastline = null;
+			for (int i = 0; i < nc_details.length; i++) {
+				String s = br.readLine();
+				if (s == null){
+					s = "";  
+				}
+				nc_details[i] = s;
+				tmpncvals[i] = s;
+				lastline = s;
+			}
+			this.date = lastline;
+			
 		} catch (FileNotFoundException e) {
 
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
+		return tmpncvals;
 	}
 	
 	public String get_nc_email(){
