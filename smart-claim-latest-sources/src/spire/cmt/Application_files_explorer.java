@@ -95,8 +95,9 @@ public class Application_files_explorer  {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(ncFile));
 			int qw = 0;
+			String str;
 		
-			while ((str = br.readLine()) != null)
+			while ((str = br.readLine()) != null && qw <= nc_details.length-1)
 			{
 				nc_details[qw] = str;
 				qw++;

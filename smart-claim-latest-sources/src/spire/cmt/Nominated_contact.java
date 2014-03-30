@@ -28,6 +28,9 @@ import android.widget.Toast;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Nominated_contact extends Activity {
 	DialogFragment dialog_nc;
@@ -41,6 +44,7 @@ public class Nominated_contact extends Activity {
 	public static boolean click_state = false;
 	public static boolean click_contact_type = false;
 	public static boolean click_contact_mode = false;
+	public ArrayList original_names_info_list;
 	private String initial_key = null; 
 	private Activity initial_activity;
 	
@@ -123,8 +127,7 @@ public class Nominated_contact extends Activity {
 			//this.initial_activity = (Activity)this.getCallingActivity();
 			
 			Application_files_explorer ap = new Application_files_explorer(getFilesDir(), key);
-			names_info = ap.getNamesInfoNc();
-		
+			names_info = ap.getNamesInfoNc();		
 			for(int i=0; i<names_info.length; i++){
 				names_title[i] = names[i] + names_info[i];
 			}
@@ -134,6 +137,8 @@ public class Nominated_contact extends Activity {
 	      SharedPreferences.Editor editor = settings.edit();
 	      editor.putString("key", "editing");
 	      editor.putString("originalkey", key);
+	      Set set = new HashSet(Arrays.asList(names_info));
+	      editor.putStringSet("names_info", set);
 	      // Commit the edits!
 	      editor.commit();
 			
@@ -188,6 +193,25 @@ public class Nominated_contact extends Activity {
 			names_info[6] = "Mobile phone";
 			names_title[6] = "Contact Mode: Mobile phone";
 		}
+		
+		if(names_info[6].equals("Email")){
+			 make_compulsory(8);
+			 make_uncompolsory(7);
+		}
+		else if(names_info[6].equals("Mobile phone")){
+			 make_compulsory(7);
+			 make_uncompolsory(8);
+		}
+		
+		if(names_info[3].equals("Smash Repair Center")){
+			make_compulsory(5);
+			make_uncompolsory(4);
+		}
+		else {
+			make_compulsory(4);
+			make_uncompolsory(5);
+		}
+		
 		
 		ArrayAdapter<String> adapt = new ArrayAdapter<String>(this,
 				R.layout.list_item, names_title);
@@ -450,6 +474,21 @@ public class Nominated_contact extends Activity {
 		
 		if(!mistakes)
 		{
+			
+		    Set set_current = new HashSet(Arrays.asList(names_info));
+		    
+			SharedPreferences sharedPreferences = getSharedPreferences("NOMINATED_CONTACT_KEY",
+					MODE_PRIVATE);
+			Set set_saved = sharedPreferences.getStringSet("names_info", null);
+			
+			if(!set_saved.equals(set_current)){
+				sharedPreferences = getSharedPreferences("MY_CLIENT",
+				MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString("ID", "");
+				editor.commit();
+			}
+			
 			writeFileSD();
 		}
 		
@@ -550,6 +589,11 @@ public class Nominated_contact extends Activity {
 					{
 						names_info[3] = contact_type[lv.getCheckedItemPosition()];
 						names_title[3] = names[3] + names_info[3];
+						
+						if(names_info[3].equals("Smash Repair Center")){
+							make_compulsory(5);
+							make_uncompolsory(4);
+						}
 					}
 					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
 					ArrayAdapter<String> adapt = new ArrayAdapter<String>(

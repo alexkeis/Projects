@@ -238,9 +238,11 @@ public class Nominated_contacts extends Activity {
 	public class MyAnimListAdapter extends ArrayAdapter<MyCell> {
 		private LayoutInflater mInflater;
 		private int resId;
+		private Context context;
 
 		public MyAnimListAdapter(Context context, int textViewResourceId, List<MyCell> objects) {
 			super(context, textViewResourceId, objects);
+			this.context = context;
 			this.resId = textViewResourceId;
 			this.mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
@@ -280,6 +282,7 @@ public class Nominated_contacts extends Activity {
 				@Override
 				public void onClick(View v) {
 					deleteCell(view, position, cellname);
+					
 				}
 			});
 
