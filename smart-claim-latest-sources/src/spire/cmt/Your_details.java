@@ -1,17 +1,21 @@
 package spire.cmt;
 
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import spire.cmt.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 //import android.util.Log;
 import android.view.View;
@@ -55,6 +59,15 @@ public class Your_details extends Activity {
 		dialog = new Dialog_details();
 		dialog_date = new Dialog_date_details();
 		list();
+		
+		SharedPreferences settings = getSharedPreferences(
+				"NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+		SharedPreferences.Editor editor = settings.edit();
+		Set set = new HashSet(Arrays.asList(names_info));
+		editor.putStringSet("names_info", set);
+		// Commit the edits!
+		editor.commit();
+	
 	}
 
 	public void list() {
@@ -109,6 +122,21 @@ public class Your_details extends Activity {
 					"Please enter a valid *Phone:", Toast.LENGTH_SHORT);
 			toast.show();
 		} else {
+
+			Set set_current = new HashSet(Arrays.asList(names_info));
+
+			SharedPreferences sharedPreferences = getSharedPreferences(
+					"NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+			Set set_saved = sharedPreferences.getStringSet("names_info", null);
+
+			if (!set_saved.equals(set_current)) {
+				sharedPreferences = getSharedPreferences("MY_CLIENT",
+						MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString("Contact_edited", "true");
+				editor.commit();
+			}
+
 			writeFileSD();
 			finish();
 		}
@@ -143,8 +171,8 @@ public class Your_details extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Select state:");
 			builder.setSingleChoiceItems(state, radio_pos, myClickListener);
-			//builder.setPositiveButton("Next", myClickListener);
-			//builder.setNegativeButton("Prev", myClickListener);
+			// builder.setPositiveButton("Next", myClickListener);
+			// builder.setNegativeButton("Prev", myClickListener);
 			builder.setNeutralButton("Done", myClickListener);
 			// builder.setCancelable(false);
 			return builder.create();

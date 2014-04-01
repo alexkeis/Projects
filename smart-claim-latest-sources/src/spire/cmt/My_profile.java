@@ -70,6 +70,8 @@ public class My_profile extends Activity {
 	JSONArray array;
 	String strSavedMem1;
 	private ProgressDialog progressDialog;
+	
+
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -181,6 +183,17 @@ public class My_profile extends Activity {
 	// //////////////////////
 	public class MyTask_show extends AsyncTask<Void, Void, Integer> {
 
+		public int getClientId(){
+			try {
+				int id = new Integer(id_client);
+				return id;
+			}
+			catch (Exception e){
+				
+			}
+			return new Integer(0);
+		}
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -209,7 +222,9 @@ public class My_profile extends Activity {
 				httppost.setHeader("Accept", "application/json");
 				try {
 					Map obj = new LinkedHashMap();
-					obj.put("Id", new Integer(0));
+				
+					obj.put("Id", this.getClientId());
+
 					obj.put("DealerId", null);
 					obj.put("DealerVehicleMake", null);
 					obj.put("VehicleMake", info_vechicle.names_info[0]);
@@ -534,6 +549,7 @@ public class My_profile extends Activity {
 			BufferedReader br = new BufferedReader(new FileReader(sdFile));
 			int qw = 0;
 			Your_vehicle yv = new Your_vehicle();
+			//yv.menustate.set_first_time(); 
 			while ((str = br.readLine()) != null)
 
 			{
@@ -585,6 +601,23 @@ public class My_profile extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
+				MODE_PRIVATE);
+		String strSavedMem1 = sharedPreferences.getString("Contact_edited", "");
+		if (strSavedMem1.equals("true")) {
+			  
+			Toast.makeText(
+			getApplicationContext(),
+			"Contact details have been edited.\n Please resend. ",
+			Toast.LENGTH_SHORT).show();
+			
+			
+			sendDetails.setVisibility(View.VISIBLE);
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putString("Contact_edited", "false");
+			editor.commit();
+		} 
 		load();
 	}
 }

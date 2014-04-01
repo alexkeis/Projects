@@ -163,11 +163,15 @@ public class Nominated_contacts extends Activity {
 
 		removeNcFile(key);
 		collapse(v, al);
+	
+		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT", MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString("Contact_edited", "true");
+		editor.commit();
 	}
 
 	
 	private void removeNcFile(String key){
-		
 		Application_files_explorer ap = new Application_files_explorer(getFilesDir());
 		ap.removeNcFile(key);
 	}

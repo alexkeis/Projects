@@ -6,11 +6,14 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import spire.cmt.R;
-
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,15 +30,28 @@ public class Your_vehicle extends Activity {
 	int pp2;
 	public static String[] names = { "Make ", "Model ", "*Rego " };
 	public static String[] names_info = { "", "", "" };
+	public String[] temp_names_info;
 	public static String[] names_title = { "Make " + names_info[0],
 			"Model " + names_info[1], "*Rego " + names_info[2] };
+	//public Menu_state_keeper menustate;
+	public int count = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.your_vechicle);
 		dialog2 = new Dialog_vehicle();
 		list();
-
+		
+		if(count == 0){
+			temp_names_info = names_info;
+			count++;
+		}
+		
+//		menustate = new Menu_state_keeper();
+//		if(menustate.is_first_time_called()){
+//			menustate.set_init_values(names_info);
+//			menustate.menu_called_again();
+//		}
 	}
 
 	public void list() {
@@ -69,6 +85,19 @@ public class Your_vehicle extends Activity {
 					"Please enter a valid *Rego:", Toast.LENGTH_SHORT);
 			toast.show();
 		} else {
+
+			
+			if(!this.temp_names_info.equals(this.names_info))
+			{
+				SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT", MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString("Contact_edited", "true");
+				editor.commit();
+			}
+			this.count = 0;
+			//menustate.set_final_values(names_info);
+			//if (menustate.make_comparison()) { menustate.notify("true", MODE_PRIVATE);}
+
 			writeFileSD();
 			finish();
 		}
@@ -79,8 +108,9 @@ public class Your_vehicle extends Activity {
 		path.mkdirs();
 		File sdFile = new File(path, "My_profile_vehicle.txt");
 		try {
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(sdFile), "utf8"),8192);
-		//	BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(sdFile), "utf8"), 8192);
+			// BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
 			int i = 0;
 			for (i = 0; i < names.length - 1; i++) {
 

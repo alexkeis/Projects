@@ -205,7 +205,7 @@ public class Nominated_contact extends Activity {
 		
 		if(names_info[3].equals("Smash Repair Center")){
 			make_compulsory(5);
-			make_uncompolsory(4);
+			//make_uncompolsory(4);
 		}
 		else {
 			make_compulsory(4);
@@ -485,7 +485,7 @@ public class Nominated_contact extends Activity {
 				sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
 				SharedPreferences.Editor editor = sharedPreferences.edit();
-				editor.putString("ID", "");
+				editor.putString("Contact_edited", "true");
 				editor.commit();
 			}
 			
