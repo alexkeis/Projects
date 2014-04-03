@@ -100,6 +100,11 @@ public class My_profile extends Activity {
 		readFile_info();
 		readFile_info2();
 		readFile_info3();
+		
+		Application_files_explorer ap = new Application_files_explorer(
+				new File(getFilesDir(), "/Your_details"));
+	
+		ap.backup_your_details();
 	}
 
 	public void showDetails(View view) {
@@ -370,6 +375,9 @@ public class My_profile extends Activity {
 				// .show();
 
 				SavePreferences2("ID", id_client);
+				Application_files_explorer ap = new Application_files_explorer(
+						new File(getFilesDir(), "/Your_details"));
+				ap.backup_your_details();
 				sendDetails.setVisibility(View.GONE);
 			}
 
@@ -601,23 +609,35 @@ public class My_profile extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
-		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
-				MODE_PRIVATE);
-		String strSavedMem1 = sharedPreferences.getString("Contact_edited", "");
-		if (strSavedMem1.equals("true")) {
-			  
+		Application_files_explorer ap = new Application_files_explorer(
+				new File(getFilesDir(), "/Your_details"));
+		boolean changes  =  ap.have_files_changed();
+		if(changes){
 			Toast.makeText(
 			getApplicationContext(),
 			"Contact details have been edited.\n Please resend. ",
 			Toast.LENGTH_SHORT).show();
-			
-			
 			sendDetails.setVisibility(View.VISIBLE);
-			SharedPreferences.Editor editor = sharedPreferences.edit();
-			editor.putString("Contact_edited", "false");
-			editor.commit();
-		} 
+		}
+		
+		
+		
+//		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
+//				MODE_PRIVATE);
+//		String strSavedMem1 = sharedPreferences.getString("Contact_edited", "");
+//		if (strSavedMem1.equals("true")) {
+//			  
+//			Toast.makeText(
+//			getApplicationContext(),
+//			"Contact details have been edited.\n Please resend. ",
+//			Toast.LENGTH_SHORT).show();
+//			
+//			
+//			sendDetails.setVisibility(View.VISIBLE);
+//			SharedPreferences.Editor editor = sharedPreferences.edit();
+//			editor.putString("Contact_edited", "false");
+//			editor.commit();
+//		} 
 		load();
 	}
 }

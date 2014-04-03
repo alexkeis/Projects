@@ -1,11 +1,14 @@
 package spire.cmt;
 
-import java.io.*;
-import java.util.*;
 
+import java.io.*;
+
+import java.util.*;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import org.apache.commons.io.*;
+
 
 public class Application_files_explorer  {
 
@@ -22,6 +25,7 @@ public class Application_files_explorer  {
 	File ncFile;
 	File vehicleFile;
 	File detailsFile;
+	 
 	String date;
 	
 	public Application_files_explorer(File path, String nckey){
@@ -45,6 +49,50 @@ public class Application_files_explorer  {
 	public Application_files_explorer(){	
 	}
 	
+	
+	public void backup_your_details(){
+		Runtime r = Runtime.getRuntime();
+		if(this.path.exists()){
+			try {
+				Process p = r.exec("rm -r "+this.path.toString()+"_back/");
+				p.waitFor();
+			    p = r.exec("cp -R "+this.path.toString()+" "+this.path.toString()+"_back");
+				p.waitFor();
+			}
+			catch (Exception e){
+				
+			}
+		}
+	}
+	
+	public boolean have_files_changed(){
+		File backupdir = new File(this.path.toString()+"_back");
+		
+		if(backupdir.exists()){
+			
+			File[] files = new File(this.path.toString()+"_back").listFiles();
+		
+			for(File file : files){
+				if(file.isDirectory()){continue;}
+				try {
+					File file2 = new File(this.path.toString(), "/"+file.getName());
+					if(file2.exists()){
+						if(FileUtils.contentEquals(file, file2)){
+							continue;
+						}
+						else
+							return true;
+					}
+					else
+						return true;
+				} catch (java.io.IOException e) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return false;
+	}
 	
 	
 	public void getNcsfromFiles(){

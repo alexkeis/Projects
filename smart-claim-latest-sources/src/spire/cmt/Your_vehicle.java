@@ -1,6 +1,7 @@
 package spire.cmt;
 
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -33,7 +34,7 @@ public class Your_vehicle extends Activity {
 	public String[] temp_names_info;
 	public static String[] names_title = { "Make " + names_info[0],
 			"Model " + names_info[1], "*Rego " + names_info[2] };
-	//public Menu_state_keeper menustate;
+	public Menu_state_keeper menustate;
 	public int count = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,16 +43,14 @@ public class Your_vehicle extends Activity {
 		dialog2 = new Dialog_vehicle();
 		list();
 		
-		if(count == 0){
-			temp_names_info = names_info;
-			count++;
-		}
 		
-//		menustate = new Menu_state_keeper();
+//		menustate = new Menu_state_keeper(savedInstanceState);
 //		if(menustate.is_first_time_called()){
 //			menustate.set_init_values(names_info);
 //			menustate.menu_called_again();
 //		}
+		
+		
 	}
 
 	public void list() {
@@ -85,18 +84,12 @@ public class Your_vehicle extends Activity {
 					"Please enter a valid *Rego:", Toast.LENGTH_SHORT);
 			toast.show();
 		} else {
-
-			
-			if(!this.temp_names_info.equals(this.names_info))
-			{
-				SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT", MODE_PRIVATE);
-				SharedPreferences.Editor editor = sharedPreferences.edit();
-				editor.putString("Contact_edited", "true");
-				editor.commit();
-			}
-			this.count = 0;
-			//menustate.set_final_values(names_info);
-			//if (menustate.make_comparison()) { menustate.notify("true", MODE_PRIVATE);}
+//
+//			menustate.set_final_values(names_info);
+//			if (menustate.make_comparison()) { 
+//				menustate.notify("true", MODE_PRIVATE);
+//			}
+//			menustate.set_first_time();
 
 			writeFileSD();
 			finish();
