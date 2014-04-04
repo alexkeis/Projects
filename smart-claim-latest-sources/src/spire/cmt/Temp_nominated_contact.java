@@ -1,5 +1,7 @@
 package spire.cmt;
 
+import android.text.TextUtils;
+
 public class Temp_nominated_contact {
 	
 	private String[] names_info = { "", "", "", "", "", "", "", "", ""};
@@ -43,7 +45,11 @@ public class Temp_nominated_contact {
 	}
 	
 	public String getName(){
-		return names_info[4];
+		if(TextUtils.isEmpty(names_info[4])){
+			return "N/A";
+		}
+		else 
+			return names_info[4];
 		
 	}
 	

@@ -89,11 +89,40 @@ public class Application_files_explorer  {
 					return true;
 				}
 			}
+			
+			
+			files = new File(this.path.toString()).listFiles();
+			
+			for(File file : files){
+				if(file.isDirectory()){continue;}
+				try {
+					File file2 = new File(this.path.toString()+"_back", "/"+file.getName());
+					if(file2.exists()){
+						if(FileUtils.contentEquals(file, file2)){
+							continue;
+						}
+						else
+							return true;
+					}
+					else
+						return true;
+				} catch (java.io.IOException e) {
+					return true;
+				}
+			}
+			
 			return false;
 		}
 		return false;
 	}
 	
+	public boolean hasNominatedContacts(){
+		if(contacts.isEmpty()){
+			return false;
+		}
+		else
+			return true;
+	}
 	
 	public void getNcsfromFiles(){
 		

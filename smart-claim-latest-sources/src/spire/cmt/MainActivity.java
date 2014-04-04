@@ -120,7 +120,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		begin_service();
+		//begin_service();
 		
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// captcha
@@ -185,8 +185,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		//alexkeis, only prompt for nominated contact if contact email is not set
 		String strSavedMem1 = sharedPreferences.getString("NC_EMAIL", "");
-		if (strSavedMem1.equals("no")) { 
-			//alexkeis, ask whether a user wants to nominated a contact
+		
+		Application_files_explorer ap = new Application_files_explorer(new File(getFilesDir(), "/Your_details"));
+		//if (strSavedMem1.equals("no")) { 
+		//alexkeis, ask whether a user wants to nominated a contact
+		if(!ap.hasNominatedContacts())	{
 			check_nominated_contact();
 		}
 		
@@ -248,7 +251,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	        	dialog.dismiss();
 				Intent intent1 = new Intent();
 				intent1.setClass(getApplicationContext(),
-								 Nominated_contact.class);
+								 Nominated_contacts.class);
 				startActivity(intent1);
 	        }
 

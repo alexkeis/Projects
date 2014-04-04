@@ -52,6 +52,7 @@ public class Nominated_contact extends Activity {
 	int radio_pos = -1;
 	private Email_processor ep = new Email_processor();
 	Long date = System.currentTimeMillis()/1000;
+	String dateString = String.valueOf(date);
 
 	
     //alexkeis
@@ -100,6 +101,11 @@ public class Nominated_contact extends Activity {
 		dialog_date = new Dialog_date_details();
 		
 		
+	      SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_SCREEN_VALUES", MODE_PRIVATE);
+	      SharedPreferences.Editor editor = settings.edit();
+	      editor.putString("done", "empty");
+	      editor.commit();
+		
 		this.readFileInfo();
 		
 		list();
@@ -111,7 +117,9 @@ public class Nominated_contact extends Activity {
 		
 		if(key.equals("editing")){
 		//if(mode.equals("editing")){
-		      return;
+			SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
+			this.dateString = settings.getString("date", null);
+			return;
 		}
 		else if (key.equals("firsttime")){		
 			for(int i=0; i<names_info.length; i++){
@@ -131,12 +139,14 @@ public class Nominated_contact extends Activity {
 			for(int i=0; i<names_info.length; i++){
 				names_title[i] = names[i] + names_info[i];
 			}
+			this.dateString = ap.getDatefromNcFile();
 		}
 		
 		  SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_KEY", MODE_PRIVATE);
 	      SharedPreferences.Editor editor = settings.edit();
 	      editor.putString("key", "editing");
 	      editor.putString("originalkey", key);
+	      editor.putString("date", dateString);
 	      Set set = new HashSet(Arrays.asList(names_info));
 	      editor.putStringSet("names_info", set);
 	      // Commit the edits!
@@ -205,7 +215,7 @@ public class Nominated_contact extends Activity {
 		
 		if(names_info[3].equals("Smash Repair Center")){
 			make_compulsory(5);
-			//make_uncompolsory(4);
+			//make_compulsory(4);
 		}
 		else {
 			make_compulsory(4);
@@ -384,8 +394,7 @@ public class Nominated_contact extends Activity {
 	}
 	
 	public String getName(){
-		return names_info[4];
-		
+			return names_info[4];
 	}
 	
 	public String getSurname(){
@@ -510,7 +519,7 @@ public class Nominated_contact extends Activity {
 
 			}
 			bw.write(names_info[i]+"\n");
-			bw.write(this.date+"\n");
+			bw.write(this.dateString+"\n");
 
 			bw.close();
 

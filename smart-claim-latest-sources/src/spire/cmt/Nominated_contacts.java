@@ -121,8 +121,9 @@ public class Nominated_contacts extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		SharedPreferences settings = getSharedPreferences("NOMINATED_CONTACT_SCREEN_VALUES", MODE_PRIVATE);
 		String keystring  = settings.getString("done", null);
-		addCell(keystring);
-				
+		if(!keystring.equals("empty")){
+			addCell(keystring);
+		}	
 //
 //		//switch (requestCode) {
 //		//case (0): {
