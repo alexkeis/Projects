@@ -193,7 +193,7 @@ public class Nominated_contact extends Activity {
 	}
 	
 	public void list() {
-		ListView lv = (ListView) findViewById(R.id.listView_nominated_contact);
+		//ListView lv = (ListView) findViewById(R.id.listView_nominated_contact);
 		
 		names_title[0] = "Country: Australia";
 		names_info[0] = "Australia";
@@ -214,14 +214,17 @@ public class Nominated_contact extends Activity {
 		}
 		
 		if(names_info[3].equals("Smash Repair Center")){
-			make_compulsory(5);
-			//make_compulsory(4);
+		 	names[5] = "Business name: ";
+			names_title[5] = "*Business Name: " + names_info[5];
+		 	make_compulsory(5);
+		 	//make_compulsory(4);
 		}
 		else {
 			make_compulsory(4);
 			make_uncompolsory(5);
 		}
 		
+		ListView lv = (ListView) findViewById(R.id.listView_nominated_contact);
 		
 		ArrayAdapter<String> adapt = new ArrayAdapter<String>(this,
 				R.layout.list_item, names_title);
@@ -346,8 +349,18 @@ public class Nominated_contact extends Activity {
 	public String getKey(){
 		String key = "";
 		
-		if (!this.getName().equals("") && !this.getName().equals(null)){
-			key += this.getName();
+		if(this.isCompulsory(5)){
+			if (!this.getCompany().equals("") && !this.getCompany().equals(null)){
+				key += this.getCompany();
+			}
+			if (!this.getName().equals("") && !this.getName().equals(null)){
+				key += "  |  "+ this.getName();
+			}
+		}
+		else{
+			if (!this.getName().equals("") && !this.getName().equals(null)){
+				key += this.getName();
+			}
 		}
 		
 		if (!this.getPhone().equals("") && !this.getPhone().equals(null)){
@@ -602,6 +615,12 @@ public class Nominated_contact extends Activity {
 						if(names_info[3].equals("Smash Repair Center")){
 							make_compulsory(5);
 							make_uncompolsory(4);
+							names_title[5] = "*Business name: "+names_info[5];
+						}
+						else{
+							make_compulsory(4);
+							make_uncompolsory(5);
+							names_title[5] = "Business Name\n (If applicable): "+names_info[5];
 						}
 					}
 					ListView lv2 = (ListView) findViewById(R.id.listView_nominated_contact);
@@ -665,6 +684,11 @@ public class Nominated_contact extends Activity {
 			this.names[index] = this.names[index].substring(1); 
 		}
 		this.names_title[index] =  this.names[index] + this.names_info[index];
+	}
+	
+	
+	public boolean isCompulsory(int index){
+		return this.names_title[index].startsWith("*");
 	}
 	
 	
