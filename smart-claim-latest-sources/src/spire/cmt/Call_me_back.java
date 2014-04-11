@@ -55,7 +55,7 @@ import android.os.Vibrator;
  */
 /**
  * @author alex
- *
+ * 
  */
 public class Call_me_back extends Activity implements OnClickListener {
 	public static int id = 0;
@@ -95,19 +95,20 @@ public class Call_me_back extends Activity implements OnClickListener {
 			"", "" };
 	private ProgressDialog progressDialog;
 	private Application_files_explorer app_files = new Application_files_explorer();
-	
-	
+	private String latitude;
+	private String longitude;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.call_me_back);
-		
+
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setCancelable(false);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.setIndeterminate(true);
 		progressDialog.setMessage("Wait");
-		
+
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
 		String strSavedMem1 = sharedPreferences.getString("ID", "");
@@ -130,15 +131,14 @@ public class Call_me_back extends Activity implements OnClickListener {
 		View footer2 = getLayoutInflater().inflate(
 				R.layout.footer_existing_client, null);
 		lv2.addFooterView(footer2);
-		
-//		New code added 2/13/2014 by alexkeis  -----------------------------------
-		
-		View footer3 = getLayoutInflater().inflate(
-				R.layout.gap, null);
+
+		// New code added 2/13/2014 by alexkeis
+		// -----------------------------------
+
+		View footer3 = getLayoutInflater().inflate(R.layout.gap, null);
 		lv2.addFooterView(footer3);
-//	-----------------------------------------------------------------------------	
-		
-		
+		// -----------------------------------------------------------------------------
+
 		lv2.setAdapter(adapt2);
 
 		dialog = new Dialog_new_client();
@@ -167,19 +167,24 @@ public class Call_me_back extends Activity implements OnClickListener {
 			}
 		});
 
+		
+		
+		
 		tabs = (TabHost) findViewById(android.R.id.tabhost);
 
 		tabs.setup();
 
-		TabHost.TabSpec spec = tabs.newTabSpec("tag1");
 
+		TabHost.TabSpec spec = tabs.newTabSpec("tag1");
 		spec.setContent(R.id.tab1);
 		spec.setIndicator("New Client");
 		tabs.addTab(spec);
+
 		spec = tabs.newTabSpec("tag2");
 		spec.setContent(R.id.tab2);
 		spec.setIndicator("Existing Client");
 		tabs.addTab(spec);
+
 		tabs.setCurrentTab(id);
 
 	}
@@ -251,84 +256,147 @@ public class Call_me_back extends Activity implements OnClickListener {
 		}
 
 	}
-	
-	public void ok_gap(View view) {
-		
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    builder.setTitle("Accident");
-	    builder.setMessage("We’ve detected that you’ve been in a car accident. Would you like a notification sent to your Nominated Contact?");
-	    builder.setIcon(android.R.drawable.ic_dialog_info);
-	    
-	    
-	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-	        public void onClick(DialogInterface dialog, int which) {
-	        	                send_email();
-	        					Toast.makeText(getApplicationContext(), "Sending Email", Toast.LENGTH_SHORT).show();
-	        		        	dialog.dismiss();  		        	
-	        }
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-	    });
+		if (requestCode == 1) {
 
-	    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-	        @Override
-	        public void onClick(DialogInterface dialog, int which) {
-	            // Do nothing
-	            dialog.dismiss();
-	            Toast.makeText(getApplicationContext(), "Email Canceled.", Toast.LENGTH_SHORT).show();
-	        }
-	    });
-	    
-	    builder.setInverseBackgroundForced(true);
-	    AlertDialog alert = builder.create();
-	    Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-	    // Vibrate for 500 milliseconds
-	    v.vibrate(2500);
-	    alert.show();
-
-		
-		if (names_info2[0].equals("")) {
-			Toast.makeText(
-					getApplicationContext(),
-					"ClientId is required field. Please use \"New Client\" if you do not know your ClientId",
-					Toast.LENGTH_LONG).show();
-			id = 0;
-			tabs.setCurrentTab(id);
-		} else {
-
+			if (resultCode == RESULT_OK) {
+				this.latitude = data.getStringExtra("resultlatitude");
+				this.longitude = data.getStringExtra("resultlongitude");
+//				SharedPreferences locationpref = getApplication()
+//						.getSharedPreferences("location", MODE_WORLD_READABLE);
+//				String lng = locationpref.getString("Longitude", null);
+//				String lat = locationpref.getString("Latitude", null);
+//				Toast.makeText(getApplicationContext(), "Lat - "+lat+" Long - "+lng,
+//						 Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), this.latitude+" "+this.longitude ,
+						 Toast.LENGTH_SHORT).show();
+				
+				
+				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+				if (networkInfo != null && networkInfo.isConnected()) {
+					// fetch data
+					MyTask3 mt3 = new MyTask3();
+					mt3.lat = this.latitude;
+					mt3.lng = this.longitude;
+					mt3.execute();
+				} else {
+					// display error
+					Toast.makeText(getApplicationContext(), "Invalid connection",
+							Toast.LENGTH_SHORT).show();
+				}
+				
+			}
+			else
+				Toast.makeText(getApplicationContext(), "Unable to obtain location coordinates. \n"
+						+ "Please make sure location services are available.",
+						 Toast.LENGTH_SHORT).show();
 		}
 
 	}
-	
 
-	void send_email(){
-		
-		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
-		String email = app_files.get_nc_email(); 
+	public void ok_gap(View view) {
+
+		MyLocation ml = new MyLocation();
+		// ShowLocationActivity location_activity = new ShowLocationActivity();
+
+		Intent intent1 = new Intent();
+		intent1.setClass(getApplicationContext(), LocationFinder.class);
+		startActivityForResult(intent1, 1);
+
+		// String lat = location_activity.getLatitude();
+		// String lng = location_activity.getLongatude();
+
+		// Toast.makeText(getApplicationContext(), "Lat - "+lat+" Long - "+lng,
+		// Toast.LENGTH_SHORT).show();
+
+		// AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		// builder.setTitle("Accident");
+		// builder.setMessage("We’ve detected that you’ve been in a car accident. Would you like a notification sent to your Nominated Contact?");
+		// builder.setIcon(android.R.drawable.ic_dialog_info);
+		//
+		//
+		// builder.setPositiveButton("YES", new
+		// DialogInterface.OnClickListener() {
+		//
+		// public void onClick(DialogInterface dialog, int which) {
+		// send_email();
+		// Toast.makeText(getApplicationContext(), "Sending Email",
+		// Toast.LENGTH_SHORT).show();
+		// dialog.dismiss();
+		// }
+		//
+		// });
+		//
+		// builder.setNegativeButton("NO", new DialogInterface.OnClickListener()
+		// {
+		//
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// // Do nothing
+		// dialog.dismiss();
+		// Toast.makeText(getApplicationContext(), "Email Canceled.",
+		// Toast.LENGTH_SHORT).show();
+		// }
+		// });
+		//
+		// builder.setInverseBackgroundForced(true);
+		// AlertDialog alert = builder.create();
+		// Vibrator v = (Vibrator)
+		// getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+		// // Vibrate for 500 milliseconds
+		// v.vibrate(2500);
+		// alert.show();
+		//
+		//
+		// if (names_info2[0].equals("")) {
+		// Toast.makeText(
+		// getApplicationContext(),
+		// "ClientId is required field. Please use \"New Client\" if you do not know your ClientId",
+		// Toast.LENGTH_LONG).show();
+		// id = 0;
+		// tabs.setCurrentTab(id);
+		// } else {
+		//
+		// }
+
+	}
+
+	void send_email() {
+
+		app_files.set_path_string(new File(getFilesDir(), "/Your_details"));
+		String email = app_files.get_nc_email();
 		String profile_name = app_files.get_profile_name();
 		String profile_phone = app_files.get_profile_phone();
-		
+
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
-		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
-		i.putExtra(Intent.EXTRA_SUBJECT, profile_name+" has been in a car accident\n");
-		i.putExtra(Intent.EXTRA_TEXT   , profile_name+" has been in a car accident. You’ve been chosen as their nominated contact in the event of a car crash. \n" +
- 
-"Their current location is _________, and they can be contacted on "+profile_phone+ "\n\n\n"+
- 
-"If you have any questions, please contact CMT on 1300 887 712. ");
-		
+		i.putExtra(Intent.EXTRA_EMAIL, new String[] { email });
+		i.putExtra(Intent.EXTRA_SUBJECT, profile_name
+				+ " has been in a car accident\n");
+		i.putExtra(
+				Intent.EXTRA_TEXT,
+				profile_name
+						+ " has been in a car accident. You’ve been chosen as their nominated contact in the event of a car crash. \n"
+						+
+
+						"Their current location is _________, and they can be contacted on "
+						+ profile_phone + "\n\n\n" +
+
+						"If you have any questions, please contact CMT on 1300 887 712. ");
+
 		try {
-		    startActivity(Intent.createChooser(i, "Send mail..."));
+			startActivity(Intent.createChooser(i, "Send mail..."));
 		} catch (android.content.ActivityNotFoundException ex) {
-		    Toast.makeText(getApplicationContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					"There are no email clients installed.", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
-	
-	
-	
+
 	void readFile_info2() {
 		String str = "";
 		File path = new File(getFilesDir(), "/Your_details");
@@ -368,7 +436,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 
 			Integer ret = new Integer(0);
-			
+
 			try {
 
 				HttpClient httpclient = new DefaultHttpClient();
@@ -417,13 +485,13 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 					obj.put("PersonalData", "--");
 
-					//StringWriter out = new StringWriter();
-					//JSONValue.writeJSONString(obj, out);
-					//String jsonText = out.toString();
-					JSONObject json =  new JSONObject(in_obj);
-					JSONObject json1 =  new JSONObject(obj);
-					//String jsonText = out2.toString();
-					String jsonText = json.toString(); 
+					// StringWriter out = new StringWriter();
+					// JSONValue.writeJSONString(obj, out);
+					// String jsonText = out.toString();
+					JSONObject json = new JSONObject(in_obj);
+					JSONObject json1 = new JSONObject(obj);
+					// String jsonText = out2.toString();
+					String jsonText = json.toString();
 					String jsonText1 = json1.toString();
 					jsonText1 = jsonText1.replace("\"--\"", jsonText);
 					Log.d("WWW", jsonText1);
@@ -452,58 +520,62 @@ public class Call_me_back extends Activity implements OnClickListener {
 			} finally {
 				Log.d("!!!", result);
 				boolean id_request;
-				if (result == null){
+				if (result == null) {
 					ret = new Integer(1);
-				}else{
-				  result = result.substring(0, result.length() - 1);
-				Log.d("DLINNA", String.valueOf(result.length()) + "/" + result
-						+ "/");
-				try {
-					Log.d("!1!", result);
-					Integer.parseInt(result.toString());
-					id_req = Integer.parseInt(result.toString());
-					id_request = true;
-					
-					ret = new Integer(0);
-					
-				} catch (Exception e) {
-					Log.d("!!!!!!!", e.toString());
-					id_request = false;
+				} else {
+					result = result.substring(0, result.length() - 1);
+					Log.d("DLINNA", String.valueOf(result.length()) + "/"
+							+ result + "/");
+					try {
+						Log.d("!1!", result);
+						Integer.parseInt(result.toString());
+						id_req = Integer.parseInt(result.toString());
+						id_request = true;
 
-					ret = new Integer(1);
+						ret = new Integer(0);
+
+					} catch (Exception e) {
+						Log.d("!!!!!!!", e.toString());
+						id_request = false;
+
+						ret = new Integer(1);
+					}
+					if (id_request == true) {
+						Log.d("!!!!!!!", "22222222");
+						names_info2[0] = String.valueOf(result);
+						names_title2[0] = names2[0] + names_info2[0];
+						ArrayAdapter<String> adapt2 = new ArrayAdapter<String>(
+								getApplicationContext(), R.layout.list_item,
+								names_title2);
+						lv2.setAdapter(adapt2);
+
+						SavePreferences("ID", names_info2[0]);
+						Log.d("!!!!!", "Shared OOOOOOOOOOOOK");
+
+					} else if (id_request == false) {
+						Log.d("!!!!!!!", "333333333");
+						id_request = true;
+					}
 				}
-				if (id_request == true) {
-					Log.d("!!!!!!!", "22222222");
-					names_info2[0] = String.valueOf(result);
-					names_title2[0] = names2[0] + names_info2[0];
-					ArrayAdapter<String> adapt2 = new ArrayAdapter<String>(
-							getApplicationContext(), R.layout.list_item,
-							names_title2);
-					lv2.setAdapter(adapt2);
-
-					SavePreferences("ID", names_info2[0]);
-					Log.d("!!!!!", "Shared OOOOOOOOOOOOK");
-
-				} else if (id_request == false) {
-					Log.d("!!!!!!!", "333333333");
-					id_request = true;
-				}
-			  }
 			}
 			return ret;
 		}
 
-		
-		
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 			progressDialog.dismiss();
-			if( result.equals(0) )
-				Toast.makeText(getApplicationContext(), "Client registration succeeded", Toast.LENGTH_SHORT).show();
-			else
-				Toast.makeText(getApplicationContext(), "Some error occured while sending data to server. Please try again later", Toast.LENGTH_SHORT).show();
+			if (result.equals(0))
+				Toast.makeText(getApplicationContext(),
+						"Client registration succeeded", Toast.LENGTH_SHORT)
+						.show();
 			
+			else
+				Toast.makeText(
+						getApplicationContext(),
+						"Some error occured while sending data to server. Please try again later",
+						Toast.LENGTH_SHORT).show();
+
 			Log.d("Log", "End");
 			id = 1;
 			tabs.setCurrentTab(id);
@@ -512,7 +584,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 		}
 	}
-	
+
 	void readFile_info() {
 		String str = "";
 
@@ -524,7 +596,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 			for (int i = 0; i < details.length - 1; i++) {
 				details[i] = br.readLine();
-//				Log.d("FILE", details[i]);
+				// Log.d("FILE", details[i]);
 
 			}
 		} catch (FileNotFoundException e) {
@@ -535,8 +607,8 @@ public class Call_me_back extends Activity implements OnClickListener {
 		}
 
 	}
-	
-	//alexkeis read the nominated contact stuff
+
+	// alexkeis read the nominated contact stuff
 	void readFile_info3() {
 
 	}
@@ -550,63 +622,150 @@ public class Call_me_back extends Activity implements OnClickListener {
 			progressDialog.show();
 		}
 
-		
 		@Override
 		protected Integer doInBackground(Void... params) {
-		
+
 			Integer ret = new Integer(0);
-			
+
 			try {
-				String currentTimeStamp = "/Date(" + System.currentTimeMillis() / 1000 + ")/";
-				
-				HttpPost request = new HttpPost("http://test.service.cmt.net.au/ClaimsDataService.svc/InsertEnquiryEntry");
+				String currentTimeStamp = "/Date(" + System.currentTimeMillis()
+						/ 1000 + ")/";
+
+				HttpPost request = new HttpPost(
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/InsertEnquiryEntry");
 				request.setHeader("Content-Type", "application/json");
 				request.setHeader("Accept", "application/json");
-				
-				JSONStringer json = new JSONStringer()
-				.object() 
-				 .key("Id").value(0)
-				 .key("ClientId").value(Integer.parseInt(names_info2[0]))
-				 .key("EnquiryTime").value(currentTimeStamp)
-				 .key("ResponseTime").value(currentTimeStamp)
-				 .key("ResponseText").value(null)
-				 .key("PersonalData").value(null)
-				 .key("EnquiryText").value("Callback Request")
-				.endObject();
+
+				JSONStringer json = new JSONStringer().object().key("Id")
+						.value(0).key("ClientId")
+						.value(Integer.parseInt(names_info2[0]))
+						.key("EnquiryTime").value(currentTimeStamp)
+						.key("ResponseTime").value(currentTimeStamp)
+						.key("ResponseText").value(null).key("PersonalData")
+						.value(null).key("EnquiryText")
+						.value("Callback Request").endObject();
 				Log.d("SmartClaim", json.toString());
 				StringEntity entity = new StringEntity(json.toString(), "UTF-8");
-				request.setEntity(entity); 
+				request.setEntity(entity);
 
 				DefaultHttpClient httpClient = new DefaultHttpClient();
-				HttpResponse response = httpClient.execute(request); 
-				
-				BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+				HttpResponse response = httpClient.execute(request);
+
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(
+								response.getEntity().getContent(), "UTF-8"));
 				StringBuilder sb = new StringBuilder();
 				String line = null;
-				
+
 				while ((line = reader.readLine()) != null) {
-					sb.append(line + System.getProperty("line.separator"));				
-				}		
-				Log.d("SmartClaim", "req 3 "+sb.toString());
-				
-				
+					sb.append(line + System.getProperty("line.separator"));
+				}
+				Log.d("SmartClaim", "req 3 " + sb.toString());
+
 			} catch (Exception e) {
 				ret = new Integer(1);
 			}
-			
+
 			return ret;
 		}
-	
 
+		
+		
+		
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 			Log.d("Log", "End");
 			progressDialog.dismiss();
-			if( result.intValue() == 0 )
-				Toast.makeText(getApplicationContext(), "Callback request successfully sent", Toast.LENGTH_SHORT).show();
+			if (result.intValue() == 0)
+				Toast.makeText(getApplicationContext(),
+						"Callback request successfully sent",
+						Toast.LENGTH_SHORT).show();
 			else
-				Toast.makeText(getApplicationContext(), "Some error occured while sending Callback request to server. Please try again later", Toast.LENGTH_SHORT).show();
+				Toast.makeText(
+						getApplicationContext(),
+						"Some error occured while sending Callback request to server. Please try again later",
+						Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	
+	class MyTask3 extends AsyncTask<Void, Void, Integer> {
+
+		public String lng = "";
+		public String lat = "";
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			Log.d("Logn", "Begin");
+			progressDialog.show();
+		}
+
+		@Override
+		protected Integer doInBackground(Void... params) {
+
+			Integer ret = new Integer(0);
+
+			try {
+				String currentTimeStamp = "/Date(" + System.currentTimeMillis()
+						/ 1000 + ")/";
+
+				HttpPost request = new HttpPost(
+						"http://test.service.cmt.net.au/ClaimsDataService.svc/InsertEnquiryEntry");
+				request.setHeader("Content-Type", "application/json");
+				request.setHeader("Accept", "application/json");
+
+				JSONStringer json = new JSONStringer().object().key("Id")
+						.value(0).key("ClientId")
+						.value(Integer.parseInt(names_info2[0]))
+						.key("EnquiryTime").value(currentTimeStamp)
+						.key("ResponseTime").value(currentTimeStamp)
+						.key("ResponseText").value(null).key("PersonalData")
+						.value(null).key("EnquiryText")
+						.value("GAP Request: latitude="+lat+"; longitude="+lng+";").endObject();
+				Log.d("SmartClaim", json.toString());
+				StringEntity entity = new StringEntity(json.toString(), "UTF-8");
+				request.setEntity(entity);
+
+				DefaultHttpClient httpClient = new DefaultHttpClient();
+				HttpResponse response = httpClient.execute(request);
+
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(
+								response.getEntity().getContent(), "UTF-8"));
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+
+				while ((line = reader.readLine()) != null) {
+					sb.append(line + System.getProperty("line.separator"));
+				}
+				Log.d("SmartClaim", "req 3 " + sb.toString());
+
+			} catch (Exception e) {
+				ret = new Integer(1);
+			}
+
+			return ret;
+		}
+
+		
+		
+		
+		@Override
+		protected void onPostExecute(Integer result) {
+			super.onPostExecute(result);
+			Log.d("Log", "End");
+			progressDialog.dismiss();
+			if (result.intValue() == 0)
+				Toast.makeText(getApplicationContext(),
+						"Callback request successfully sent",
+						Toast.LENGTH_SHORT).show();
+			else
+				Toast.makeText(
+						getApplicationContext(),
+						"Some error occured while sending Callback request to server. Please try again later",
+						Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -648,9 +807,5 @@ public class Call_me_back extends Activity implements OnClickListener {
 		SavePreferences("ID", names_info2[0]);
 		super.onPause();
 	}
-	
-	
 
 }
-
-

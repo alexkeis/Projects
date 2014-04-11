@@ -163,6 +163,9 @@
         <activity
             android:name="Photo_new"
             android:screenOrientation="portrait" />
+         <activity
+            android:name="LocationFinder"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

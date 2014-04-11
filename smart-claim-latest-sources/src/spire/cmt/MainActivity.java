@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.app.Notification;
 import android.app.Service;
 
@@ -346,25 +347,35 @@ public class MainActivity extends Activity implements OnClickListener {
 		case 1:
 
 		{
+			
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(),
+					My_profile.class);
+			startActivity(intent);
+			
 			// SharedPreferences sharedPreferences = getSharedPreferences(
 			// "MY_CLIENT", MODE_PRIVATE);
 			// String strSavedMem1 = sharedPreferences.getString("ID", "");
 			// if (strSavedMem1.equals("")) {
-			builder.setTitle("Profile incomplete");
-			builder.setMessage("Please fill all required fields in your profile");
-			builder.setIcon(android.R.drawable.ic_dialog_info);
-			builder.setNeutralButton("Fill My Profile",
-					new DialogInterface.OnClickListener() {
+			
+////			
+//			builder.setTitle("Profile incomplete");
+//			builder.setMessage("Please fill all required fields in your profile");
+//			builder.setIcon(android.R.drawable.ic_dialog_info);
+//			builder.setNeutralButton("Fill My Profile",
+//					new DialogInterface.OnClickListener() {/
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+//						@Override
+//						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
-							Intent intent = new Intent();
-							intent.setClass(getApplicationContext(),
-									My_profile.class);
-							startActivity(intent);
-						}
-					});
+//							Intent intent = new Intent();
+//							intent.setClass(getApplicationContext(),
+//			            My_profile.class);
+//							startActivity(intent);
+//						}
+//					});
+////			
+			
 			// } else {
 			// Call_me_back cmb = new Call_me_back();
 			// cmb.id = 1;
@@ -372,8 +383,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			// intent1.setClass(getApplicationContext(), Call_me_back.class);
 			// startActivity(intent1);
 			// }
-			builder.setCancelable(false);
-			return builder.create();
+			
+////			
+//			builder.setCancelable(false);
+//			return builder.create();
+////
 		}
 
 		case 2:
@@ -383,21 +397,26 @@ public class MainActivity extends Activity implements OnClickListener {
 			// "MY_CLIENT", MODE_PRIVATE);
 			// String strSavedMem1 = sharedPreferences.getString("ID", "");
 			// if (strSavedMem1.equals("")) {
-			builder.setTitle("Profile incomplete");
-			builder.setMessage("Please fill all required fields in your profile");
-			builder.setIcon(android.R.drawable.ic_dialog_info);
-			builder.setNeutralButton("Fill My Profile",
-					new DialogInterface.OnClickListener() {
+		
+//			builder.setTitle("Profile incomplete");
+//			builder.setMessage("Please fill all required fields in your profile");
+//			builder.setIcon(android.R.drawable.ic_dialog_info);
+//			builder.setNeutralButton("Fill My Profile",
+//					new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+//						@Override
+//					public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
-							Intent intent = new Intent();
-							intent.setClass(getApplicationContext(),
-									My_profile.class);
-							startActivity(intent);
-						}
-					});
+			
+			Call_me_back cmb = new Call_me_back();
+			cmb.id = 0;
+			Intent intent1 = new Intent();
+			intent1.setClass(getApplicationContext(), Call_me_back.class);
+			startActivity(intent1);
+			
+				
+//						}
+//					});
 			// } else {
 			// Call_me_back cmb = new Call_me_back();
 			// cmb.id = 1;
@@ -405,8 +424,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			// intent1.setClass(getApplicationContext(), Lodge_claim.class);
 			// startActivity(intent1);
 			// }
-			builder.setCancelable(false);
-			return builder.create();
+//			builder.setCancelable(false);
+//			return builder.create();
 		}
 		default:
 			return null;
@@ -474,9 +493,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 			break;
 		case R.id.button_left: {
-			Intent intent1 = new Intent();
-			intent1.setClass(this, View_modify.class);
-			startActivity(intent1);
+			
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Currently unavailable", Toast.LENGTH_SHORT);
+			toast.show();
+			
+//			Intent intent1 = new Intent();
+//			intent1.setClass(this, View_modify.class);
+//			startActivity(intent1);
 		}
 			break;
 		case R.id.imageView_banner: {

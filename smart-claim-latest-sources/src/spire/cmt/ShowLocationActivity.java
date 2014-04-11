@@ -2,6 +2,7 @@ package spire.cmt;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Geocoder;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,9 +16,10 @@ public class ShowLocationActivity extends Activity implements LocationListener {
 	  private TextView longitudeField;
 	  private LocationManager locationManager;
 	  private String provider;
-	  private int lat;
-	  private int lng;
-
+	  private double lat;
+	  private double lng;
+	  private Location location;
+	  private Geocoder geocoder;
 	  
 	/** Called when the activity is first created. */
 
@@ -26,23 +28,24 @@ public class ShowLocationActivity extends Activity implements LocationListener {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.main_470);
 	    
-	    //latituteField = (TextView) findViewById(R.id.TextView02);
 	    
-	    //longitudeField = (TextView) findViewById(R.id.TextView04);
-
 	    // Get the location manager
 	    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
 	    // Define the criteria how to select the locatioin provider -> use
 	    // default
+	    
 	    Criteria criteria = new Criteria();
 	    provider = locationManager.getBestProvider(criteria, false);
-	    Location location = locationManager.getLastKnownLocation(provider);
-
+	    location = locationManager.getLastKnownLocation(provider);
+	    
 	    // Initialize the location fields
 	    if (location != null) {
 	      System.out.println("Provider " + provider + " has been selected.");
 	      onLocationChanged(location);
 	    } else {
+	      Toast.makeText(this,"Location Not found",Toast.LENGTH_LONG).show(); 	
 	      latituteField.setText("Location not available");
 	      longitudeField.setText("Location not available");
 	    }
@@ -64,11 +67,10 @@ public class ShowLocationActivity extends Activity implements LocationListener {
 
 	  @Override
 	  public void onLocationChanged(Location location) {
-	    this.lat = (int) (location.getLatitude());
-	    this.lng = (int) (location.getLongitude());
-	    
-	    //latituteField.setText(String.valueOf(lat));
-	    //longitudeField.setText(String.valueOf(lng));
+	    this.lat = location.getLatitude();
+	    this.lng = location.getLongitude();
+	    latituteField.setText(String.valueOf(lat));
+	    longitudeField.setText(String.valueOf(lng));
 	  }
 	  
 	  public String getLatitude(){
