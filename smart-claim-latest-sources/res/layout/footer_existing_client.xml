@@ -13,7 +13,7 @@
         android:maxWidth="20dp"
         android:onClick="ok_footer_existing_client"
         android:padding="0dp"
-        android:text="Send My Contact Details" />
+        android:text="Submit the call back request" />
 
 <!--     <Button -->
 <!--     android:layout_width="match_parent" -->

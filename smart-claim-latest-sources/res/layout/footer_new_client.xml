@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        
         android:text="Ok"
          /> -->
          <Button
@@ -19,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_gravity="center_horizontal"
-        android:text="Send My Contact Details"
+        android:text="Submit the call back request"
          /> 
     
 </LinearLayout>

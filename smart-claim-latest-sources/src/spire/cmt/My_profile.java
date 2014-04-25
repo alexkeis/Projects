@@ -83,7 +83,7 @@ public class My_profile extends Activity {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
-		String strSavedMem1 = sharedPreferences.getString("ID", "");
+		String strSavedMem1 = sharedPreferences.getString("ID2", "");
 		if (strSavedMem1.equals("")) {
 			sendDetails.setVisibility(View.VISIBLE);
 		} else
@@ -190,7 +190,11 @@ public class My_profile extends Activity {
 
 		public int getClientId(){
 			try {
-				int id = new Integer(id_client);
+				
+				SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",	MODE_PRIVATE);
+        		String strSavedMem1 = sharedPreferences.getString("ID2", "0");
+        		int id = new Integer(strSavedMem1);
+        		//int id = new Integer(id_client);
 				return id;
 			}
 			catch (Exception e){
@@ -375,6 +379,7 @@ public class My_profile extends Activity {
 				// .show();
 
 				SavePreferences2("ID", id_client);
+				SavePreferences2("ID2", id_client);
 				Application_files_explorer ap = new Application_files_explorer(
 						new File(getFilesDir(), "/Your_details"));
 				ap.backup_your_details();
@@ -615,8 +620,9 @@ public class My_profile extends Activity {
 		if(changes){
 			Toast.makeText(
 			getApplicationContext(),
-			"Contact details have been edited.\n Please resend. ",
+			"Contact details have been updated.\n Press Update to resend. ",
 			Toast.LENGTH_SHORT).show();
+			sendDetails.setText("Update My Contacts Details");
 			sendDetails.setVisibility(View.VISIBLE);
 		}
 		

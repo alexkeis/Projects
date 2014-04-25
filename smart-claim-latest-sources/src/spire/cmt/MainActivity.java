@@ -352,7 +352,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			intent.setClass(getApplicationContext(),
 					My_profile.class);
 			startActivity(intent);
-			
 			// SharedPreferences sharedPreferences = getSharedPreferences(
 			// "MY_CLIENT", MODE_PRIVATE);
 			// String strSavedMem1 = sharedPreferences.getString("ID", "");

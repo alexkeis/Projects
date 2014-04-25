@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" >
 
-            <ImageView
+           <ImageView
                 android:id="@+id/imageView_banner"
 
                 android:layout_width="fill_parent"
@@ -45,7 +45,24 @@
                 android:baselineAlignBottom="true"
                 android:cropToPadding="true"
                 android:scaleType="fitXY"
+                android:src="@drawable/tap_here" />
+            
+            
+            <ImageView
+                android:id="@+id/imageView_banner2"
+
+                android:layout_width="fill_parent"
+                android:layout_height="100px"
+                
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:baselineAlignBottom="true"
+                android:cropToPadding="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/sgapntext" />
+            
+            
+            
         </RelativeLayout>
     </LinearLayout>
 
