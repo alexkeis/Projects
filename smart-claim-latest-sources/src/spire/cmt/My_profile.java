@@ -161,10 +161,23 @@ public class My_profile extends Activity {
 		case 0:
 
 		{
-			builder.setTitle("Registration Succeeded");
+			String title;
+			String buttext;
+			
+			if(Integer.parseInt(id_client) == Integer.parseInt(this.getClientIdString())){
+				title = "Update Succeeded";
+				buttext = "OK";
+			}
+			else{
+				title = "Registration Succeeded";
+				buttext = "Cancel";
+			}
+			
+			builder.setTitle(title);
 			builder.setMessage("Your ClientID is " + id_client);
 			builder.setIcon(android.R.drawable.ic_dialog_info);
-			builder.setNeutralButton("Cancel", null);
+			builder.setNeutralButton(buttext, null);
+			removeDialog(0);
 
 			builder.setCancelable(false);
 			return builder.create();
@@ -185,6 +198,22 @@ public class My_profile extends Activity {
 		}
 	}
 
+	
+	public String getClientIdString(){
+		try {
+			
+			SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",	MODE_PRIVATE);
+    		String strSavedMem1 = sharedPreferences.getString("ID2", "0");
+    		int id = new Integer(strSavedMem1);
+    		//int id = new Integer(id_client);
+			return Integer.toString(id);
+		}
+		catch (Exception e){
+			
+		}
+		return "0";
+	}
+	
 	// //////////////////////
 	public class MyTask_show extends AsyncTask<Void, Void, Integer> {
 
@@ -370,6 +399,7 @@ public class My_profile extends Activity {
 				showDialog(1);
 
 			else {
+				removeDialog(0);
 				Log.d("Log", "VSE OKEY");
 				showDialog(0);
 
@@ -384,6 +414,7 @@ public class My_profile extends Activity {
 						new File(getFilesDir(), "/Your_details"));
 				ap.backup_your_details();
 				sendDetails.setVisibility(View.GONE);
+				//removeDialog(0);
 			}
 
 		}
