@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:toucharea="http://schemas.android.com/apk/res/spire.cmt"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:onClick="ok_gap" >
+
+            <spire.cmt.RoundButton
+                android:id="@+id/button_center"
+				android:layout_width="167px"
+                android:layout_height="167px"
+                android:layout_centerHorizontal="true"                
+                android:layout_centerInParent="true"
+                android:background="@drawable/gapglobe_d_big"
+                toucharea:toucharea="@array/touch_area_btncenter_470"
+                android:onClick="ok_gap"
+                 />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/a3333333"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" >
+
+           <ImageView
+                android:id="@+id/imageView_banner"
+
+                android:layout_width="fill_parent"
+                android:layout_height="100px"
+                
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:baselineAlignBottom="true"
+                android:cropToPadding="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/tap_here_big" />
+            
+            
+            <ImageView
+                android:id="@+id/imageView_banner2"
+
+                android:layout_width="fill_parent"
+                android:layout_height="100px"
+                
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:baselineAlignBottom="true"
+                android:cropToPadding="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/sgapntext_big" />
+            
+            
+            
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

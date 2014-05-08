@@ -6,7 +6,7 @@
 
     <!-- android:windowSoftInputMode="stateAlwaysVisible" -->
     <uses-sdk
-        android:maxSdkVersion="20"
+        android:maxSdkVersion="20"	
         android:minSdkVersion="8"
         android:targetSdkVersion="16" />
 
@@ -86,7 +86,7 @@
             android:name="spire.cmt.Dialog_date"
             android:screenOrientation="portrait" />
 
-        <uses-library android:name="com.google.android.maps" />
+<!--         <uses-library android:name="com.google.android.maps" /> -->
         <!-- android:theme="@android:style/Theme.NoTitleBar" -->
         <activity
             android:name="spire.cmt.GoogleMapsActivity"

@@ -16,6 +16,8 @@ import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import android.view.Display;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -36,6 +38,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -134,8 +137,15 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 		// New code added 2/13/2014 by alexkeis
 		// -----------------------------------
-
-		View footer3 = getLayoutInflater().inflate(R.layout.gap, null);
+		View footer3;
+		DisplayMetrics metrics = new DisplayMetrics();
+		
+		if (metrics.widthPixels > 1189) {
+			footer3 = getLayoutInflater().inflate(R.layout.gap_big, null);	
+		}
+		else
+			footer3 = getLayoutInflater().inflate(R.layout.gap, null);
+		
 		lv2.addFooterView(footer3);
 		// -----------------------------------------------------------------------------
 
@@ -300,12 +310,25 @@ public class Call_me_back extends Activity implements OnClickListener {
 
 	public void ok_gap(View view) {
 
-		MyLocation ml = new MyLocation();
-		// ShowLocationActivity location_activity = new ShowLocationActivity();
-
-		Intent intent1 = new Intent();
-		intent1.setClass(getApplicationContext(), LocationFinder.class);
-		startActivityForResult(intent1, 1);
+		try {
+			
+		
+			MyLocation ml = new MyLocation();
+			// ShowLocationActivity location_activity = new ShowLocationActivity();
+	
+			Intent intent1 = new Intent();
+			intent1.setClass(getApplicationContext(), LocationFinder.class);
+			startActivityForResult(intent1, 1);
+			
+			Toast.makeText(getApplicationContext(), "NO EXCEPTIONS!!!",
+					 Toast.LENGTH_SHORT).show();
+		
+		}
+		catch (Exception e){
+			Toast.makeText(getApplicationContext(), "The following exception has occured: \n"
+					+ e.getMessage(),
+					 Toast.LENGTH_SHORT).show();
+		}
 
 		// String lat = location_activity.getLatitude();
 		// String lng = location_activity.getLongatude();
@@ -759,7 +782,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 			progressDialog.dismiss();
 			if (result.intValue() == 0)
 				Toast.makeText(getApplicationContext(),
-						"Callback request successfully sent",
+						"GAP request successfully sent",
 						Toast.LENGTH_SHORT).show();
 			else
 				Toast.makeText(
