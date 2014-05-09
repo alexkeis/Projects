@@ -1,6 +1,7 @@
 package spire.cmt;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,7 +145,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 			footer3 = getLayoutInflater().inflate(R.layout.gap_big, null);	
 		}
 		else
-			footer3 = getLayoutInflater().inflate(R.layout.gap, null);
+			footer3 = getLayoutInflater().inflate(R.layout.gap_big, null);
 		
 		lv2.addFooterView(footer3);
 		// -----------------------------------------------------------------------------
@@ -281,8 +282,10 @@ public class Call_me_back extends Activity implements OnClickListener {
 //				String lat = locationpref.getString("Latitude", null);
 //				Toast.makeText(getApplicationContext(), "Lat - "+lat+" Long - "+lng,
 //						 Toast.LENGTH_SHORT).show();
-				Toast.makeText(getApplicationContext(), this.latitude+" "+this.longitude ,
-						 Toast.LENGTH_SHORT).show();
+				
+				
+				//Toast.makeText(getApplicationContext(), this.latitude+" "+this.longitude ,
+				//		 Toast.LENGTH_SHORT).show();
 				
 				
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -320,8 +323,8 @@ public class Call_me_back extends Activity implements OnClickListener {
 			intent1.setClass(getApplicationContext(), LocationFinder.class);
 			startActivityForResult(intent1, 1);
 			
-			Toast.makeText(getApplicationContext(), "NO EXCEPTIONS!!!",
-					 Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "NO EXCEPTIONS!!!",
+			//		 Toast.LENGTH_SHORT).show();
 		
 		}
 		catch (Exception e){
@@ -729,7 +732,11 @@ public class Call_me_back extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 
 			Integer ret = new Integer(0);
-
+//
+			if(names_info2[0].isEmpty()){
+				return  new Integer(2);
+		    }
+			
 			try {
 				String currentTimeStamp = "/Date(" + System.currentTimeMillis()
 						/ 1000 + ")/";
@@ -752,6 +759,10 @@ public class Call_me_back extends Activity implements OnClickListener {
 				request.setEntity(entity);
 
 				DefaultHttpClient httpClient = new DefaultHttpClient();
+				
+			
+				
+				
 				HttpResponse response = httpClient.execute(request);
 
 				BufferedReader reader = new BufferedReader(
@@ -784,6 +795,12 @@ public class Call_me_back extends Activity implements OnClickListener {
 				Toast.makeText(getApplicationContext(),
 						"GAP request successfully sent",
 						Toast.LENGTH_SHORT).show();
+			else if(result.intValue() ==2){
+				Toast.makeText(
+						getApplicationContext(),
+						"Please specify a valid Client ID",
+						Toast.LENGTH_SHORT).show();
+			}
 			else
 				Toast.makeText(
 						getApplicationContext(),

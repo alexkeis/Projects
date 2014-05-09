@@ -38,7 +38,7 @@ public class LocationFinder extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_470);
+		//setContentView(R.layout.main_470);
 		boolean r = myLocation.getLocation(getApplicationContext(),
 				this.locationResult);
 
