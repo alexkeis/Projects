@@ -56,7 +56,8 @@ public class Application_files_explorer  {
 			try {
 				Process p = r.exec("rm -r "+this.path.toString()+"_back/");
 				p.waitFor();
-			    p = r.exec("cp -R "+this.path.toString()+" "+this.path.toString()+"_back");
+			    p = r.exec("mv "+this.path.toString()+" "+this.path.toString()+"_back");
+			    //p = r.exec("cp -R "+this.path.toString()+" "+this.path.toString()+"_back");
 				p.waitFor();
 			}
 			catch (Exception e){
