@@ -52,13 +52,28 @@ public class Application_files_explorer  {
 	
 	public void backup_your_details(){
 		Runtime r = Runtime.getRuntime();
+		File[] files = new File(this.path.toString()).listFiles();
+		
 		if(this.path.exists()){
 			try {
 				Process p = r.exec("rm -r "+this.path.toString()+"_back/");
 				p.waitFor();
-			    p = r.exec("mv "+this.path.toString()+" "+this.path.toString()+"_back");
-			    //p = r.exec("cp -R "+this.path.toString()+" "+this.path.toString()+"_back");
+				p = r.exec("mkdir "+this.path.toString()+"_back/");
 				p.waitFor();
+				
+				for(File file : files){
+					if(file.isDirectory()){continue;}
+					p = r.exec(new String[]{"sh", "-c", "cat '"+file.getAbsolutePath()+"' > "+"'"+this.path.toString()+"_back/"+file.getName()+"'"});
+					p.waitFor();
+			
+//					p = r.exec(new String[]{"cat file.getAbsolutePath()"});
+//					OutputStream stdin = p.getOutputStream();
+//					stdin.write("this.path.toString()+");
+					
+				}
+			    //p = r.exec("mv "+this.path.toString()+" "+this.path.toString()+"_back");
+			    //p = r.exec("cp -R "+this.path.toString()+" "+this.path.toString()+"_back");
+				//p.waitFor();
 			}
 			catch (Exception e){
 				
