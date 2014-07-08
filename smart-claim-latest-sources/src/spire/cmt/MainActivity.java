@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.Integer;
 
 import spire.cmt.R;
 import android.app.Activity;
@@ -19,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.EditText;
 import android.app.Notification;
 import android.app.Service;
 
@@ -61,7 +64,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	DisplayMetrics metricsB = new DisplayMetrics();
 	Context context;
 
-
 	void readFile_info3() {
 		String str = "";
 		File path = new File(getFilesDir(), "/Your_details");
@@ -74,7 +76,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			{
 				contact.names_info[qw] = str;
-				contact.names_title[qw] = contact.names[qw] + contact.names_info[qw];
+				contact.names_title[qw] = contact.names[qw]
+						+ contact.names_info[qw];
 				qw++;
 
 			}
@@ -85,8 +88,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	private void SavePreferences(String key, String value) {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_DATA",
@@ -96,33 +98,31 @@ public class MainActivity extends Activity implements OnClickListener {
 		editor.commit();
 	}
 
-	
-	private void begin_service(){
-		//alexkeis, app as service stuff
-		//Intent main_intent = new Intent(this, CMTIntentService.class);
-		//startService(main_intent);		
-		
-		Thread t = new Thread(){
-			public void run(){
-			 Intent i = new Intent();
-		       i.setClassName( "spire.cmt",
-		        //"spire.cmt.CMTIntentService" );
-		        "spire.cmt.CMT_service" );
-		       //bindService( i, null, Context.BIND_AUTO_CREATE);
-		       startService(i);   
+	private void begin_service() {
+		// alexkeis, app as service stuff
+		// Intent main_intent = new Intent(this, CMTIntentService.class);
+		// startService(main_intent);
+
+		Thread t = new Thread() {
+			public void run() {
+				Intent i = new Intent();
+				i.setClassName("spire.cmt",
+				// "spire.cmt.CMTIntentService" );
+						"spire.cmt.CMT_service");
+				// bindService( i, null, Context.BIND_AUTO_CREATE);
+				startService(i);
 			}
 		};
 		t.start();
-		
+
 	}
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//begin_service();
-		
+
+		// begin_service();
+
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// captcha
 		SharedPreferences sharedData = getSharedPreferences("MY_DATA",
@@ -163,38 +163,36 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		Log.d("Proverka", "kto perviyyyyyyyyyyyyyy: ");
 		imageView_header1 = (ImageView) findViewById(R.id.imageView_header1);
-		
-		
-		
-		
+
 		Application_files_explorer app_files = new Application_files_explorer();
-		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
+		app_files.set_path_string(new File(getFilesDir(), "/Your_details"));
 		String nc_email_string = app_files.get_nc_email();
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		
-		if(nc_email_string != null && !(app_files.get_nc_email().equals(""))){
+
+		if (nc_email_string != null && !(app_files.get_nc_email().equals(""))) {
 			editor.putString("NC_EMAIL", "yes");
 			editor.commit();
-		}
-		else
-		{
+		} else {
 			editor.putString("NC_EMAIL", "no");
 			editor.commit();
 		}
-		
-		//alexkeis, only prompt for nominated contact if contact email is not set
+
+		// alexkeis, only prompt for nominated contact if contact email is not
+		// set
 		String strSavedMem1 = sharedPreferences.getString("NC_EMAIL", "");
-		
-		Application_files_explorer ap = new Application_files_explorer(new File(getFilesDir(), "/Your_details"));
-		//if (strSavedMem1.equals("no")) { 
-		//alexkeis, ask whether a user wants to nominated a contact
-		if(!ap.hasNominatedContacts())	{
-			check_nominated_contact();
+
+		// if (strSavedMem1.equals("no")) {
+		// alexkeis, ask whether a user wants to nominated a contact
+		if (!is_clientid_present()) {
+			check_client_id();
 		}
-		
-		
+
+		// if(!ap.hasNominatedContacts()) {
+		// check_nominated_contact();
+		// }
+
 		btn_center = (Button) findViewById(R.id.button_center);
 		btn_center.setOnClickListener(this);
 		btn_right = (Button) findViewById(R.id.button_right);
@@ -207,9 +205,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		relat_anim.setOnClickListener(this);
 		relat_vis = (RelativeLayout) findViewById(R.id.relativ_anim);
 
-		//imageView_lodge_claim = (ImageView) findViewById(R.id.imageView_lodge_claim);
-		//imageView_lodge_claim.setOnClickListener(this);
-		
+		// imageView_lodge_claim = (ImageView)
+		// findViewById(R.id.imageView_lodge_claim);
+		// imageView_lodge_claim.setOnClickListener(this);
+
 		imageView_banner = (ImageView) findViewById(R.id.imageView_banner);
 		imageView_banner.setOnClickListener(this);
 		imageView_terms = (ImageView) findViewById(R.id.imageView_claim_terms);
@@ -232,45 +231,167 @@ public class MainActivity extends Activity implements OnClickListener {
 		path.mkdirs();
 
 	}
-	
-	public void check_nominated_contact(){
-		
-//		Application_files_explorer app_files = new Application_files_explorer();
-//		app_files.set_path_string(new File(getFilesDir(), "/Your_details")); 
-	
-		
+
+	public boolean is_clientid_present() {
+		try {
+
+			SharedPreferences sharedPreferences = getSharedPreferences(
+					"MY_CLIENT", MODE_PRIVATE);
+			String strSavedMem1 = sharedPreferences.getString("ID2", "0");
+			int tempid = new Integer(strSavedMem1);
+
+			if (tempid != 0)
+				return true;
+			else
+				return false;
+			// int id = new Integer(id_client);
+		} catch (Exception e) {
+
+		}
+		return false;
+	}
+
+	public boolean valid_clientdata(String clientid, String clientpin) {
+		boolean errs = false;
+		String errmsg = "";
+		if (clientid.length() < 6) {
+			errs = true;
+			errmsg = "client id";
+		}
+
+		if (clientpin.length() < 4) {
+			errmsg = "pin";
+			if (errs) {
+				errmsg = "client id and pin";
+			}
+			errs = true;
+		}
+
+		if (errs) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Please enter a valid " + errmsg, Toast.LENGTH_SHORT);
+			toast.show();
+			return false;
+		} else
+			return true;
+	}
+
+	public void check_client_id() {
+		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		// alert.setTitle("Identify user");
+		alert.setMessage("Synchronize your CMT app");
+		LayoutInflater inflater = getLayoutInflater();
+		// Inflate and set the layout for the dialog
+		// Pass null as the parent view because its going in the dialog layout
+		View idview = inflater.inflate(R.layout.dialog_clientid, null);
+		alert.setView(idview);
+		final EditText idbox = (EditText) idview.findViewById(R.id.idBox);
+		final EditText pinbox = (EditText) idview.findViewById(R.id.pinBox);
+
+		alert.setPositiveButton("Submit ID",
+				new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+					}
+				});
+
+		alert.setNegativeButton("I don't have and ID",
+				new DialogInterface.OnClickListener() {
+					
+			        @Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+					}
+				});
+
+		final AlertDialog dialog = alert.create();
+		dialog.show();
+
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Boolean wantToCloseDialog = false;
+						// Do stuff, possibly set wantToCloseDialog to true
+						// then...
+						if (wantToCloseDialog)
+							dialog.dismiss();
+						else{
+							// else dialog stays open. Make sure you have an obvious
+							// way to close the dialog especially if you set
+							// cancellable to false.
+							String idstring = idbox.getText().toString().trim();
+							String pinstring = pinbox.getText().toString().trim();
+							if (valid_clientdata(idstring, pinstring)) {
+								wantToCloseDialog = true;
+								ServerLink link = new ServerLink();
+								
+								// !!!! CHANGE HARDCODED VALUE ////////
+								
+								
+								link.getClinetObejct("106220,0294"); //idstring+pinstring);
+								dialog.dismiss();
+							}
+							
+						}
+					}
+				});
+
+		dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.cancel();
+
+						Application_files_explorer ap = new Application_files_explorer(
+								new File(getFilesDir(), "/Your_details"));
+						if (!ap.hasNominatedContacts()) {
+							check_nominated_contact();
+						}
+					}
+				});
+
+	}
+
+	public void check_nominated_contact() {
+
+		// Application_files_explorer app_files = new
+		// Application_files_explorer();
+		// app_files.set_path_string(new File(getFilesDir(), "/Your_details"));
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-	    builder.setTitle("Nominate accident contact");
-	    builder.setMessage("Would you like someone to contact you if you have an accident?");
+		builder.setTitle("Nominate accident contact");
+		builder.setMessage("Would you like someone to contact you if you have an accident?");
 
-	    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-	        public void onClick(DialogInterface dialog, int which) {
-	        	readFile_info3();
-	        	
-	        	dialog.dismiss();
+			public void onClick(DialogInterface dialog, int which) {
+				readFile_info3();
+
+				dialog.dismiss();
 				Intent intent1 = new Intent();
 				intent1.setClass(getApplicationContext(),
-								 Nominated_contacts.class);
+						Nominated_contacts.class);
 				startActivity(intent1);
-	        }
+			}
 
-	    });
+		});
 
-	    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
-	        @Override
-	        public void onClick(DialogInterface dialog, int which) {
-	            // Do nothing
-	            dialog.dismiss();
-	        }
-	    });
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// Do nothing
+				dialog.dismiss();
+			}
+		});
 
-	    AlertDialog alert = builder.create();
-	    alert.show();
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
-	
 
 	public void cmt_insurance(View view) {
 		Web web = new Web();
@@ -347,34 +468,33 @@ public class MainActivity extends Activity implements OnClickListener {
 		case 1:
 
 		{
-			
+
 			Intent intent = new Intent();
-			intent.setClass(getApplicationContext(),
-					My_profile.class);
+			intent.setClass(getApplicationContext(), My_profile.class);
 			startActivity(intent);
 			// SharedPreferences sharedPreferences = getSharedPreferences(
 			// "MY_CLIENT", MODE_PRIVATE);
 			// String strSavedMem1 = sharedPreferences.getString("ID", "");
 			// if (strSavedMem1.equals("")) {
-			
-////			
-//			builder.setTitle("Profile incomplete");
-//			builder.setMessage("Please fill all required fields in your profile");
-//			builder.setIcon(android.R.drawable.ic_dialog_info);
-//			builder.setNeutralButton("Fill My Profile",
-//					new DialogInterface.OnClickListener() {/
 
-//						@Override
-//						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-//							Intent intent = new Intent();
-//							intent.setClass(getApplicationContext(),
-//			            My_profile.class);
-//							startActivity(intent);
-//						}
-//					});
-////			
-			
+			// //
+			// builder.setTitle("Profile incomplete");
+			// builder.setMessage("Please fill all required fields in your profile");
+			// builder.setIcon(android.R.drawable.ic_dialog_info);
+			// builder.setNeutralButton("Fill My Profile",
+			// new DialogInterface.OnClickListener() {/
+
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			// Intent intent = new Intent();
+			// intent.setClass(getApplicationContext(),
+			// My_profile.class);
+			// startActivity(intent);
+			// }
+			// });
+			// //
+
 			// } else {
 			// Call_me_back cmb = new Call_me_back();
 			// cmb.id = 1;
@@ -382,11 +502,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			// intent1.setClass(getApplicationContext(), Call_me_back.class);
 			// startActivity(intent1);
 			// }
-			
-////			
-//			builder.setCancelable(false);
-//			return builder.create();
-////
+
+			// //
+			// builder.setCancelable(false);
+			// return builder.create();
+			// //
 		}
 
 		case 2:
@@ -396,26 +516,25 @@ public class MainActivity extends Activity implements OnClickListener {
 			// "MY_CLIENT", MODE_PRIVATE);
 			// String strSavedMem1 = sharedPreferences.getString("ID", "");
 			// if (strSavedMem1.equals("")) {
-		
-//			builder.setTitle("Profile incomplete");
-//			builder.setMessage("Please fill all required fields in your profile");
-//			builder.setIcon(android.R.drawable.ic_dialog_info);
-//			builder.setNeutralButton("Fill My Profile",
-//					new DialogInterface.OnClickListener() {
 
-//						@Override
-//					public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-			
+			// builder.setTitle("Profile incomplete");
+			// builder.setMessage("Please fill all required fields in your profile");
+			// builder.setIcon(android.R.drawable.ic_dialog_info);
+			// builder.setNeutralButton("Fill My Profile",
+			// new DialogInterface.OnClickListener() {
+
+			// @Override
+			// public void onClick(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+
 			Call_me_back cmb = new Call_me_back();
 			cmb.id = 0;
 			Intent intent1 = new Intent();
 			intent1.setClass(getApplicationContext(), Call_me_back.class);
 			startActivity(intent1);
-			
-				
-//						}
-//					});
+
+			// }
+			// });
 			// } else {
 			// Call_me_back cmb = new Call_me_back();
 			// cmb.id = 1;
@@ -423,8 +542,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			// intent1.setClass(getApplicationContext(), Lodge_claim.class);
 			// startActivity(intent1);
 			// }
-//			builder.setCancelable(false);
-//			return builder.create();
+			// builder.setCancelable(false);
+			// return builder.create();
 		}
 		default:
 			return null;
@@ -472,7 +591,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			SharedPreferences sharedPreferences = getSharedPreferences(
 					"MY_CLIENT", MODE_PRIVATE);
 			String strSavedMem1 = sharedPreferences.getString("ID", "");
-			if (strSavedMem1.equals("")) { 
+			if (strSavedMem1.equals("")) {
 				showDialog(2);
 			} else {
 
@@ -492,14 +611,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 			break;
 		case R.id.button_left: {
-			
+
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Currently unavailable", Toast.LENGTH_SHORT);
 			toast.show();
-			
-//			Intent intent1 = new Intent();
-//			intent1.setClass(this, View_modify.class);
-//			startActivity(intent1);
+
+			// Intent intent1 = new Intent();
+			// intent1.setClass(this, View_modify.class);
+			// startActivity(intent1);
 		}
 			break;
 		case R.id.imageView_banner: {

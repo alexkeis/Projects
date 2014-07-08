@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/idBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Client ID"
+        android:inputType="phone"
+        android:maxLength="15" >
+
+        <requestFocus />
+    </EditText>
+     
+    <EditText
+        android:id="@+id/pinBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pin number"
+        android:inputType="textPassword"
+        android:maxLength="15" >
+
+    </EditText>
+
+
+</LinearLayout>

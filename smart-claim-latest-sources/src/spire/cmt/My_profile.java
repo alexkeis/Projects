@@ -101,12 +101,21 @@ public class My_profile extends Activity {
 		readFile_info2();
 		readFile_info3();
 		
-		Application_files_explorer ap = new Application_files_explorer(
-				new File(getFilesDir(), "/Your_details"));
-	
-		ap.backup_your_details();
+//		Application_files_explorer ap = new Application_files_explorer(
+//				new File(getFilesDir(), "/Your_details"));
+//	
+//		ap.backup_your_details();
 	}
 
+	 public void onDestry(){
+		 super.onDestroy();
+		 
+			Application_files_explorer ap = new Application_files_explorer(
+					new File(getFilesDir(), "/Your_details"));
+		
+			ap.backup_your_details();
+	 }
+	
 	public void showDetails(View view) {
 		Your_details yr = new Your_details();
 		Your_vehicle your_vehicle = new Your_vehicle();
@@ -164,7 +173,8 @@ public class My_profile extends Activity {
 			String title;
 			String buttext;
 			
-			if(Integer.parseInt(id_client) == Integer.parseInt(this.getClientIdString())){
+			if(Integer.parseInt(this.getClientIdString()) != 0){
+			// if(Integer.parseInt(id_client) == Integer.parseInt(this.getClientIdString())){
 				title = "Update Succeeded";
 				buttext = "OK";
 			}

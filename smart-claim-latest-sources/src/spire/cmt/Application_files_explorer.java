@@ -2,12 +2,26 @@ package spire.cmt;
 
 
 import java.io.*;
-
 import java.util.*;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+
 import org.apache.commons.io.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class Application_files_explorer  {
@@ -311,4 +325,10 @@ public class Application_files_explorer  {
 		return profile_details[5];
 	}
 
+	
+	
+/////////////////////////////////////////////// WEB SERVER COMMUNICAITON //////////////////////////////////////////////////
+	
+
+	
 }
