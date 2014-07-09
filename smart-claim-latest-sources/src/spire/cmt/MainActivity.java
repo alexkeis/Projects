@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.PendingIntent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -326,12 +327,10 @@ public class MainActivity extends Activity implements OnClickListener {
 							String pinstring = pinbox.getText().toString().trim();
 							if (valid_clientdata(idstring, pinstring)) {
 								wantToCloseDialog = true;
-								ServerLink link = new ServerLink();
-								
-								// !!!! CHANGE HARDCODED VALUE ////////
-								
-								
-								link.getClinetObejct("106220,0294"); //idstring+pinstring);
+								ServerLink link = new ServerLink(v.getContext());
+								ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+								String idpin = idstring+","+pinstring;
+								link.getClinetObejct(idpin, connMgr); //idstring+pinstring);
 								dialog.dismiss();
 							}
 							

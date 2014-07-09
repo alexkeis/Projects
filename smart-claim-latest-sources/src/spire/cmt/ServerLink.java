@@ -16,6 +16,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
 
 import spire.cmt.My_profile.MyTask_show;
 import android.app.ProgressDialog;
@@ -28,34 +29,40 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import java.util.Arrays;
 
-public class ServerLink extends Activity {
-	
-	private ProgressDialog progressDialog;
+
+public class ServerLink {
+
+	public ProgressDialog progressDialog;
 	private String data = null;
 	public String result = null;
-	
-	public void getClinetObejct(String data){
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		
+	public Context context;
+
+	public ServerLink(Context context) {
+		this.context = context;
+	}
+
+	public void getClinetObejct(String data, ConnectivityManager connMgr) {
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
 			{
-				Task myTask = new Task(data);
+
+				Task myTask = new Task(data, context);
 				myTask.execute();
 
 			}
 			// ///////////////
-		
+
 		} else {
 			// display error
-			Toast.makeText(getApplicationContext(), "Invalid connection",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Invalid connection", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
-	
-	
-	public String getData(){
+
+	public String getData() {
 		return this.data;
 	}
 
@@ -63,15 +70,24 @@ public class ServerLink extends Activity {
 	public class Task extends AsyncTask<Void, Void, Integer> {
 
 		private String data;
+		private Context context;
+		private ProgressDialog progressDialog;
 
-		Task(String data){
+		Task(String data, Context context) {
 			this.data = data;
+			this.context = context;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog.show();
+
+			progressDialog = new ProgressDialog(this.context);
+			progressDialog.setCancelable(false);
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.setIndeterminate(true);
+			progressDialog.setMessage("Wait");
+			this.progressDialog.show();
 			Log.d("Logn", "Begin_registration");
 		}
 
@@ -98,8 +114,10 @@ public class ServerLink extends Activity {
 					obj.put("Data", this.data);
 					JSONObject json = new JSONObject(obj);
 					String jsonText = json.toString();
-			
-					HttpGet httpget = new HttpGet("http://test.service.cmt.net.au/ClaimsDataService.svc/GetClientObject?"+jsonText);
+					byte [] encodedbytes  = Base64.encodeBase64(data.getBytes());
+					String encodedString = new String(encodedbytes);
+
+					HttpGet httpget = new HttpGet("http://test.service.cmt.net.au/ClaimsDataService.svc/GetClientObject?data="+encodedString);
 					httpget.setHeader("Content-Type", "application/json");
 					httpget.setHeader("Accept", "application/json");
 
