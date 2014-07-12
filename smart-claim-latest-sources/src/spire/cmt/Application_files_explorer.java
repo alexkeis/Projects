@@ -20,9 +20,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.*;
 
+import javax.json.*;
 
 public class Application_files_explorer  {
 
@@ -53,7 +53,18 @@ public class Application_files_explorer  {
 	public Application_files_explorer(File path){	
 		try{
 			this.path = path;
+			path.mkdirs();  
+			
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+			// new code, connecting to getClient web service
+			this.ncFile = new File(path, "/Nominated_contact.txt");
+			this.detailsFile = new File(path, "/My_profile_details.txt");
+			this.vehicleFile = new File(path, "/My_profile_vehicle.txt");
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+						
 			getNcsfromFiles();
+		
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +74,79 @@ public class Application_files_explorer  {
 	public Application_files_explorer(){	
 	}
 	
+	
+	public void parseJsontoFiles(JsonObject obj){
+		String[] names_info;
+	
+		names_info = this.detailsFromJson(obj);
+		this.writeNamesInfotoFile(names_info, this.detailsFile);
+		
+		names_info = this.vehicleFromJson(obj);
+		this.writeNamesInfotoFile(names_info, this.vehicleFile);
+		
+//		String [][] names_info_array = this.nomcontactsFromJson(obj);
+//		for(int i=0; i < names_info_array.length; i++){
+//			names_info = names_info_array[i];
+//			this.writeNamesInfotoFile(names_info, this.ncFile);
+//		}
+	}
+	
+	
+	public String[] detailsFromJson(JsonObject obj){
+		
+		String[] names_info = new String[11];
+		JsonObject personalobj  = obj.getJsonObject("PersonalData");
+		
+		names_info[0] = personalobj.getString("FirstName");
+		names_info[1] = personalobj.getString("Surname");
+		names_info[2] = ""; //DOB
+		names_info[3] = "";  //Drivers License
+		names_info[4] = "";  //Exp Date
+		names_info[5] = personalobj.getString("Phone");  //Phone
+		names_info[6] = personalobj.getString("Email");  //Email
+		names_info[7] = personalobj.getString("Address1");  // Street Address
+		names_info[8] = personalobj.getString("Address2");  // Suburb
+		names_info[9] = personalobj.getString("Postcode");  // Post code
+		names_info[10] = personalobj.getString("StateCode"); // State
+		
+		return names_info;
+	}
+	
+	
+	public String[] vehicleFromJson(JsonObject obj){
+		String[] names_info = new String[3];
+
+		names_info[0] = obj.getString("VehicleMake");
+		names_info[1] = obj.getString("VehicleModelUser");
+		names_info[2] = obj.getString("VehicleRego");
+		
+		return names_info;
+	}
+	
+	public String[][] nomcontactsFromJson(JsonObject obj){
+		String[][] names_info = null;
+		return names_info;
+	}
+	
+	
+	
+	public void writeNamesInfotoFile(String[] names_info, File sdFile){
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(sdFile));
+			int i = 0;
+			for (i = 0; i < names_info.length - 1; i++) {
+
+				bw.write(names_info[i] + "\n");
+
+			}
+			bw.write(names_info[i]);
+
+			bw.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void backup_your_details(){
 		Runtime r = Runtime.getRuntime();

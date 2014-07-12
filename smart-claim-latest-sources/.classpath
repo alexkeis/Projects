@@ -9,5 +9,6 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/javax.mail.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-codec-1.9"/>
+	<classpathentry kind="lib" path="C:/Users/alex/workspace/CMT/Android/cmt/cmt/smart-claim-latest-sources/libs/javax.json-1.0.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

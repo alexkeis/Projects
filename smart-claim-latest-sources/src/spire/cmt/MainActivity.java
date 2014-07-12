@@ -332,6 +332,9 @@ public class MainActivity extends Activity implements OnClickListener {
 								String idpin = idstring+","+pinstring;
 								link.getClinetObejct(idpin, connMgr); //idstring+pinstring);
 								dialog.dismiss();
+								
+								//My_profile profile = new My_profile();
+								//profile.showDetails(v);
 							}
 							
 						}

@@ -3,6 +3,7 @@ package spire.cmt;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,24 +15,31 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.*;
+
+import javax.json.*;
+
 import org.apache.commons.codec.binary.Base64;
 
 import spire.cmt.My_profile.MyTask_show;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import java.util.Arrays;
+import android.view.LayoutInflater;
 
+import java.util.Arrays;
 
 public class ServerLink {
 
@@ -39,9 +47,11 @@ public class ServerLink {
 	private String data = null;
 	public String result = null;
 	public Context context;
+	private Application_files_explorer ap;
 
 	public ServerLink(Context context) {
 		this.context = context;
+		ap = new Application_files_explorer(new File(context.getFilesDir(), "/Your_details"));
 	}
 
 	public void getClinetObejct(String data, ConnectivityManager connMgr) {
@@ -64,6 +74,10 @@ public class ServerLink {
 
 	public String getData() {
 		return this.data;
+	}
+	
+	public String getClientId(){
+		return this.data.split(",")[0];
 	}
 
 	// //////////////////////
@@ -106,35 +120,27 @@ public class ServerLink {
 						.setSoTimeout(httpParameters, timeoutSocket);
 				DefaultHttpClient httpclient = new DefaultHttpClient(
 						httpParameters);
-				
 
 				try {
-					Map obj = new LinkedHashMap();
-
-					obj.put("Data", this.data);
-					JSONObject json = new JSONObject(obj);
-					String jsonText = json.toString();
-					byte [] encodedbytes  = Base64.encodeBase64(data.getBytes());
+					byte[] encodedbytes = Base64.encodeBase64(data.getBytes());
 					String encodedString = new String(encodedbytes);
 
-					HttpGet httpget = new HttpGet("http://test.service.cmt.net.au/ClaimsDataService.svc/GetClientObject?data="+encodedString);
+					HttpGet httpget = new HttpGet(
+							"http://test.service.cmt.net.au/ClaimsDataService.svc/GetClientObject?data="
+									+ encodedString);
 					httpget.setHeader("Content-Type", "application/json");
 					httpget.setHeader("Accept", "application/json");
 
 					HttpResponse response = httpclient.execute(httpget);
-			
+					InputStream is = response.getEntity().getContent();
 					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(response.getEntity()
-									.getContent(), "windows-1251"));
+							new InputStreamReader(is, "windows-1251"));
+					JsonReader rdr = Json.createReader(is);
+					JsonObject obj = rdr.readObject();
+					ap.parseJsontoFiles(obj);
+					
+					result = obj.toString();
 
-					StringBuilder sb = new StringBuilder();
-					String line = null;
-
-					while ((line = reader.readLine()) != null) {
-						sb.append(line + System.getProperty("line.separator"));
-					}
-
-					result = sb.toString();
 					Log.d("Log", "result " + result);
 					//
 				} catch (Exception e) {
@@ -143,13 +149,47 @@ public class ServerLink {
 				}
 
 			} finally {
-				return 0;
+				return res;
 			}
 		}
 
 		@Override
-		protected void onPostExecute(Integer result) {
+		protected void onPostExecute(Integer result) {	
+			String title;
+			String buttext;
 			super.onPostExecute(result);
+			if (result.equals(0)){
+			
+				
+				final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+				
+				builder.setTitle("Your profile has been sychronized");
+				builder.setMessage("Your ClientID is " + data.split(",")[0]);
+				builder.setIcon(android.R.drawable.ic_dialog_info);
+				builder.setNeutralButton("OK", null);
+		
+				builder.setCancelable(false);
+				final AlertDialog dialog = builder.create();
+				dialog.show();				
+			}
+			
+			else{
+				
+						final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+						
+						builder.setTitle("Profile has not been synchronized");
+						builder.setMessage("The Client ID or PIN is incorrect, please verify your details and try again.");
+						builder.setIcon(android.R.drawable.ic_dialog_info);
+						builder.setNeutralButton("OK", null);
+				
+						builder.setCancelable(false);
+						final AlertDialog dialog = builder.create();
+						dialog.show();	
+			}
+			
+			
 			Log.d("Log", "End");
 			progressDialog.dismiss();
 
