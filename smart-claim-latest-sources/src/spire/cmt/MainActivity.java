@@ -187,7 +187,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// if (strSavedMem1.equals("no")) {
 		// alexkeis, ask whether a user wants to nominated a contact
 		if (!is_clientid_present()) {
-			check_client_id();
+			check_client_id(savedInstanceState);
 		}
 
 		// if(!ap.hasNominatedContacts()) {
@@ -238,7 +238,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			SharedPreferences sharedPreferences = getSharedPreferences(
 					"MY_CLIENT", MODE_PRIVATE);
-			String strSavedMem1 = sharedPreferences.getString("ID2", "0");
+			String strSavedMem1 = sharedPreferences.getString("ID", "0");
 			int tempid = new Integer(strSavedMem1);
 
 			if (tempid != 0)
@@ -277,10 +277,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			return true;
 	}
 
-	public void check_client_id() {
+	public void check_client_id(final Bundle bundle) {
 		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		// alert.setTitle("Identify user");
-		alert.setMessage("Synchronize your CMT app");
+		alert.setMessage("Synchronize your CMT App");
 		LayoutInflater inflater = getLayoutInflater();
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
@@ -327,7 +327,7 @@ public class MainActivity extends Activity implements OnClickListener {
 							String pinstring = pinbox.getText().toString().trim();
 							if (valid_clientdata(idstring, pinstring)) {
 								wantToCloseDialog = true;
-								ServerLink link = new ServerLink(v.getContext());
+								ServerLink link = new ServerLink(v, bundle);
 								ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 								String idpin = idstring+","+pinstring;
 								link.getClinetObejct(idpin, connMgr); //idstring+pinstring);

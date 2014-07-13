@@ -115,13 +115,26 @@ public class Application_files_explorer  {
 	
 	public String[] vehicleFromJson(JsonObject obj){
 		String[] names_info = new String[3];
-
-		names_info[0] = obj.getString("VehicleMake");
-		names_info[1] = obj.getString("VehicleModelUser");
-		names_info[2] = obj.getString("VehicleRego");
 		
-		return names_info;
+		try{
+			names_info[0] = obj.getString("VehicleMake");
+			names_info[1] = obj.getString("VehicleModelUser");
+			
+			if(names_info[0].isEmpty()){
+				String tempmakemodel = names_info[1].split("::")[0];
+				names_info[0] = tempmakemodel;
+				tempmakemodel = names_info[1].split("::")[1];
+				names_info[1] = tempmakemodel;
+			}
+			names_info[2] = obj.getString("VehicleRego");
+		}
+		catch (java.lang.ArrayIndexOutOfBoundsException e){
+		}
+		return names_info;	
+		
 	}
+
+	
 	
 	public String[][] nomcontactsFromJson(JsonObject obj){
 		String[][] names_info = null;

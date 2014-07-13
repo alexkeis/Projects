@@ -25,6 +25,7 @@ import spire.cmt.My_profile.MyTask_show;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,24 +34,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.view.LayoutInflater;
+import android.os.Bundle;
 
 import java.util.Arrays;
 
-public class ServerLink {
+public class ServerLink extends Activity{
 
 	public ProgressDialog progressDialog;
 	private String data = null;
 	public String result = null;
 	public Context context;
+	public Bundle bundle;
+	public View view;
 	private Application_files_explorer ap;
 
-	public ServerLink(Context context) {
-		this.context = context;
+	public ServerLink(View v,  Bundle savedInstanceState) {
+		this.view = v;
+		this.context = v.getContext();
+		this.bundle = savedInstanceState;
 		ap = new Application_files_explorer(new File(context.getFilesDir(), "/Your_details"));
 	}
 
@@ -80,6 +87,19 @@ public class ServerLink {
 		return this.data.split(",")[0];
 	}
 
+	public void savePreferences(String key, String value) {
+		try{
+		SharedPreferences sharedPreferences = context.getSharedPreferences("MY_CLIENT",
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(key, value);
+		editor.commit();
+		}
+		catch(Exception e){
+			return; 
+		}
+	}
+	
 	// //////////////////////
 	public class Task extends AsyncTask<Void, Void, Integer> {
 
@@ -90,6 +110,7 @@ public class ServerLink {
 		Task(String data, Context context) {
 			this.data = data;
 			this.context = context;
+			
 		}
 
 		@Override
@@ -165,13 +186,26 @@ public class ServerLink {
 
 				
 				builder.setTitle("Your profile has been sychronized");
-				builder.setMessage("Your ClientID is " + data.split(",")[0]);
+				builder.setMessage("Your Client id is " + data.split(",")[0]);
 				builder.setIcon(android.R.drawable.ic_dialog_info);
 				builder.setNeutralButton("OK", null);
 		
+				
+				
 				builder.setCancelable(false);
 				final AlertDialog dialog = builder.create();
-				dialog.show();				
+				dialog.show();	
+				
+				String clientid = data.split(",")[0];
+				savePreferences("ID", clientid);
+				savePreferences("ID2", clientid);
+				ap.backup_your_details();
+				try{
+					//profile.showDetails(view);
+				}
+				catch (Exception e) {
+					e.getStackTrace();
+				}
 			}
 			
 			else{
@@ -195,5 +229,8 @@ public class ServerLink {
 
 		}
 	}
+	
+
+	
 
 }

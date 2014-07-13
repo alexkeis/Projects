@@ -81,8 +81,10 @@ public class My_profile extends Activity {
 		array = new JSONArray();
 		sendDetails = (Button) findViewById(R.id.sendDetails);
 
+		
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
+			
 		String strSavedMem1 = sharedPreferences.getString("ID2", "");
 		if (strSavedMem1.equals("")) {
 			sendDetails.setVisibility(View.VISIBLE);
@@ -97,9 +99,15 @@ public class My_profile extends Activity {
 
 		load();
 		list();
-		readFile_info();
-		readFile_info2();
-		readFile_info3();
+		readFile_info(this);
+		readFile_info2(this);
+		readFile_info3(this);
+		
+		
+		String strSavedMem = sharedPreferences.getString("downloaded_profile", "");
+		if (strSavedMem.equals("yes")) {
+			showDetails(this.findViewById(R.id.listView_my_profile));
+		}
 		
 //		Application_files_explorer ap = new Application_files_explorer(
 //				new File(getFilesDir(), "/Your_details"));
@@ -122,7 +130,8 @@ public class My_profile extends Activity {
 		if (yr.names_info[0].equals("") || yr.names_info[1].equals("")
 				|| yr.names_info[5].equals("")
 				|| your_vehicle.names_info[2].equals("")) {
-			Toast.makeText(getApplicationContext(),
+			//Toast.makeText(getApplicationContext(),
+					Toast.makeText(view.getContext(),
 					"Please fill all required fields in your profile",
 					Toast.LENGTH_LONG).show();
 		} else {
@@ -137,12 +146,16 @@ public class My_profile extends Activity {
 				// ///////////////
 			} else {
 				// display error
-				Toast.makeText(getApplicationContext(), "Invalid connection",
+				//Toast.makeText(getApplicationContext(), "Invalid connection",
+				Toast.makeText(view.getContext(), "Invalid connection",
 						Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
 
+	
+	
+	
 	private void SavePreferences2(String key, String value) {
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
@@ -306,7 +319,7 @@ public class My_profile extends Activity {
 					in_obj.put("AbnNumber", null);
 					in_obj.put("Country", null);
 					in_obj.put("Address1", details.names_info[7]);
-					in_obj.put("Address2", null);
+					in_obj.put("Address2", details.names_info[8]);
 					in_obj.put("City", "");
 					in_obj.put("StateCode", details.names_info[10]);// /izm
 																	// details[10]
@@ -569,10 +582,10 @@ public class My_profile extends Activity {
 		});
 	}
 
-	void readFile_info() {
+	void readFile_info(Context context) {
 		String str = "";
 
-		File path = new File(getFilesDir(), "/Your_details");
+		File path = new File(context.getFilesDir(), "/Your_details");
 		File sdFile = new File(path, "My_profile_details.txt");
 
 		try {
@@ -595,9 +608,9 @@ public class My_profile extends Activity {
 
 	}
 
-	void readFile_info2() {
+	void readFile_info2(Context context) {
 		String str = "";
-		File path = new File(getFilesDir(), "/Your_details");
+		File path = new File(context.getFilesDir(), "/Your_details");
 		File sdFile = new File(path, "My_profile_vehicle.txt");
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(sdFile));
@@ -621,9 +634,9 @@ public class My_profile extends Activity {
 
 	}
 
-	void readFile_info3() {
+	void readFile_info3(Context context) {
 		String str = "";
-		File path = new File(getFilesDir(), "/Your_details");
+		File path = new File(context.getFilesDir(), "/Your_details");
 		File sdFile = new File(path, "Nominated_contact.txt");
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(sdFile));
