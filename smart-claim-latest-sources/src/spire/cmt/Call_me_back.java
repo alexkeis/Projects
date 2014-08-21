@@ -145,7 +145,7 @@ public class Call_me_back extends Activity implements OnClickListener {
 			footer3 = getLayoutInflater().inflate(R.layout.gap_big, null);	
 		}
 		else
-			footer3 = getLayoutInflater().inflate(R.layout.gap_big, null);
+			footer3 = getLayoutInflater().inflate(R.layout.gap_small, null);
 		
 		lv2.addFooterView(footer3);
 		// -----------------------------------------------------------------------------
