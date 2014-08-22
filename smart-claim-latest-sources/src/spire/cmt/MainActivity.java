@@ -215,8 +215,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		imageView_terms = (ImageView) findViewById(R.id.imageView_claim_terms);
 		imageView_terms.setOnClickListener(this);
 		scroll = (ScrollView) findViewById(R.id.scroll);
+		
+		
 		more_services = (ImageView) findViewById(R.id.imageView_more_services2);
 		more_services.setOnClickListener(this);
+		more_services.setVisibility(View.GONE);
+		
+		
+		
 		// lParams1 =(RelativeLayout.LayoutParams)
 		// imageView_header1.getLayoutParams();
 		// lParams1.height = (metrics.heightPixels*16)/100;
@@ -277,7 +283,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			return true;
 	}
 
-	public void check_client_id(final Bundle bundle) {
+	public  void check_client_id(final Bundle bundle) {
 		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		// alert.setTitle("Identify user");
 		alert.setMessage("Synchronize your CMT App");
@@ -403,6 +409,32 @@ public class MainActivity extends Activity implements OnClickListener {
 		startActivity(intent1);
 	}
 
+	
+	public void cmt_instagram(View view) {
+		Web web = new Web();
+		web.uri = "http://instagram.com/cmtluxuryreplacementvehicles";
+		Intent intent1 = new Intent();
+		intent1.setClass(getApplicationContext(), Web.class);
+		startActivity(intent1);
+	}
+	
+	public void cmt_twitter(View view) {
+		Web web = new Web();
+		web.uri = "https://twitter.com/CMTLuxuryCar";
+		Intent intent1 = new Intent();
+		intent1.setClass(getApplicationContext(), Web.class);
+		startActivity(intent1);
+	}
+	
+	public void cmt_facebook(View view) {
+		Web web = new Web();
+		web.uri = " https://www.facebook.com/cmtluxuryreplacementvehicles";
+		Intent intent1 = new Intent();
+		intent1.setClass(getApplicationContext(), Web.class);
+		startActivity(intent1);
+	}
+	
+	
 	public void cmt_bmw(View view) {
 		Web web = new Web();
 		web.uri = "http://www.bmwcarrental.com.au/index.php";
@@ -614,9 +646,25 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.button_left: {
 
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Currently unavailable", Toast.LENGTH_SHORT);
-			toast.show();
+			switch (i) {
+			case 1: {
+				relat_vis.setVisibility(View.VISIBLE);
+
+				i = 2;
+			}
+				break;
+			case 2: {
+				relat_vis.setVisibility(View.GONE);
+				i = 1;
+			}
+				break;
+			default:
+				break;
+			}
+			
+//			Toast toast = Toast.makeText(getApplicationContext(),
+//					"Currently unavailable", Toast.LENGTH_SHORT);
+//			toast.show();
 
 			// Intent intent1 = new Intent();
 			// intent1.setClass(this, View_modify.class);

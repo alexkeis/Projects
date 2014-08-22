@@ -13,7 +13,7 @@
         android:maxWidth="20dp"
         android:onClick="ok_footer_existing_client"
         android:padding="0dp"
-        android:text="Submit the call back request" />
+        android:text="Request a callback" />
 
 <!--     <Button -->
 <!--     android:layout_width="match_parent" -->

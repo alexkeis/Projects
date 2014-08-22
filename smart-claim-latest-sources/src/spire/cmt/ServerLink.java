@@ -38,6 +38,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.os.Bundle;
@@ -53,7 +54,8 @@ public class ServerLink extends Activity{
 	public Bundle bundle;
 	public View view;
 	private Application_files_explorer ap;
-
+	public Dialog extdialog=null;
+	
 	public ServerLink(View v,  Bundle savedInstanceState) {
 		this.view = v;
 		this.context = v.getContext();
@@ -194,6 +196,16 @@ public class ServerLink extends Activity{
 				
 				builder.setCancelable(false);
 				final AlertDialog dialog = builder.create();
+				
+				
+				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+			        @Override
+			        public void onDismiss(DialogInterface dialog) {
+			        	dismissparent();
+			        	//finish();
+			        }
+			        });
+				
 				dialog.show();	
 				
 				String clientid = data.split(",")[0];
@@ -220,6 +232,13 @@ public class ServerLink extends Activity{
 				
 						builder.setCancelable(false);
 						final AlertDialog dialog = builder.create();
+						dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+					        @Override
+					        public void onDismiss(DialogInterface dialog) {
+					        	dismissparent();
+					        	//finish();
+					        }
+					        });
 						dialog.show();	
 			}
 			
@@ -231,6 +250,15 @@ public class ServerLink extends Activity{
 	}
 	
 
+	public void dismissparent(){
+		if(this.extdialog != null){
+			this.extdialog.dismiss();
+		}
+	}
+	
+	public void setDialog(Dialog dialog){
+		this.extdialog = dialog;
+	}
 	
 
 }

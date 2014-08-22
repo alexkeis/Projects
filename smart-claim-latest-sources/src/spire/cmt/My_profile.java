@@ -61,7 +61,7 @@ public class My_profile extends Activity {
 			"Nominated Contacts" };
 	// public static String[] mas_prof = { "Nominated Conntact"};
 
-	Button im_del, sendDetails;
+	Button im_del, sendDetails, reqDetails;
 	SharedPreferences sPref;
 	final String SAVED_TEXT = "pin";
 	int id_req;
@@ -80,7 +80,7 @@ public class My_profile extends Activity {
 
 		array = new JSONArray();
 		sendDetails = (Button) findViewById(R.id.sendDetails);
-
+		reqDetails = (Button) findViewById(R.id.requestDetails);
 		
 		SharedPreferences sharedPreferences = getSharedPreferences("MY_CLIENT",
 				MODE_PRIVATE);
@@ -88,8 +88,10 @@ public class My_profile extends Activity {
 		String strSavedMem1 = sharedPreferences.getString("ID2", "");
 		if (strSavedMem1.equals("")) {
 			sendDetails.setVisibility(View.VISIBLE);
-		} else
+		} else {
 			sendDetails.setVisibility(View.GONE);
+			reqDetails.setVisibility(View.GONE);
+		}
 
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setCancelable(false);
@@ -124,6 +126,20 @@ public class My_profile extends Activity {
 			ap.backup_your_details();
 	 }
 	
+	 
+	public void requestDetails(View view){
+		Intent intent1 = new Intent();
+		//intent1.setClass(getApplicationContext(), New_pin.class);
+		intent1.setClass(getApplicationContext(), Id_synch.class);
+			try{
+				startActivity(intent1);
+				finish();
+			}
+			catch (Exception e){
+				return;
+			}
+		}
+	 
 	public void showDetails(View view) {
 		Your_details yr = new Your_details();
 		Your_vehicle your_vehicle = new Your_vehicle();
